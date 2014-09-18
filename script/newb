@@ -1,0 +1,9 @@
+set -e
+gem install bundler
+bundle install --binstubs bin
+createuser -s -e rockwood
+
+rake db:create
+rake db:migrate
+rake db:seed
+bundle exec rspec
