@@ -5,8 +5,11 @@
 - Rails 4.1.4
 - Postgresql 9.3
 
-###Installation
+####Setup
 ```
 ./script/newb
 ```
-
+####Start
+```
+thin start --ssl
+```
