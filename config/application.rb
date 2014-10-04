@@ -20,5 +20,16 @@ module Eval360
       token_encryption_key: Base64.strict_decode64(ENV['TOKEN_ENCRYPTION_KEY']),
       endpoints: {"login.salesforce.com" => {"key" => ENV['CONSUMER_KEY'], 
                                              "secret" => ENV['CONSUMER_SECRET']}}
+
+    config.generators do |g|
+      g.view_specs false
+      g.helper_specs false
+      g.controller_specs false
+      g.model_specs false
+      g.stylesheets false
+      g.javascripts false
+      g.helper false
+      g.test_framework :rspec
+    end
   end
 end
