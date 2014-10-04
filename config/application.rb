@@ -7,6 +7,9 @@ require "databasedotcom-oauth2"
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
+#  http://www.wegtam.net/article/ruby-rails-and-activeadmin-assets-heroku
+Bundler.require(:default, :assets, Rails.env)
+
 
 VARS=%w(TOKEN_ENCRYPTION_KEY CONSUMER_KEY CONSUMER_SECRET)
 VARS.keep_if{|var| ENV[var].nil? || ENV[var].empty?}
@@ -31,5 +34,8 @@ module Eval360
       g.helper false
       g.test_framework :rspec
     end
+
+    config.serve_static_assets = true
+
   end
 end

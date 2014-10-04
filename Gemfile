@@ -9,7 +9,6 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'slim-rails'
-gem 'unicorn', group: :production
 gem 'databasedotcom-oauth2'
 gem 'turbolinks'
 gem 'devise'
@@ -17,8 +16,14 @@ gem 'activeadmin', github: 'activeadmin'
 gem 'active_record-acts_as'
 gem 'thin', group: :development
 
+group :production do
+  gem 'unicorn'
+  gem 'rails_serve_static_assets'
+end
+
 group :development, :test do
   gem 'dotenv-rails'
+  gem 'pry'
 end
 
 group :test do
@@ -31,6 +36,4 @@ group :test do
   gem "codeclimate-test-reporter", require: nil
 end
 
-# Use debugger
-# gem 'debugger', group: [:development, :test]
 
