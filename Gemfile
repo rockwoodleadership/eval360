@@ -18,7 +18,7 @@ gem 'active_record-acts_as'
 
 
 
-group :development, :test do
+group :development do
   gem 'dotenv-rails'
   gem 'thin'
 end
@@ -27,7 +27,8 @@ group :test do
   gem 'rspec-rails', '~> 3.1.0'
   gem 'rspec-activemodel-mocks'
   gem 'shoulda-matchers', require: false
-  gem "shoulda-callback-matchers", "~> 1.0"
+  gem 'shoulda-callback-matchers', '~> 1.0'
+  gem 'rake'
 end
 
 # Use debugger
