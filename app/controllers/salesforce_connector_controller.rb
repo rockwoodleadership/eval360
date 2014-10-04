@@ -6,7 +6,6 @@ class SalesforceConnectorController < ApplicationController
     attributes = { first_name: participant['First_Name__c'],
                     last_name: participant['Last_Name__c'],
                     email: participant['Email__c'] }
-    puts attributes
     Participant.create(attributes)
     render json: 'success', status: 200
   end
