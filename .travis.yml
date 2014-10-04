@@ -1,7 +1,15 @@
 language: ruby
 rvm:
-  - 2.1.2
+- 2.1.2
 addons:
-  postgresql: "9.3"
+  postgresql: '9.3'
 before_script:
-  - cp config/database.yml.travis config/database.yml
+- cp config/database.yml.travis config/database.yml
+- psql -c 'create database travis_ci_test' -U postgres
+deploy:
+  provider: heroku
+  api_key:
+    secure: aVM+enL8CROwo8nmBiZLBmYpqWcAPQIsfaq+bZE4UTDqW0CH99qqnb1vmyLU/Jp8qlY6hLZCXDmlDvhHnfFfDBKm+zvpPntxXVfeDeAjJWDQSVHk67VZwyUzepi/KybAfbUojqveiIe3hkw+2qZA5ASlzMTOf0z7Ss7y67pTc00=
+  app: staging-rockwood
+  on:
+    repo: rockwoodleadership/eval360
