@@ -251,11 +251,13 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   databasedotcom-oauth2
   devise
+  dotenv-deployment
   dotenv-rails
   jbuilder (~> 2.0)
   jquery-rails
   pg
   rails (= 4.1.4)
+  rake
   rspec-activemodel-mocks
   rspec-rails (~> 3.1.0)
   sass-rails (= 5.0.0.beta1)

@@ -15,12 +15,10 @@ gem 'turbolinks'
 gem 'devise'
 gem 'activeadmin', github: 'activeadmin'
 gem 'active_record-acts_as'
+gem 'thin', group: :development
 
-
-
-group :development do
+group :development, :test do
   gem 'dotenv-rails'
-  gem 'thin'
 end
 
 group :test do
@@ -29,6 +27,7 @@ group :test do
   gem 'shoulda-matchers', require: false
   gem 'shoulda-callback-matchers', '~> 1.0'
   gem 'rake'
+  gem 'dotenv-deployment'
 end
 
 # Use debugger

@@ -28,5 +28,5 @@ thin start --ssl
 ```
 ####Test
 ```
-rspec spec
+rake
 ```
