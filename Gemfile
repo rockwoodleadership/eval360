@@ -28,6 +28,7 @@ group :test do
   gem 'shoulda-callback-matchers', '~> 1.0'
   gem 'rake'
   gem 'dotenv-deployment'
+  gem "codeclimate-test-reporter", require: nil
 end
 
 # Use debugger
