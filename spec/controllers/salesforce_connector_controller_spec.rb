@@ -4,7 +4,7 @@ RSpec.describe SalesforceConnectorController, :type => :controller do
 
   describe "POST new_particpant" do
 
-    context 'valid parameters' do
+    context 'with valid parameters' do
 
       before(:each) do
         @participant = JSON.generate({ First_Name__c: 'Doris', Last_Name__c: 'Day', Email__c: 'day@example.com' })
@@ -12,11 +12,15 @@ RSpec.describe SalesforceConnectorController, :type => :controller do
       end 
       
       it "creates a new participant" do
-        expect(Participant).to receive(:create).with(@attributes)
+        expect(Participant).to receive(:create!).with(@attributes)
         post :new_participant, :participant => @participant
       end 
 
-
+      it "sends a self evaluation" do
+        expect(Evaluation).to receive(:create_and_send_self_eval)
+        post :new_participant, :participant => @participant
+      end
+      
       it "returns status code 200" do
         post :new_participant, :participant => @participant
         expect(response.status).to eq 200
@@ -24,7 +28,7 @@ RSpec.describe SalesforceConnectorController, :type => :controller do
 
     end
 
-    context 'invalid parameters' do
+    context 'with invalid parameters' do
 
       it "returns status code 422" do
         post :new_participant

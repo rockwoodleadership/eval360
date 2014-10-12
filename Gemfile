@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.1.4'
+gem 'rails', '4.1.6'
 gem 'pg'
 gem 'sass-rails', '5.0.0.beta1'
 gem 'uglifier', '>= 1.3.0'
@@ -15,6 +15,7 @@ gem 'devise'
 gem 'activeadmin', github: 'activeadmin'
 gem 'active_record-acts_as'
 gem 'thin', group: :development
+gem 'mandrill-api'
 
 group :production do
   gem 'unicorn'
@@ -33,7 +34,9 @@ group :test do
   gem 'shoulda-callback-matchers', '~> 1.0'
   gem 'rake'
   gem 'dotenv-deployment'
-  gem "codeclimate-test-reporter", require: nil
+  gem 'codeclimate-test-reporter', require: nil
+  gem 'factory_girl_rails'
+  gem 'webmock'
 end
 
 

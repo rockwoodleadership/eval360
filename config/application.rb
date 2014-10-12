@@ -33,6 +33,7 @@ module Eval360
       g.javascripts false
       g.helper false
       g.test_framework :rspec
+      g.factory_girl dir: '/spec/factories/'
     end
 
     config.serve_static_assets = true
