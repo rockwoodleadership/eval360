@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+
+  resources :evaluations do
+    get :edit
+  end  
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   

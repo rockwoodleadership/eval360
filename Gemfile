@@ -25,11 +25,10 @@ end
 group :development, :test do
   gem 'dotenv-rails'
   gem 'pry'
+  gem 'rspec-rails', '~> 3.1.0'
 end
 
 group :test do
-  gem 'rspec-rails', '~> 3.1.0'
-  gem 'rspec-activemodel-mocks'
   gem 'shoulda-matchers', require: false
   gem 'shoulda-callback-matchers', '~> 1.0'
   gem 'rake'

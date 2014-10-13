@@ -1,9 +1,8 @@
 require 'mandrill'
 class EvaluationEmailer
 
-  def self.send_invite_for_self(evaluation)
+  def self.send_invite_for_self_eval(participant)
     
-    participant = Participant.find(evaluation.participant_id)
     mandrill = Mandrill::API.new ENV['MANDRILL_APIKEY']
     
     #todo: use template name from event
@@ -18,7 +17,7 @@ class EvaluationEmailer
                               { "name" => "LAST_NAME",
                                 "content" =>  participant.last_name },
                               { "name" => "EVAL_URL",
-                                "content" =>  "https://staging-rockwood.herokuapp.com/evaluations/#{evaluation.access_key}/edit" }],
+                                "content" =>  "https://staging-rockwood.herokuapp.com/evaluations/#{participant.self_evaluation.access_key}/edit" }],
       "merge" => true,
       "to" => [{ "email" => participant.email, 
                  "name" => "#{participant.first_name} #{participant.last_name}",
