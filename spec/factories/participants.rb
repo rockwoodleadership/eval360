@@ -3,6 +3,7 @@ FactoryGirl.define do
     first_name "Sean"
     last_name "Combs"
     sequence(:email) { |n| "person#{n}@example.com" }
+    training
 
     factory :participant_with_self_eval do
 

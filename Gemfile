@@ -14,12 +14,18 @@ gem 'turbolinks'
 gem 'devise'
 gem 'activeadmin', github: 'activeadmin'
 gem 'active_record-acts_as'
-gem 'thin', group: :development
 gem 'mandrill-api'
 
 group :production do
   gem 'unicorn'
   gem 'rails_serve_static_assets'
+end
+
+group :development do
+  gem 'thin'
+  gem 'guard-rspec', require: false
+  gem "spring"
+  gem "spring-commands-rspec"
 end
 
 group :development, :test do

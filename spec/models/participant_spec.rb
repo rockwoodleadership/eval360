@@ -4,6 +4,14 @@ RSpec.describe Participant, :type => :model do
 
   expect_it { to validate_presence_of :email }
   expect_it { to have_many :evaluations }
+  expect_it { to belong_to :training }
+
+  describe '#program' do
+    it 'returns the participant program' do
+      participant = create(:participant)
+      expect(participant.program).to be_kind_of Program
+    end
+  end
 
   describe '#self_evaluation' do
     it 'returns the self evaluation' do

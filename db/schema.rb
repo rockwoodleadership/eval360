@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141013200214) do
+ActiveRecord::Schema.define(version: 20141014021602) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,15 @@ ActiveRecord::Schema.define(version: 20141013200214) do
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
+  create_table "answers", force: true do |t|
+    t.integer  "question_id"
+    t.integer  "evaluation_id"
+    t.integer  "actable_id"
+    t.string   "actable_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "evaluations", force: true do |t|
     t.integer  "participant_id"
     t.string   "access_key"
@@ -56,6 +65,8 @@ ActiveRecord::Schema.define(version: 20141013200214) do
     t.datetime "updated_at"
     t.integer  "evaluator_id"
   end
+
+  add_index "evaluations", ["access_key"], name: "index_evaluations_on_access_key", using: :btree
 
   create_table "evaluators", force: true do |t|
     t.string   "email"
@@ -65,10 +76,47 @@ ActiveRecord::Schema.define(version: 20141013200214) do
     t.string   "actable_type"
   end
 
+  create_table "numeric_answers", force: true do |t|
+    t.integer  "response"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "participants", force: true do |t|
     t.string   "first_name"
     t.string   "last_name"
     t.string   "evaluation_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "training_id"
+  end
+
+  create_table "programs", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "questionnaires", force: true do |t|
+    t.integer  "program_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "questions", force: true do |t|
+    t.integer  "questionnaire_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "answer_type"
+  end
+
+  create_table "text_answers", force: true do |t|
+    t.text     "response"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "trainings", force: true do |t|
+    t.integer  "program_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
