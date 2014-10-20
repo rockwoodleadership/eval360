@@ -1,0 +1,18 @@
+- header: section header test
+  questions:
+    - - range1
+      - text: Overall, performs the primary tasks for which they are responsible at the highest standards of excellence.
+        self_text: Overall, I perform the primary tasks for which I am responsible at the highest standards of excellence.
+        legacy_tag: performs_tasks
+    - - range2
+      - text: Is continually learning and improving their leadership and performance.
+        self_text: I am continually learning and improving my leadership and performance.
+        legacy_tag: learning
+    - - range3
+      - text: Is innovative and resourceful in doing whatever it takes to get the job done well.
+        self_text: I am innovative and resourceful in doing whatever it takes to get the job done well.
+        legacy_tag: resourceful
+    - - text1
+      - text: What are his/her greatest strengths as a leader?
+        self_text: What are your greatest strengths as a leader?
+        legacy_tag: strengths

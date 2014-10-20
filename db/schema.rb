@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141014021602) do
+ActiveRecord::Schema.define(version: 20141020065309) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,10 +52,10 @@ ActiveRecord::Schema.define(version: 20141014021602) do
   create_table "answers", force: true do |t|
     t.integer  "question_id"
     t.integer  "evaluation_id"
-    t.integer  "actable_id"
-    t.string   "actable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "numeric_response"
+    t.text     "text_response"
   end
 
   create_table "evaluations", force: true do |t|
@@ -76,12 +76,6 @@ ActiveRecord::Schema.define(version: 20141014021602) do
     t.string   "actable_type"
   end
 
-  create_table "numeric_answers", force: true do |t|
-    t.integer  "response"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "participants", force: true do |t|
     t.string   "first_name"
     t.string   "last_name"
@@ -94,12 +88,14 @@ ActiveRecord::Schema.define(version: 20141014021602) do
   create_table "programs", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
   end
 
   create_table "questionnaires", force: true do |t|
     t.integer  "program_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "header"
   end
 
   create_table "questions", force: true do |t|
@@ -107,12 +103,8 @@ ActiveRecord::Schema.define(version: 20141014021602) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "answer_type"
-  end
-
-  create_table "text_answers", force: true do |t|
-    t.text     "response"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.text     "description"
+    t.text     "self_description"
   end
 
   create_table "trainings", force: true do |t|

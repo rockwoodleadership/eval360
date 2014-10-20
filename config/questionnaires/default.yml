@@ -1,0 +1,70 @@
+- header: 
+  questions:
+    - - range1
+      - text: Overall, performs the primary tasks for which they are responsible at the highest standards of excellence.
+        self_text: Overall, I perform the primary tasks for which I am responsible at the highest standards of excellence.
+        legacy_tag: performs_tasks
+    - - range2
+      - text: Is continually learning and improving their leadership and performance.
+        self_text: I am continually learning and improving my leadership and performance.
+        legacy_tag: learning
+    - - range3
+      - text: Is innovative and resourceful in doing whatever it takes to get the job done well.
+        self_text: I am innovative and resourceful in doing whatever it takes to get the job done well.
+        legacy_tag: resourceful
+    - - range4
+      - text: Persuasively and effectively communicates and forwards the purpose and mission of their organization internally and in public.
+        self_text: I persuasively and effectively communicate and forward the purpose and mission of my organization internally and in public.
+        legacy_tag: communicates
+    - - range5
+      - text: Maintains an appropriate balance of immediate needs and longer range focus.
+        self_text: I maintain an appropriate balance of immediate needs and longer range focus.
+        legacy_tag: balance
+    - - range6
+      - text: Is effective in creating partnerships and alliances that move the work forward.
+        self_text: I am effective in creating partnerships and alliances that move the work forward.
+        legacy_tag: partnership
+    - - range7
+      - text: "Is accountable: does what they say they will do by when they said it will be done."
+        self_text: "I am accountable: I do what I say I will do by when I said it would be done."
+        legacy_tag: accountable
+    - - range8
+      - text: Inspires and supports others in doing their best work.
+        self_text: I inspire and support others in doing their best work.
+        legacy_tag: inspires
+    - - range9
+      - text: Understand the needs and priorities of others and is proactive in communicating to others the information upon which they depend.
+        self_text: I understand the needs and priorities of others and am proactive in communicating to others the information upon which they depend.
+        legacy_tag: needs_of_others
+    - - range10
+      - text: Is highly constructive force in group meetings.
+        self_text: I am a highly constructive force in group meetings.
+        legacy_tag: constructive
+    - - range11
+      - text: Treats others with respect.
+        self_text: I treat others with respect.
+        legacy_tag: respect
+    - - range12
+      - text: Is candid and honest in dealing with others.
+        self_text: I am candid and honest in dealing with others.
+        legacy_tag: honest
+    - - range13
+      - text: Listens well to others.
+        self_text: I listen well to others.
+        legacy_tag: listens
+    - - range14
+      - text: Makes it easy to give feedback to him/her.
+        self_text: I make it easy to give me feedback.
+        legacy_tag: receives_feedback
+    - - range15
+      - text: Is effective in providing helpful feedback to others.
+        self_text: I am effective in providing helpful feedback to others.
+        legacy_tag: gives_feedback
+    - - text1
+      - text: What are his/her greatest strengths as a leader?
+        self_text: What are your greatest strengths as a leader?
+        legacy_tag: strengths
+    - - text2
+      - text: What are his/her greatest challenges as a leader?
+        self_text: What are your greatest challenges as a leader?
+        legacy_tag: weakness

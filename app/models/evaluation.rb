@@ -6,6 +6,8 @@ class Evaluation < ActiveRecord::Base
   validates_uniqueness_of :access_key
 
   before_validation :set_access_key, on: :create
+
+  accepts_nested_attributes_for :answers
   
   def to_param
     access_key
@@ -14,12 +16,16 @@ class Evaluation < ActiveRecord::Base
   def build_questions
     questions = participant.program.questionnaire.questions
     questions.each do |question|
-      if question.answer_type == 'numeric'
-        self.answers << NumericAnswer.new(question_id: question.id)
-      elsif question.answer_type == 'text'
-        self.answers << TextAnswer.new(question_id: question.id)
-      end
+      answers.create(question: question)
     end
+  end
+
+  def header
+    participant.program.questionnaire.header
+  end
+
+  def self_eval?
+    participant.equal? evaluator
   end
   
 

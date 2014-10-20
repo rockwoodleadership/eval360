@@ -1,0 +1,146 @@
+- header: "Please provide your response to the statements below using the sliding scale (Not Applicable, 1=Almost Never, 10=Almost Always). Your written responses to the final open-ended questions would also be very much appreciated, and are important to the assessment process. NOTE: If you skip a question, or leave a question blank, the default response will be 'Not Applicable.'" 
+  questions:
+    - - range1
+      - text: "Shows up with energy, passion and commitment for their work."
+        self_text: "I show up with energy, passion and commitment for my work."
+        legacy_tag: std_01
+    - - range2
+      - text: "Leads from a place of personal authenticity -- people know who this person is and what is important to them."
+        self_text: "I lead from a place of personal authenticity -- people know who I am and what is important to me."
+        legacy_tag: std_02
+    - - range3
+      - text: "Takes delight in their overall work. Finds joy in their work and shares it with others."
+        self_text: "I take delight in my overall work. I find joy in my work and share it with others."
+        legacy_tag: std_03
+    - - range4
+      - text: "Understands and communicates clearly why the work of the organization is important and how it connects to the broader mission both internally and in the public."
+        self_text: "I understand and communicate clearly why the work of our organization is important and how it connects to our broader mission both internally and in the public."
+        legacy_tag: std_04
+    - - range5
+      - text: "Is clear about the organization's vision and uses it to help guide them in setting day to day and work plan priorities."
+        self_text: "I am clear about our organization's vision and use it to help guide me in setting  day to day and workplan priorities."
+        legacy_tag: std_05
+    - - range6
+      - text: "Helps keep the team focused on what's most important for our shared success."
+        self_text: "I help keep my team focused on what's most important for our shared success."
+        legacy_tag: std_06
+    - - range7
+      - text: "Maintains a larger perspective of what is best for the whole."
+        self_text: "I maintain a larger perspective of what is best for the whole."
+        legacy_tag: std_07
+    - - range8
+      - text: "Plays an active role in defining innovative and effective strategies to fulfill the organization's mission."
+        self_text: "I play an active role in defining innovative and effective strategies to fulfill the organization's mission."
+        legacy_tag: std_08
+    - - range9
+      - text: "Articulates a clear and compelling picture for the work and what is being accomplished."
+        self_text: "I articulate a clear and compelling picture for our work and what we are trying to accomplish."
+        legacy_tag: std_09
+    - - range10
+      - text: "'Plays well' with others so that the best possible outcomes for the work are produced."
+        self_text: "I 'play well' with others so that we produce the best possible outcomes for our work."
+        legacy_tag: std_10
+    - - range11
+      - text: "Understands the needs and priorities of others and is proactive in communicating the information upon which they depend."
+        self_text: "I understand the needs and priorities of others and I am proactive in communicating the information upon which they depend."
+        legacy_tag: std_11
+    - - range12
+      - text: "Accurately understands the perspectives and feelings of others and communicates so that they feel heard and understood."
+        self_text: "I accurately understand the perspectives and feelings of others and communicate so that they feel heard and understood."
+        legacy_tag: std_12
+    - - range13
+      - text: "Makes it easy to give them feedback by being approachable and non-defensive."
+        self_text: "I make it easy to give feedback to me by being approachable and non-defensive."
+        legacy_tag: std_13
+    - - range14
+      - text: "Is effective in providing clear, timely and helpful feedback."
+        self_text: "I am effective in providing clear, timely and helpful feedback."
+        legacy_tag: std_14
+    - - range15
+      - text: "Looks for opportunities to build bridges internally as well as externally."
+        self_text: "I look for opportunities to build bridges internally as well as externally."
+        legacy_tag: std_15
+    - - range16
+      - text: "Responds and adapts flexibly to changing circumstances."
+        self_text: "I respond and adapt flexibly to changing circumstances."
+        legacy_tag: std_16
+    - - range17
+      - text: "Maintains balance, clarity and poise in difficult situations."
+        self_text: "I maintain balance, clarity and poise in difficult situations."
+        legacy_tag: std_17
+    - - range18
+      - text: "Seeks feedback from others and can incorporate the feedback to focus or shift their work or behavior."
+        self_text: "I seek feedback from others and can incorporate the feedback to focus or shift my work or behavior."
+        legacy_tag: std_18
+    - - range19
+      - text: "Is comfortable acknowledging and learning from their mistakes."
+        self_text: "I am comfortable acknowledging and learning from my mistakes."
+        legacy_tag: std_19
+    - - range20
+      - text: "Is aware of the impact their behaviors have on others and effectively manages their emotions and actions."
+        self_text: "I am aware of the impact my behaviors have on others and effectively manage my emotions and actions."
+        legacy_tag: std_20
+    - - range21
+      - text: "Overall, performs the primary tasks for which they are responsible at the highest standards of excellence."
+        self_text: "Overall, I perform the primary tasks for which I am responsible at the highest standards of excellence."
+        legacy_tag: std_21
+    - - range22
+      - text: "Is accountable: People can count on this person to do what they said they will do and/or renegotiate in a timely manner."
+        self_text: "I am accountable: People can count on me to do what I said I will do and/or renegotiate in a timely manner."
+        legacy_tag: std_22
+    - - range23
+      - text: "Continually holds and achieves a high standard of excellence in the work they produce."
+        self_text: "I continually hold and achieve a high standard of excellence in the work I produce."
+        legacy_tag: std_23
+    - - range24
+      - text: "Makes good decisions and knows when to reach out for help with decisions."
+        self_text: "I make good decisions and know when to reach out for help with decisions."
+        legacy_tag: std_24
+    - - range25
+      - text: "Plays a strong and useful role in establishing, maintaining and modeling accountability for performance standards within the organization."
+        self_text: "I play a strong and useful role in establishing, maintaining and modeling accountability for performance standards within the organization."
+        legacy_tag: std_25
+    - - range26
+      - text: "Skillfully manages their workload and time."
+        self_text: "I skillfully manage my workload and time."
+        legacy_tag: std_26
+    - - range27
+      - text: "Displays good judgment in establishing personal priorities."
+        self_text: "I display good judgment in establishing personal priorities."
+        legacy_tag: std_27
+    - - range28
+      - text: "Maintains a balance of work, play, rest and community."
+        self_text: "I maintain a balance of work, play, rest and community."
+        legacy_tag: std_28
+    - - range29
+      - text: "Models and supports others in setting appropriate boundaries in service of self-care."
+        self_text: "I model and support others in setting appropriate boundaries in service of self-care."
+        legacy_tag: std_29
+    - - range30
+      - text: "Maintains an appropriate balance of immediate needs and longer range focus."
+        self_text: "I maintain an appropriate balance of immediate needs and longer range focus."
+        legacy_tag: std_30
+    - - range31
+      - text: "Walks their talk: Daily behaviors demonstrate the values they espouse."
+        self_text: "I walk my talk: My daily behaviors demonstrate the values I espouse."
+        legacy_tag: std_31
+    - - range32
+      - text: "Faces and resolves problems forthrightly and effectively rather than letting them linger or build."
+        self_text: "I face and resolve problems forthrightly and effectively rather than letting them linger or build."
+        legacy_tag: std_32
+    - - range33
+      - text: "Inspires others with their positive energy and attitude."
+        self_text: "I inspire others with my positive energy and attitude."
+        legacy_tag: std_33
+    - - range34
+      - text: "Plays a strong and useful role in building a positive, values-based work culture."
+        self_text: "I play a strong and useful role in building a positive, values-based work culture."
+        legacy_tag: std_34
+    - - text1
+      - text: "What are their greatest strengths as a leader?"
+        self_text: "What are my greatest strengths as a leader?"
+        legacy_tag: std_text_1
+    - - text2
+      - text: "What are their greatest areas of growth as a leader?"
+        self_text: "What are my greatest areas of growth as a leader?"
+        legacy_tag: std_text_2

@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :questionnaire do
-
+    header "Please complete the following questions"
     factory :questionnaire_with_questions do
       after(:create) do |questionnaire, evaluator|
         create_list(:question, 3, questionnaire: questionnaire, answer_type: 'numeric')

@@ -1,0 +1,160 @@
+- header: 'PERSONAL MASTERY SKILLS: Please consider a rating of "ten" as always exhibiting this behavior, "five" or "six" as sometimes, and "one" as never.' 
+  questions:
+    - - range1
+      - text: Continually holds and achieves a high standard of excellence in the work s/he produces.
+        self_text: I continually hold and achieve a high standard of excellence in the work I produce.
+        legacy_tag: ind_01 
+    - - range2
+      - text: Continuously looks for ways to do things better.
+        self_text: I continuously look for ways to do things better.
+        legacy_tag: ind_02
+    - - range3
+      - text: Is comfortable acknowledging and learning from his/her own mistakes.
+        self_text: I am comfortable acknowledging and learning from my mistakes.
+        legacy_tag: ind_03
+    - - range4
+      - text: Responds and adapts flexibly to changing circumstances.
+        self_text: I respond and flexibly adapt to changing circumstances.
+        legacy_tag: ind_04
+    - - range5
+      - text: Maintains balance, clarity and poise in difficult situations.
+        self_text: I maintain balance, clarity and poise in difficult situations.
+        legacy_tag: ind_05
+    - - range6
+      - text: "Faces and resolves problems forthrightly & effectively rather than letting them linger or build."
+        self_text: "I face and resolve problems forthrightly & effectively rather than letting them linger or build."
+        legacy_tag: ind_06
+    - - range7
+      - text: Exercises good, sound judgment in making decisions.
+        self_text: I exercise good, sound judgment in making decisions.
+        legacy_tag: ind_07
+    - - range8
+      - text: Manages his/her time and energy well, displaying good judgment in establishing personal priorities.
+        self_text: I manage my time and energy well, displaying good judgment in establishing personal priorities.
+        legacy_tag: ind_08
+    - - range9
+      - text: Walks the talk; in daily behavior, practices and demonstrates the values s/he espouses.
+        self_text: I walk the talk; I demonstrate the values I espouse in daily behavior and practices.
+        legacy_tag: ind_09
+- header: 'INTERPERSONAL SKILLS: Please consider a rating of "ten" as always exhibiting this behavior, "five" or "six" as sometimes, and "one" as never.' 
+  questions:
+    - - range10
+      - text: Is authentic and transparent; shares openly and honestly the truth of what s/he thinks and feels.
+        self_text: I am authentic and transparent; I share openly and honestly the truth of what I think and feel.
+        legacy_tag: ind_10
+    - - range11
+      - text: "Is effective in enrolling positive support from others for his/her ideas & initiatives."
+        self_text: "I am effective in enrolling positive support from others for my ideas & initiatives."
+        legacy_tag: ind_11
+    - - range12
+      - text: People tend to go to him/her for guidance, input or support because the interactions are usually helpful.
+        self_text: People tend to go to me for guidance, input or support because the interactions are usually helpful.
+        legacy_tag: ind_12
+    - - range13
+      - text: When I am talking with him/her, I feel that s/he is really present and listening to me.
+        self_text: When others are talking with me, I feel that I am really present and listening.
+        legacy_tag: ind_13
+    - - range14
+      - text: Accurately understands the perspectives and feelings of others.
+        self_text: I accurately understand the perspectives and feelings of others.
+        legacy_tag: ind_14
+    - - range15
+      - text: Actively elicits and respectfully considers the opinions and input of others, even when s/he may disagree.
+        self_text: I actively elicit and respectfully consider the opinions and input of others, even when I may disagree.
+        legacy_tag: ind_15
+    - - range16
+      - text: Is effective in providing timely and helpful feedback.
+        self_text: I am effective in providing timely and helpful feedback.
+        legacy_tag: ind_16
+    - - range17
+      - text: Makes it easy to give him/her feedback by being approachable and non-defensive.
+        self_text: I make it easy for others to give me feedback by being approachable and non-defensive.
+        legacy_tag: ind_17
+    - - range18
+      - text: "Deals directly and skillfully with potentially difficult interpersonal situations & dynamics (disagreements, conflicts, poor performance reviews, hurt feelings, etc.)."
+        self_text: "I deal directly and skillfully with potentially difficult interpersonal situations & dynamics (disagreements, conflicts, poor performance reviews, hurt feelings, etc.)."
+        legacy_tag: ind_18
+- header: 'TEAM SKILLS: Please consider a rating of "ten" as always exhibiting this behavior, "five" or "six" as sometimes, and "one" as never.' 
+  questions:
+    - - range19
+      - text: Puts the success of the team before his/her personal agendas.
+        self_text: I put the success of the team before my personal agendas.
+        legacy_tag: ind_19
+    - - range20
+      - text: Is a highly constructive force in group meetings.
+        self_text: I am a highly constructive force in group meetings.
+        legacy_tag: ind_20
+    - - range21
+      - text: Understands the needs and priorities of others, acting in ways that support others in accomplishing their tasks.
+        self_text: I understand the needs and priorities of others, acting in ways that support others in accomplishing their tasks.
+        legacy_tag: ind_21
+    - - range22
+      - text: Appreciates and acknowledges the contributions of others.
+        self_text: I appreciate and acknowledge the contributions of others.
+        legacy_tag: ind_22
+    - - range23
+      - text: Is accountable; does what s/he say s/he will do by when s/he said s/he will do it.
+        self_text: I am accountable; I do what I say I will do by when I said I will do it.
+        legacy_tag: ind_23
+    - - range24
+      - text: Supports others in taking responsibility for their own needs and limits.
+        self_text: I support others in taking responsibility for their own needs and limits.
+        legacy_tag: ind_24
+    - - range25
+      - text: Helps challenge our group to set and hold a high standard for performance.
+        self_text: I help challenge our group to set and hold a high standard for performance.
+        legacy_tag: ind_25
+    - - range26
+      - text: "Helps us keep focused on what's most important for our shared success."
+        self_text: "I help us keep focused on what's most important for our shared success."
+        legacy_tag: ind_26
+    - - range27
+      - text: Inspires others with their positive energy and attitude.
+        self_text: I inspire others with my positive energy and attitude.
+        legacy_tag: ind_27
+- header: 'ORGANIZATIONAL SKILLS: Please consider a rating of "ten" as always exhibiting this behavior, "five" or "six" as sometimes, and "one" as never.'
+  questions:
+    - - range28
+      - text: Persuasively and effectively communicates and forwards the purpose and mission of his/her organization.
+        self_text: I persuasively and effectively communicate and forward the purpose and mission of my organization.
+        legacy_tag: ind_28
+    - - range29
+      - text: Maintains a larger perspective of what is best for the whole.
+        self_text: I maintain a larger perspective of what is best for the whole.
+        legacy_tag: ind_29
+    - - range30
+      - text: Is effective in creating partnerships and alliances that move the work forward.
+        self_text: I am effective in creating partnerships and alliances that move the work forward.
+        legacy_tag: ind_30
+    - - range31
+      - text: His/her actions reflect an understanding of and sensitivity to organizational dynamics.
+        self_text: My actions reflect an understanding of and sensitivity to organizational dynamics.
+        legacy_tag: ind_31
+    - - range32
+      - text: "Plays a strong and useful role in defining innovative and effective strategies to fulfill the organization's mission."
+        self_text: "I play a strong and useful role in defining innovative and effective strategies to fulfill the organization's mission."
+        legacy_tag: ind_32
+    - - range33
+      - text: Plays a strong and useful role in establishing and maintaining accountability for performance standards within his/her organization.
+        self_text: I play a strong and useful role in establishing and maintaining accountability for performance standards within my organization.
+        legacy_tag: ind_33
+    - - range34
+      - text: Takes leadership in using measures to help drive effective organizational performance.
+        self_text: I take leadership in using measures to help drive effective organizational performance.
+        legacy_tag: ind_34
+    - - range35
+      - text: Demonstrates appropriate awareness of the impact of race, class, and gender issues in organizational life.
+        self_text: I demonstrate appropriate awareness of the impact of race, class, and gender issues in organizational life.
+        legacy_tag: ind_35
+    - - range36
+      - text: Plays a strong and useful role in building a positive, values-based work culture.
+        self_text: I play a strong and useful role in building a positive, values-based work culture.
+        legacy_tag: ind_36
+    - - text1
+      - text: "What are this person's two greatest strengths as a leader? (Please write at least a few sentences of feedback.)"
+        self_text: What are your two greatest strengths as a leader?
+        legacy_tag: ind_text_1 
+    - - text2
+      - text: "What are this person's two greatest weaknesses as a leader? (Please write at least a few sentences of feedback.)"
+        self_text: What are your greatest needs for development as a leader? 
+        legacy_tag: ind_text_2

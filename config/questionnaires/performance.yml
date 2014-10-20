@@ -1,0 +1,143 @@
+- header: 'OUR TEAM PERFORMANCE CULTURE: Please consider a rating of "10" as always exhibiting this behavior, "5" or "6" as sometimes, and "1" as never.'
+  questions:
+    - - range1
+      - text: "We all have SMART goals to define our work (strategic, measurable, ambitious, realistic, and time-bound."
+        self_text: "We all have SMART goals to define our work (strategic, measurable, ambitious, realistic, and time-bound."
+        legacy_tag: per_01
+    - - range2
+      - text: "I know exactly what I'm responsible for."
+        self_text: "People know exactly what they're responsible for."
+        legacy_tag: per_02
+    - - range3
+      - text: "All teams and individuals have useful work plans."
+        self_text: "All teams and individuals have useful work plans."
+        legact_tag: per_03
+    - - range4
+      - text: "We focus our time, energy and resources on getting the priority results most important for the success of our mission."
+        self_text: "We focus our time, energy, and resources on getting the priority results most important for the success of our mission."
+        legacy_tag: per_04
+    - - range5
+      - text: "We use measurements effectively to improve our performance. "
+        self_text: "We use measurements effectively to improve our performance."
+        legacy_tag: per_05
+    - - range6
+      - text: "We utilize an effective process for evaluating our organization's progress against our stated goals."
+        self_text: "We utilize an effective process for evaluating our organization's progress against our stated goals."
+        legacy_tag: per_06
+    - - range7
+      - text: "The team has an effective system for tracking commitments that supports everyone's accountability."
+        self_text: "The team has an effective system for tracking commitments that supports everyone's accountability."
+        legacy_tag: per_07
+    - - range8
+      - text: "Team members deliver on their work commitments impeccably within the promised time frame."
+        self_text: "Team members deliver on our work commitments impeccably within the promised time frame."
+        legacy_tag: per_08
+    - - range9
+      - text: "We achieve the goals we set out to accomplish."
+        self_text: "We achieve the goals we set out to accomplish."
+        legacy_tag: per_09
+    - - range10
+      - text: "Team members regularly give each other helpful, performance-related feedback."
+        self_text: "Team members regularly give each other helpful, performance-related feedback."
+        legacy_tag: per_10
+    - - range11
+      - text: "We are open and honest with each other, dealing directly with concerns, issues and disagreements."
+        self_text: "People are open and honest with each other, dealing directly with concerns, issues and disagreements."
+        legacy_tag: per_11
+    - - range12
+      - text: "Innovation is encouraged and rewarded here."
+        self_text: "Innovation is encouraged and rewarded here."
+        legacy_tag: per_12
+    - - range13
+      - text: "I have the information and tools I need to be successful."
+        self_text: "I have the information and tools I need to be successful."
+        legacy_tag: per_13
+    - - range14
+      - text: "We have a hiring process that generates excellent hires."
+        self_text: "We have a hiring process that generates excellent hires."
+        legacy_tag: per_14
+    - - range15
+      - text: "Our salary structure and benefits are competitive to attract and retain the best people."
+        self_text: "Our salary structure and benefits are competitive to attract and retain the best people."
+        legacy_tag: per_15
+    - - range16
+      - text: "We receive the training, development and coaching we need to keep improving our skills and capacity."
+        self_text: "People receive the training, development and coaching we need to keep improving their skills and capacity."
+        legacy_tag: per_16
+    - - range17
+      - text: "We receive the development, mentoring and opportunities we need to advance our career."
+        self_text: "People receive the development, mentoring and opportunities we need to advance our careers."
+        legacy_tag: per_17
+    - - range18
+      - text: "We value and support healthy and sustainable work practices."
+        self_text: "We value and support healthy and sustainable work practices."
+        legacy_tag: per_18
+    - - text1
+      - text: "What works best about your team's performance?"
+        self_text: "What works best about your team's performance?"
+        legacy_tag: per_text_1
+    - - text2
+      - text: "What are the most important needs for improvement in your team's performance?"
+        self_text: "What are the most important needs for improvement in your team's performance?"
+        legacy_tag: per_text_2
+- header: "FEEDBACK TO MY MANAGER: Please consider a rating of '10' as always exhibiting this behavior, '5' or '6' as sometimes, and '1' as never. (If you are self-evaluating consider this section as feedback on your own management.)"
+  questions:
+    - - range19
+      - text: "Overall, my manager ensures an effective process of managing individual performance for our team."
+        self_text: "Overall, I ensure an effective process of managing individual performance for our team."
+        legacy_tag: per_19
+    - - range20
+      - text: "My manager brings positive energy and enthusiasm to the job of managing performance in my organization."
+        self_text: "I bring positive energy and enthusiasm to the job of managing performance in my organization."
+        legacy_tag: per_20
+    - - range21
+      - text: "I get the support that I need from my manager."
+        self_text: "People get the support they need from me."
+        legacy_tag: per_21
+    - - range22
+      - text: "Our performance evaluations provide helpful guidance to my work."
+        self_text: "Our performance evaluations provide helpful guidance to peoples' work."
+        legacy_tag: per_22
+    - - range23
+      - text: "When I bring concerns to my manager I find the interactions helpful."
+        self_text: "When people bring concerns to me, they find the interactions helpful."
+        legacy_tag: per_23
+    - - range24
+      - text: "I receive from my manager significantly more affirming feedback and appreciation than critique."
+        self_text: "People receive from me significantly more affirming feedback and appreciation than critique."
+        legacy_tag: per_24
+    - - range25
+      - text: "I really know where I stand with my manager."
+        self_text: "People really know where they stand with me."
+        legacy_tag: per_25
+    - - range26
+      - text: "My manager can be trusted to do what they say they will do."
+        self_text: "People trust me to do what I say I will do."
+        legacy_tag: per_26
+    - - range27
+      - text: "My manager holds team members accountable to the commitments we make."
+        self_text: "I hold team members accountable to the commitments they make."
+        legacy_tag: per_27
+    - - range28
+      - text: "My manager proactively and directly confronts performance issues in a timely way."
+        self_text: "I proactively and directly confront performance issues in a timely way."
+        legacy_tag: per_28
+    - - range29
+      - text: "My manager inspires and challenges us to continually improve our performance."
+        self_text: "People feel inspired and challenged by me to continually improve their performance."
+        legacy_tag: per_29
+    - - range30
+      - text: "My manager is open to candid feedback and uses it to improve."
+        self_text: "I am open to candid feedback and use it to improve."
+        legacy_tag: per_30
+    - - text3
+      - text: "What are your manager's greatest strengths in managing performance?"
+        self_text: "What are your greatest strengths in managing performance?"
+        legacy_tag: per_text_3
+    - - text4
+      - text: "What are your manager's greatest needs for improvement in managing performance?"
+        self_text: "What are your greatest needs for improvement in managing performance?"
+        legacy_tag: per_text_4
+
+
+

@@ -1,2 +1,10 @@
-h1 Evaluations#edit
-p Find me in app/views/evaluations/edit.html.slim
+- self_eval = @evaluation.self_eval?
+p= @evaluation.header
+= semantic_form_for @evaluation do |f|
+  = f.inputs :for => :answers do |answer, i|
+    - label = self_eval ? answer.object.question.self_description : answer.object.question.description
+    - if answer.object.question.answer_type == 'numeric'
+      = answer.input :numeric_response, :as => :range, :label => label
+    - else
+      = answer.input :text_response, :label => label
+

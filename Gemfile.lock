@@ -308,6 +308,7 @@ DEPENDENCIES
   dotenv-deployment
   dotenv-rails
   factory_girl_rails
+  formtastic (~> 3.0)
   guard-rspec
   jbuilder (~> 2.0)
   jquery-rails

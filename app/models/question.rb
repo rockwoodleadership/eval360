@@ -7,6 +7,12 @@ class Question < ActiveRecord::Base
 
   ANSWER_TYPE_VALUES = ["numeric", "text"]
 
+  def self.generate_from_parsed_yaml(parsed_yaml)
+    Question.create(answer_type: parsed_yaml.first.include?("range") ? "numeric" : "text",
+                    description: parsed_yaml.last["text"],
+                    self_description: parsed_yaml.last["self_text"])
+  end
+
   private
 
   def answer_type_value
