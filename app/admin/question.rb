@@ -1,15 +1,4 @@
-ActiveAdmin.register Participant do
-  permit_params :training_id, :first_name, :last_name, :email
-
-  form do |f|
-    f.inputs do
-      f.input :training
-      f.input :first_name
-      f.input :last_name
-      f.input :email
-    end
-    f.actions
-  end
+ActiveAdmin.register Question do
 
 
   # See permitted parameters documentation:

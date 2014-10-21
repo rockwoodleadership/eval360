@@ -5,6 +5,7 @@ RSpec.describe Participant, :type => :model do
   expect_it { to validate_presence_of :email }
   expect_it { to have_many :evaluations }
   expect_it { to belong_to :training }
+  expect_it { to validate_presence_of :training }
 
   describe '#program' do
     it 'returns the participant program' do

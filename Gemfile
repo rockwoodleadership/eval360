@@ -16,6 +16,7 @@ gem 'activeadmin', github: 'activeadmin'
 gem 'active_record-acts_as'
 gem 'mandrill-api'
 gem 'formtastic', '~> 3.0'
+gem 'formtastic-bootstrap'
 
 group :production do
   gem 'unicorn'

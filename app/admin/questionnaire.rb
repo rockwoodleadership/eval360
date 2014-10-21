@@ -1,16 +1,5 @@
-ActiveAdmin.register Participant do
-  permit_params :training_id, :first_name, :last_name, :email
-
-  form do |f|
-    f.inputs do
-      f.input :training
-      f.input :first_name
-      f.input :last_name
-      f.input :email
-    end
-    f.actions
-  end
-
+ActiveAdmin.register Questionnaire do
+  permit_params :program_id, :header, :self_intro_text, :intro_text
 
   # See permitted parameters documentation:
   # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters

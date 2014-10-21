@@ -110,6 +110,8 @@ GEM
     formatador (0.2.5)
     formtastic (3.0.0)
       actionpack (>= 3.2.13)
+    formtastic-bootstrap (3.0.0)
+      formtastic (>= 2.2)
     gibberish (1.4.0)
     guard (2.6.1)
       formatador (>= 0.2.4)
@@ -309,6 +311,7 @@ DEPENDENCIES
   dotenv-rails
   factory_girl_rails
   formtastic (~> 3.0)
+  formtastic-bootstrap
   guard-rspec
   jbuilder (~> 2.0)
   jquery-rails
