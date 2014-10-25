@@ -5,6 +5,7 @@ require 'webmock/rspec'
 WebMock.disable_net_connect!(:allow => "codeclimate.com")
 
 require 'factory_girl'
+require 'database_cleaner'
 
 RSpec.configure do |config|
 
@@ -20,9 +21,18 @@ RSpec.configure do |config|
     stub_request(:post, "https://mandrillapp.com/api/1.0/messages/send-template.json").to_return(:status => 200, :body => body.to_json, :headers => {})
   end
 
-  config.include FactoryGirl::Syntax::Methods
+  config.before(:suite) do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
+  end
 
-  
+  config.around(:each) do |example|
+    DatabaseCleaner.cleaning do
+      example.run
+    end
+  end
+
+  config.include FactoryGirl::Syntax::Methods
 
   config.alias_example_to :expect_it
 end

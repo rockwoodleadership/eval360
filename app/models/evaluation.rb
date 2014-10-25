@@ -1,4 +1,5 @@
 class Evaluation < ActiveRecord::Base
+  include AccessKeys
   belongs_to :evaluator
   belongs_to :participant
   has_many :answers, dependent: :destroy
@@ -7,17 +8,12 @@ class Evaluation < ActiveRecord::Base
   validates_presence_of :participant
   validates_presence_of :evaluator
 
-  before_validation :set_access_key, on: :create
+  before_validation :set_access_key, on: :create 
   after_create :build_questions
+  after_create :set_defaults
 
   accepts_nested_attributes_for :answers
   
-  def to_param
-    access_key
-  end
-
-  
-
   def header
     participant.program.questionnaire.header
   end
@@ -30,9 +26,17 @@ class Evaluation < ActiveRecord::Base
     participant.evaluations.create(evaluator_id: participant.evaluator.id)
   end
 
+  def self.create_peer_evaluations(evaluators, participant)
+    evaluations = []
+    evaluators.each do |ev|
+      evaluations << Evaluation.create(evaluator_id: ev.id, participant_id: participant.id)
+    end
+    evaluations
+  end
+
   def title
     return "Self Evaluation" if self_eval?
-    "Peer Evaluation for #{participant.first_name} #{participant.last_name}"
+    "Peer Evaluation for #{participant.full_name}"
   end
 
   def intro_text
@@ -43,23 +47,30 @@ class Evaluation < ActiveRecord::Base
   def questionnaire
     participant.training.program.questionnaire
   end
+
+  def completed?
+    status == 'completed'
+  end
+
+  def mark_complete
+    self.status = 'completed'
+    self.save
+  end
   
 
   private
   
-    def set_access_key
-      return if access_key.present?
-
-      begin
-        self.access_key = SecureRandom.hex(8)
-      end while self.class.exists?(access_key: self.access_key)
-    end
-
     def build_questions
       questions = participant.program.questionnaire.questions
       questions.each do |question|
         answers.create(question: question)
       end
+    end
+
+    def set_defaults
+      return if !status.nil?
+      self.status = 'created'
+      self.save
     end
 
 end

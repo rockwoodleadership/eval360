@@ -17,6 +17,7 @@ gem 'active_record-acts_as'
 gem 'mandrill-api'
 gem 'formtastic', '~> 3.0'
 gem 'formtastic-bootstrap'
+gem "cocoon"
 
 group :production do
   gem 'unicorn'
@@ -44,6 +45,7 @@ group :test do
   gem 'codeclimate-test-reporter', require: nil
   gem 'factory_girl_rails'
   gem 'webmock'
+  gem 'database_cleaner'
 end
 
 

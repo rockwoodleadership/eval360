@@ -58,6 +58,7 @@ GEM
     builder (3.2.2)
     celluloid (0.16.0)
       timers (~> 4.0.0)
+    cocoon (1.2.6)
     codeclimate-test-reporter (0.4.1)
       simplecov (>= 0.7.1, < 1.0.0)
     coderay (1.1.0)
@@ -71,6 +72,7 @@ GEM
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
     daemons (1.1.9)
+    database_cleaner (1.3.0)
     databasedotcom (1.3.2)
       activesupport
       json
@@ -303,8 +305,10 @@ PLATFORMS
 DEPENDENCIES
   active_record-acts_as
   activeadmin!
+  cocoon
   codeclimate-test-reporter
   coffee-rails (~> 4.0.0)
+  database_cleaner
   databasedotcom-oauth2
   devise
   dotenv-deployment

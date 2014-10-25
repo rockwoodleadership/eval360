@@ -1,0 +1,31 @@
+#invitations
+  h1.text.title Invite Your Peers
+  p
+    =@participant.peer_evaluation_status
+    |  peer evaluations completed 
+  p
+    | Next, select eight to ten peers to evaluate your leadership skills. Please include a variety of people you work with on a regular basis. Evaluators might be people you report to or people who report to you, partners, board members, colleagues or consultants.
+  p
+    | Completion of this survey is required before attending the training.
+  p
+    | The peer survey process is confidential &mdash; you will not be able to track any comments back to their source, nor will you know which of your peers responded on your behalf. Rockwood will not save or use your evaluators' email addresses for solicitation or outreach purposes.
+
+  - if @participant.peer_evaluators.any?
+    h3#show-invites-trigger Who have I already invited?
+    #invites.well.well-lg
+      b
+        | You have already sent evaluation requests to the following addresses:
+      ul.previously_invited.text
+        - @participant.peer_evaluators.each do |ev|
+          li= ev.email
+  h2.text.title Enter Email Addresses
+  p
+    | Who should I invite to evaluate me?
+  = semantic_form_for @participant do |f|
+    #evaluators
+      = f.semantic_fields_for :evaluators do |ev|
+        = render 'evaluator_fields', :f => ev if ev.object.new_record? 
+      .links
+          = link_to_add_association 'add another recipient', f, :evaluators
+    = f.actions do
+      = f.action :submit, :label => "Invite Peers", :button_html => { :class => "btn btn-primary btn-lg", method: "invite_peers" }

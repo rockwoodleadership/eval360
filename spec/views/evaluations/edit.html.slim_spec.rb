@@ -17,6 +17,9 @@ describe 'evaluations/edit.html.slim' do
     render
     expect(rendered).to match /#{Regexp.quote(@evaluation.questions.first.self_description)}/
   end
-  it 'displays input fields for responses'
+  it 'displays input fields for responses' do
+    render
+    expect(rendered).to match /input/
+  end
 end
 

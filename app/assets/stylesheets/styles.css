@@ -1,20 +1,22 @@
+body {
+  background: url('/assets/tile.gif') repeat center;
+}
+
 .alert {
   webkit-box-shadow: none;
   box-shadow: none;
 }
 
 .container {
-  width: 969px;
-}
-
-#obackground-tricks {
-  width: 100%;
-  background: url('/assets/rockwood-bg-dropshadows_03.gif') top center repeat;
+  width: 970px;
+  background-color: #fff;
+  padding-left: 3px;
 }
 
 #wrapper {
   width: 100%;
   background: url('/assets/rockwood-panel.png') repeat-y top center;
+  padding-left: 25px;
 }
 
 #rockwood-header {
@@ -61,23 +63,32 @@ form fieldset.inputs {
   webkit-box-shadow: none;
 }
 
+
 input[type=range] {
-    -webkit-appearance: none;
-    background-color: silver;
-    width: 60%;
+    /*-webkit-appearance: none;*/
+    -webkit-box-shadow: none;
+    /*background-color: silver;*/
+    width: 40%;
     height:20px;
     margin-top:18px;
+    display: inline;
+    margin-left: 15px;
+    margin-right: 15px;
+    box-sizing: none;
 }
 
-input[type="range"]::-webkit-slider-thumb {
-     -webkit-appearance: none;
+/*input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
     background-color: green;
     width: 18px;
     height: 35px;
-}
+}*/
+
 
 input[type=range]:focus {
     outline: none;
+    -webkit-box-shadow: none;
+    box-sizing: none;
 }
 
 label.control-label {
@@ -87,3 +98,31 @@ label.control-label {
 fieldset {
   border: none;
 }
+
+label.output {
+  margin-left: 30px;
+  font-size: 2em;
+  color: green;
+}
+
+#evaluation-edit .btn {
+  margin-right: 10px;
+  float: right;
+}
+
+#invitations .form-control {
+  
+  display:inline;
+  width: 300px;
+}
+
+#invitations .control-label {
+  display: inline;
+  margin-right: 8px;
+}
+
+.alert {
+  margin-top: 14px;
+  font-weight: bold;
+}
+

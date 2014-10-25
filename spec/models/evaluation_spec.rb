@@ -8,6 +8,7 @@ RSpec.describe Evaluation, :type => :model do
     before(:each) do
       allow_any_instance_of(Evaluation).to receive(:build_questions)
     end
+
     expect_it { to validate_uniqueness_of :access_key }
     expect_it { to validate_presence_of :participant }
     expect_it { to validate_presence_of :evaluator }
@@ -20,6 +21,8 @@ RSpec.describe Evaluation, :type => :model do
 
   describe 'callbacks' do
     expect_it { to callback(:build_questions).after(:create) }
+    expect_it { to callback(:set_defaults).after(:create) }
+    expect_it { to callback(:set_access_key).before(:validation).on(:create) }
   end
 
   
@@ -42,10 +45,39 @@ RSpec.describe Evaluation, :type => :model do
   end
 
   describe ".create_self_evaluation" do
-    it 'creates a evaluation where participant and evaluator are same' do
+    it 'creates an evaluation where participant and evaluator are same' do
       participant = create(:participant)
       evaluation = Evaluation.create_self_evaluation(participant)
-      expect(evaluation).to be_instance_of(Evaluation) 
+      expect(evaluation).to be_instance_of(Evaluation)
+      expect(evaluation.evaluator_id).to eq evaluation.participant.evaluator.id 
+    end
+  end
+
+  describe ".create_peer_evaluations" do
+    it 'creates an evaluation where participant and evaluator are not the same' do
+      participant = create(:participant)
+      evaluators = []
+      evaluators << create(:evaluator, email: "test1#{Time.now}@email.com")
+      evaluators << create(:evaluator, email: "test2#{Time.now}@email.com")
+      evaluations = Evaluation.create_peer_evaluations(evaluators, participant)
+      expect(evaluations.first).to be_instance_of(Evaluation)
+      expect(evaluations.first.evaluator_id).to_not eq evaluations.first.participant.evaluator.id
+    end
+  end
+
+  describe "#completed?" do
+    it 'returns true if status is completed' do
+      evaluation = build(:evaluation)
+      evaluation.status = 'completed'
+      expect(evaluation.completed?).to eq true
+    end
+  end
+
+  describe "#mark_complete" do
+    it 'sets evaluation status to completed' do
+      evaluation = build(:evaluation)
+      evaluation.mark_complete
+      expect(evaluation.status).to eq 'completed'
     end
   end
 
