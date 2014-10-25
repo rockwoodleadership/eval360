@@ -51,7 +51,7 @@ RSpec.describe ParticipantsController, :type => :controller do
         it 'flashes an invitations sent message' do
 
           post :update, id: @participant.access_key, commit: "Invite Peers", participant: @participant_attributes
-          expect(flash[:notice]).to match /invitations sent/
+          expect(flash[:notice]).to match /invitation\(s\) sent/
         end
       end
     end
