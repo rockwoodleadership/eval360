@@ -13,5 +13,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require active_admin
 //= require cocoon
+//= require_directory .

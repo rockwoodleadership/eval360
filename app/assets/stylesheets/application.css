@@ -13,5 +13,5 @@
  *= require_self
  *= require formtastic-bootstrap
  *= require normalize
- *= require styles
+ *= require_directory .
  */
