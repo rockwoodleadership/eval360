@@ -11,5 +11,6 @@ deploy:
   api_key:
     secure: aVM+enL8CROwo8nmBiZLBmYpqWcAPQIsfaq+bZE4UTDqW0CH99qqnb1vmyLU/Jp8qlY6hLZCXDmlDvhHnfFfDBKm+zvpPntxXVfeDeAjJWDQSVHk67VZwyUzepi/KybAfbUojqveiIe3hkw+2qZA5ASlzMTOf0z7Ss7y67pTc00=
   app: staging-rockwood
+  skip_cleanup: true
   on:
     repo: rockwoodleadership/eval360
