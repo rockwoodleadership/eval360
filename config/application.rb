@@ -11,9 +11,9 @@ Bundler.require(*Rails.groups)
 Bundler.require(:default, :assets, Rails.env)
 
 
-VARS=%w(TOKEN_ENCRYPTION_KEY CONSUMER_KEY CONSUMER_SECRET)
-VARS.keep_if{|var| ENV[var].nil? || ENV[var].empty?}
-fail "Environment Variables required: #{VARS.join(',')}" if(!VARS.empty?)
+# VARS=%w(TOKEN_ENCRYPTION_KEY CONSUMER_KEY CONSUMER_SECRET)
+# VARS.keep_if{|var| ENV[var].nil? || ENV[var].empty?}
+# fail "Environment Variables required: #{VARS.join(',')}" if(!VARS.empty?)
 
 
 
