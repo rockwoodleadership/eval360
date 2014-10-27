@@ -20,7 +20,7 @@ $('#evaluation-edit .output').each(function() {
 });
 
 $("#evaluation-edit input[type='range']").on('change', function () {
-  $(this).siblings("label.output")[0].innerText = rangeValues[$(this).val()];
+  $(this).siblings("label.output").text(rangeValues[$(this).val()]);
   var numRegEx, base, data, answer, answer_id;
   numRegEx = /\[numeric_response\]/;
   base = $(this).attr('name').split(numRegEx);
@@ -31,7 +31,7 @@ $("#evaluation-edit input[type='range']").on('change', function () {
   
   data.answer = answer;
 
-  answer_id = $("input[name='" + base[0] + "[id]'").val();
+  answer_id = $("input[name='" + base[0] + "[id]']").val();
 
   $.post("/answers/"+ answer_id +"/update", data);
 
@@ -48,7 +48,7 @@ $("#evaluation-edit textarea").on('change', function() {
   
   data.answer = answer
 
-  answer_id = $("input[name='" + base[0] + "[id]'").val();
+  answer_id = $("input[name='" + base[0] + "[id]']").val();
 
   $.post("/answers/"+ answer_id +"/update", data);
 });
