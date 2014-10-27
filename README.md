@@ -5,23 +5,18 @@
 
 ###Requirements
 - Ruby 2.1.2
-- Rails 4.1.4
+- Rails 4.1.6
 - Postgresql 9.3
 
 ####Setup
-1 Run the below script
+1 Fork the repo [https://help.github.com/articles/fork-a-repo/](https://help.github.com/articles/fork-a-repo/)
+2 Run the below script
 ```
 ./script/newb
 ```
-2 Generate a random encryption key
+3 Create a .env file with the following using the Mandrill Api Key:
 ```
-ruby -ropenssl -rbase64 -e "puts Base64.strict_encode64(OpenSSL::Random.random_bytes(16).to_str)"
-```
-3 Create a .env file with the following using the Saleforce Consumer Key and Consumer Secret, and the token generated in previos step:
-```
-CONSUMER_KEY= "CONSUMER_KEY"
-CONSUMER_SECRET= "CONSUMER_SECRET"
-TOKEN_ENCRYPTION_KEY= "TOKEN_ENCRYPTION_KEY"
+MANDRILL_APIKEY= "MANDRILL_APIKEY"
 ``` 
 ####Start
 ```

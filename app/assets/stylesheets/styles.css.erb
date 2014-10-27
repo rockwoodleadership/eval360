@@ -1,5 +1,5 @@
 body {
-  background: url('/assets/tile.gif') repeat center;
+  background: url('<%= asset_path("tile.gif") %>') repeat center;
 }
 
 .alert {
@@ -15,12 +15,12 @@ body {
 
 #wrapper {
   width: 100%;
-  background: url('/assets/rockwood-panel.png') repeat-y top center;
+  background: url('<%= asset_path("rockwood-panel.png") %>') repeat-y top center;
   padding-left: 25px;
 }
 
 #rockwood-header {
-  background: transparent url(/assets/header.gif) no-repeat scroll 0 0;
+  background: transparent url('<%= asset_path("header.gif") %>') no-repeat scroll 0 0;
   width: 970px;
   margin-left:-3px;
   margin-top: 0px;

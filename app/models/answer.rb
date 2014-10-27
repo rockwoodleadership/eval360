@@ -11,5 +11,6 @@ class Answer < ActiveRecord::Base
   private
     def default_values
       self.numeric_response = 0
+      self.save
     end
 end
