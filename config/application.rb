@@ -19,10 +19,10 @@ Bundler.require(:default, :assets, Rails.env)
 
 module Eval360
   class Application < Rails::Application
-    config.middleware.use Databasedotcom::OAuth2::WebServerFlow,
-      token_encryption_key: Base64.strict_decode64(ENV['TOKEN_ENCRYPTION_KEY']),
-      endpoints: {"login.salesforce.com" => {"key" => ENV['CONSUMER_KEY'], 
-                                             "secret" => ENV['CONSUMER_SECRET']}}
+    # config.middleware.use Databasedotcom::OAuth2::WebServerFlow,
+    #   token_encryption_key: Base64.strict_decode64(ENV['TOKEN_ENCRYPTION_KEY']),
+    #   endpoints: {"login.salesforce.com" => {"key" => ENV['CONSUMER_KEY'], 
+    #                                          "secret" => ENV['CONSUMER_SECRET']}}
 
     config.generators do |g|
       g.view_specs false
