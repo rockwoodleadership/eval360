@@ -64,5 +64,12 @@ RSpec.describe Participant, :type => :model do
     end
   end
 
+  describe "#peer_evals_not_completed" do
+    it 'returns the peer evaluations not completed' do
+      participant = create(:participant_with_peer_evaluation)
+      expect(participant.peer_evals_not_completed).to eq participant.evaluations
+    end
+  end
+
 
 end

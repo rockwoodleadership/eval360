@@ -56,4 +56,25 @@ RSpec.describe ParticipantsController, :type => :controller do
       end
     end
   end
+
+  describe "POST send_reminders" do
+    context 'when participant is found' do
+      it 'sends peer reminders' do
+        expect(EvaluationEmailer).to receive(:send_peer_reminders)
+        post :send_reminders, id: @participant.access_key 
+      end
+
+      it 'flashes a reminders sent message' do
+        allow(EvaluationEmailer).to receive(:send_peer_reminders)
+        post :send_reminders, id: @participant.access_key
+        expect(flash[:notice]).to match /peer reminder\(s\) have been sent/
+      end
+
+      it 'returns a status of success' do
+        allow(EvaluationEmailer).to receive(:send_peer_reminders)
+        post :send_reminders, id: @participant.access_key
+        expect(response).to be_success
+      end
+    end
+  end
 end

@@ -1,0 +1,27 @@
+#reminder-modal.modal.fade
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close data-dismiss="modal"
+          span aria-hidden="true"
+            | &times;
+          span.sr-only
+            | Close
+        h4.modal-title
+          | Remind Your Peers
+      .modal-body
+        p
+          | Clicking the yellow "Send" button below will send your peers who have not yet responded to your 360 leadership assessment an automated reminder, requesting that they take a few minutes to complete the survey.
+        p
+          a#customize-link href="javascript:void(0);"
+            | Click here to customize the reminder email
+          #customize.hide
+            p
+              | Please include a short personal message to peers who have not finished the evaluation:
+              textarea#reminder-text rows="5"
+      .modal-footer
+        button.btn.btn-default type="button" data-dismiss="modal"
+          | Cancel
+        button.btn.btn-warning#send-reminder-btn type="button"
+          | Send
+

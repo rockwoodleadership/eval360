@@ -126,3 +126,9 @@ label.output {
   font-weight: bold;
 }
 
+#reminder-modal textarea {
+  display: block;
+  width: 95%;
+  margin-top:10px;
+}
+

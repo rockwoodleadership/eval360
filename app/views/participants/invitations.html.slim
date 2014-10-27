@@ -18,9 +18,14 @@
       ul.previously_invited.text
         - @participant.peer_evaluators.each do |ev|
           li= ev.email
+      button.btn.btn-warning data-toggle="modal" data-target="#reminder-modal"
+        | Remind Peers
+      = render 'reminder_modal'
   h2.text.title Enter Email Addresses
   p
-    | Who should I invite to evaluate me?
+    button.btn.btn-link data-toggle="modal" data-target="#who-to-invite"
+      | Who should I invite to evaluate me?
+    = render 'who_to_invite_modal'
   = semantic_form_for @participant do |f|
     #evaluators
       = f.semantic_fields_for :evaluators do |ev|
@@ -29,3 +34,8 @@
           = link_to_add_association 'add another recipient', f, :evaluators
     = f.actions do
       = f.action :submit, :label => "Invite Peers", :button_html => { :class => "btn btn-primary btn-lg", method: "invite_peers" }
+
+=javascript_include_tag "invitations"
+javascript:
+  var participant_id = "#{@participant.access_key}";
+

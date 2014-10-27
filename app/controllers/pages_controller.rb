@@ -10,4 +10,8 @@ class PagesController < ApplicationController
     client.logout if authenticated?
     render 'index'
   end
+
+  def thank_you
+    render 'thank_you'
+  end
 end

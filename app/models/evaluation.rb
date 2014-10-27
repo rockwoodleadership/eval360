@@ -2,7 +2,7 @@ class Evaluation < ActiveRecord::Base
   include AccessKeys
   belongs_to :evaluator
   belongs_to :participant
-  has_many :answers, dependent: :destroy
+  has_many :answers, -> { order "created_at ASC" }, dependent: :destroy
   has_many :questions, through: :answers
   validates_uniqueness_of :access_key
   validates_presence_of :participant

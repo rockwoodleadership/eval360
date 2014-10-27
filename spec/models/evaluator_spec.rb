@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Evaluator, :type => :model do
-  expect_it { to validate_uniqueness_of :email }
   expect_it { to validate_presence_of :email }
   expect_it { to have_one :evaluation }
   expect_it { to have_one(:participant).through(:evaluation) }
@@ -25,9 +24,8 @@ RSpec.describe Evaluator, :type => :model do
 
   describe '.bulk_create' do
     it ' creates multiple evaluators' do
-      attributes = {"0"=>{"email"=>"test1#{Time.now}@gmail.com"},
-     "1"=>{"email"=>"test2#{Time.now}@gmail.com"}}
-      evaluators = Evaluator.bulk_create(attributes)
+      emails = ["text1#{Time.now}@gmail.com", "test2#{Time.now}@gmail.com"]
+      evaluators = Evaluator.bulk_create(emails)
       expect(evaluators.length).to eq 2
       expect(evaluators.first).to be_instance_of(Evaluator)
     end

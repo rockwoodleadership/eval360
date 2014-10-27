@@ -8,13 +8,37 @@ class ParticipantsController < ApplicationController
   end
 
   def update
-    if params[:commit] == "Invite Peers"
-      evaluators = Evaluator.bulk_create(params[:participant]['evaluators_attributes'])
+    flash[:errors] = []
+    email_hash = params[:participant]['evaluators_attributes']
+    existing_emails = @participant.peer_evaluators.map {|e| e.email}
+    emails = [] 
+    email_hash.each_value do |attr|
+      if attr['email'] == @participant.email
+        flash[:errors] << "Can not add self #{attr['email']} as peer evaluator"
+      elsif existing_emails.include? attr['email']
+        flash[:errors] << "Can not invite #{attr['email']} more than once"
+      else
+        emails << attr['email'] unless attr['email'].blank?
+      end
+    end
+    if emails.any?
+      evaluators = Evaluator.bulk_create(emails)
       evaluations = Evaluation.create_peer_evaluations(evaluators, @participant)
       sent_count = EvaluationEmailer.send_peer_invites(evaluations)
       flash[:notice] = "#{sent_count} invitation(s) sent"
-      redirect_to invitations_path(@participant)
+    else
+      if flash[:errors].empty?
+        flash[:errors] << "Must have 1 or more valid emails"
+      end
     end
+    redirect_to invitations_path(@participant)
   end
+
+  def send_reminders
+    sent_count = EvaluationEmailer.send_peer_reminders(@participant, params[:message])
+    flash[:notice] = "#{sent_count} peer reminder(s) have been sent"
+    render json: "success", status: 200 
+  end
+
   
 end

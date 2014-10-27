@@ -39,4 +39,8 @@ class Participant < ActiveRecord::Base
     evaluators.where.not(id: self.evaluator.id)
   end
 
+  def peer_evals_not_completed
+    evaluations.where("status != ? AND evaluator_id != ?", 'completed', self.evaluator.id )
+  end
+
 end

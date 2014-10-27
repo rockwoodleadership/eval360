@@ -1,14 +1,13 @@
 class Evaluator < ActiveRecord::Base
   actable
   validates_presence_of :email
-  validates_uniqueness_of :email
   has_one :evaluation
   has_one :participant, through: :evaluation
   
-  def self.bulk_create(attributes)
+  def self.bulk_create(emails)
     evaluators = []
-    attributes.each_value do |attr|
-      evaluators << Evaluator.create!(email: attr['email']) unless attr['email'].blank?
+    emails.each do |email|
+      evaluators << Evaluator.create!(email: email)
     end
     return evaluators
   end

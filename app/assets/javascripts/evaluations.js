@@ -21,4 +21,38 @@ $('#evaluation-edit .output').each(function(index) {
 
 $("#evaluation-edit input[type='range']").on('change', function () {
   $(this).siblings("label.output")[0].innerText = rangeValues[$(this).val()];
+
 });
+
+$("#evaluation-edit input[type='range']").on('change', function() {
+  numRegEx = /\[numeric_response\]/;
+  name = $(this).attr('name');
+  base = name.split(numRegEx);
+  data = {};
+  answer = {};
+  
+  answer["numeric_response"] = $(this).val();
+  
+  data["answer"] = answer
+
+  answer_id = $("input[name='" + base[0] + "[id]'").val();
+
+  $.post("/answers/"+ answer_id +"/update", data);
+});
+
+$("#evaluation-edit textarea").on('change', function() {
+  textRegEx = /\[text_response\]/;
+  name = $(this).attr('name');
+  base = name.split(textRegEx);
+  data = {};
+  answer = {};
+  
+  answer["text_response"] = $(this).val();
+  
+  data["answer"] = answer
+
+  answer_id = $("input[name='" + base[0] + "[id]'").val();
+
+  $.post("/answers/"+ answer_id +"/update", data);
+});
+
