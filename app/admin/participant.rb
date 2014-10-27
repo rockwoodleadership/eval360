@@ -2,9 +2,7 @@ ActiveAdmin.register Participant do
   permit_params :training_id, :first_name, :last_name, :email
 
   controller do
-    def resource
-      Participant.find_by_access_key(params[:id])
-    end
+    defaults finder: :find_by_access_key
   end
   form do |f|
     f.inputs do

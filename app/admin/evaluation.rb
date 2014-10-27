@@ -1,8 +1,6 @@
 ActiveAdmin.register Evaluation do
   controller do
-    def resource
-      Evaluation.find_by_access_key(params[:id])
-    end
+    defaults finder: :find_by_access_key
   end
 
 

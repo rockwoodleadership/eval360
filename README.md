@@ -9,7 +9,7 @@
 - Postgresql 9.3
 
 ####Setup
-1 Fork the repo [https://help.github.com/articles/fork-a-repo/](https://help.github.com/articles/fork-a-repo/)
+1 Fork the repo [https://help.github.com/articles/fork-a-repo/](https://help.github.com/articles/fork-a-repo/)  
 2 Run the below script
 ```
 ./script/newb
