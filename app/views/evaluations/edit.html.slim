@@ -20,22 +20,8 @@
         
       - else
         = answer.input :text_response, :label => label, :input_html => { rows: 10 }
-    datalist#survey-scale
-      option 0
-      option 1
-      option 2
-      option 3
-      option 4
-      option 5
-      option 6
-      option 7
-      option 8
-      option 9
-      option 10
     
     = f.actions do
       = f.action :submit, :label => "Submit", :button_html => { :class => "btn btn-primary btn-lg" }
       = f.action :submit, :label => "Save For Later", :button_html => { :class => "btn btn-default btn-lg" }
       
-
-=javascript_include_tag "evaluations"
