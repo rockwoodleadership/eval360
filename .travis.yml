@@ -6,9 +6,6 @@ addons:
 before_script:
   - cp config/database.yml.travis config/database.yml
   - psql -c 'create database eval360_test' -U postgres
-script:
-  - RAILS_ENV=test bundle exec rake db:migrate --trace
-  - bundle exec rspec spec/ 
 deploy:
   provider: heroku
   api_key:

@@ -3,7 +3,7 @@ ActiveAdmin.register Evaluation do
     defaults finder: :find_by_access_key
   end
 
-  filter :evaluator, :as => :string, label: "Evaluator Email", :collection => Evaluator.all.map(&:email)
+  filter :evaluator, :as => :string, label: "Evaluator Email", :collection => proc { Evaluator.all.map(&:email) }
   filter :participant
   filter :status
 
