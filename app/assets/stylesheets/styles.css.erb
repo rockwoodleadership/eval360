@@ -93,6 +93,7 @@ input[type=range]:focus {
 
 label.control-label {
   font-size: 1.2em;
+  display: block;
 }
 
 fieldset {
@@ -108,6 +109,21 @@ label.output {
 #evaluation-edit .btn {
   margin-right: 10px;
   float: right;
+}
+
+#evaluation-edit .radio {
+  display:inline;
+}
+
+#evaluation-edit input[type=radio] {
+  position: inherit;
+  margin-left:0;
+  display: block;
+  margin-bottom: 8px;
+}
+
+#evaluation-edit .radio label {
+  padding-right:20px;
 }
 
 #invitations .form-control {

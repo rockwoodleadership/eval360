@@ -1,4 +1,5 @@
 ActiveAdmin.register Answer do
+  menu false
 
 
   # See permitted parameters documentation:

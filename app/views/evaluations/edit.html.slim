@@ -15,9 +15,8 @@
     = f.inputs :for => :answers do |answer, i|
       - label = self_eval ? answer.object.question.self_description : answer.object.question.description
       - if answer.object.question.answer_type == 'numeric'
-        = answer.input :numeric_response, :as => :range, 
-          :label => label, :input_html => { min: 0, max: 10, step: 1, list: "survey-scale" },
-          :wrapper_html => { class: "range-span" }
+        = answer.input :numeric_response, :as => :radio, 
+          :label => label, :collection => [["n/a",0],1,2,3,4,5,6,7,8,9,10] 
         
       - else
         = answer.input :text_response, :label => label, :input_html => { rows: 10 }

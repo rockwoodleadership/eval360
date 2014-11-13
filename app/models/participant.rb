@@ -28,7 +28,11 @@ class Participant < ActiveRecord::Base
   end
 
   def total_peer_evaluations
-    evaluations.where("evaluator_id != ?", self.evaluator.id ).count
+    peer_evaluations.count
+  end
+
+  def peer_evaluations
+    evaluations.where("evaluator_id != ?", self.evaluator.id )
   end
 
   def full_name
@@ -42,5 +46,6 @@ class Participant < ActiveRecord::Base
   def peer_evals_not_completed
     evaluations.where("status != ? AND evaluator_id != ?", 'completed', self.evaluator.id )
   end
+
 
 end

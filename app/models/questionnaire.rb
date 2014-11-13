@@ -11,4 +11,8 @@ class Questionnaire < ActiveRecord::Base
     end
     return q
   end
+
+  def admin_title
+    "#{program.name} Questionnaire"
+  end
 end

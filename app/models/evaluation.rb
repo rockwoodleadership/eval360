@@ -13,6 +13,10 @@ class Evaluation < ActiveRecord::Base
   after_create :set_defaults
 
   accepts_nested_attributes_for :answers
+
+  scope :search_evaluators, ->(email) { where(evaluator: { email: email }) }
+  
+  
   
   def header
     participant.program.questionnaire.header
@@ -71,6 +75,15 @@ class Evaluation < ActiveRecord::Base
       return if !status.nil?
       self.status = 'created'
       self.save
+    end
+
+    #todo search does not work
+    ransacker :evaluator,
+      formatter: proc { |email|
+        results = Evaluation.where(evaluator: { email: email}).map(&:id)
+        results = results.present? ? results : nil
+      }, splat_params: true do |parent|
+      parent.table[:id]
     end
 
 end
