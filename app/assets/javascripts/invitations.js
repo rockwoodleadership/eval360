@@ -12,10 +12,11 @@ $("#customize-link").on('click', function() {
 
 
 $("#send-reminder-btn").on('click', function() {
-  data = {};
-  if (!$("#customize").hasClass("hide"))
-    data["message"] = $("#reminder-text").val();
-  $.post("/"+ participant_id + "/send_reminders", data, function(ret_data) {
+  var data = {};
+  if (!$("#customize").hasClass("hide")) {
+    data.message= $("#reminder-text").val();
+  }
+  $.post("/"+ participant_id + "/send_reminders", data, function() {
     window.location.reload();
   }, "html");
 });

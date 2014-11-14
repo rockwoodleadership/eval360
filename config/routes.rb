@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   
 
-  root 'pages#index'
+  root to: redirect('/admin') 
   get 'logout' => 'pages#logout'
   get 'thank_you' => 'pages#thank_you'
 

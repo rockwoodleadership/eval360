@@ -16,6 +16,7 @@ ActiveAdmin.register Training do
   end 
 
   show do |training|
+    render "admin/download_reports"
     attributes_table do
       row :program
       row :name

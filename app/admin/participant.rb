@@ -46,6 +46,9 @@ ActiveAdmin.register Participant do
       row "self evaluation url" do
         evaluation_edit_url(participant.self_evaluation) if participant.self_evaluation
       end
+      row "export self evaluation pdf" do
+        "PDF"
+      end
     end
 
     panel "Peer Evaluations" do
@@ -57,7 +60,7 @@ ActiveAdmin.register Participant do
           evaluation.status
         end
         column "Actions" do |evaluation|
-          link_to "View", admin_evaluation_path(evaluation) if evaluation
+          link_to("View", admin_evaluation_path(evaluation)) + " " + link_to("Export PDF", admin_evaluation_path(evaluation)) if evaluation
         end
       end
     end

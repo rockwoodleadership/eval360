@@ -10,7 +10,6 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'slim-rails'
-gem 'databasedotcom-oauth2'
 gem 'turbolinks'
 gem 'devise'
 gem 'activeadmin', github: 'activeadmin'
@@ -19,6 +18,7 @@ gem 'mandrill-api'
 gem 'formtastic', '~> 3.0'
 gem 'formtastic-bootstrap'
 gem "cocoon"
+gem 'active_skin'
 
 group :production do
   gem 'unicorn'
