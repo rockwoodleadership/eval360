@@ -16,11 +16,11 @@ describe 'participants/invitations.html.slim' do
       render
     end
     it 'displays list of evaluators invited' do
-      expect(rendered).to match @participant.peer_evaluators.first.email
+      expect(rendered).to include @participant.peer_evaluators.first.email
     end
 
     it 'displays button to remind peers' do
-      expect(rendered).to match "Remind Peers"
+      expect(rendered).to include "Remind Peers"
     end
   end
 end
