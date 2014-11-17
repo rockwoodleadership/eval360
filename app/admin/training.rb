@@ -1,10 +1,11 @@
 ActiveAdmin.register Training do
-  permit_params :name, :program_id, :start_date
+  actions :index, :show
+  menu priority: 1
 
   filter :program
-  filter :participants
   filter :name
   filter :start_date
+
 
   config.sort_order = "start_date_desc"
 
@@ -12,7 +13,7 @@ ActiveAdmin.register Training do
     selectable_column
     column :name
     column :start_date
-    actions
+    actions 
   end 
 
   show do |training|
@@ -29,10 +30,12 @@ ActiveAdmin.register Training do
           participant.full_name
         end
         column :email
-        column "Self Evaluation" do |participant|
-          participant.self_evaluation.status if participant.self_evaluation
+        column "Self Evaluation Complete" do |participant|
+          if participant.self_evaluation
+            participant.self_evaluation.completed? ? "Yes" : "No"
+          end
         end
-        column "Peer Evaluations" do |participant|
+        column "Peer Evaluation Status" do |participant|
           participant.peer_evaluation_status
         end
         column "Actions" do |participant|

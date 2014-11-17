@@ -1,3 +1,4 @@
+require 'evaluation_emailer'
 class Evaluation < ActiveRecord::Base
   include AccessKeys
   belongs_to :evaluator
@@ -14,7 +15,6 @@ class Evaluation < ActiveRecord::Base
 
   accepts_nested_attributes_for :answers
 
-  scope :search_evaluators, ->(email) { where(evaluator: { email: email }) }
   
   
   
@@ -24,6 +24,10 @@ class Evaluation < ActiveRecord::Base
 
   def self_eval?
     participant.evaluator.id.equal? evaluator.id
+  end
+
+  def eval_type_str
+    self_eval? ? "Self Evaluation" : "Peer Evaluation"
   end
 
   def self.create_self_evaluation(participant)
@@ -52,13 +56,23 @@ class Evaluation < ActiveRecord::Base
     participant.training.program.questionnaire
   end
 
-  def completed?
-    status == 'completed'
+  def mark_complete
+    self.completed = true
+    self.save
   end
 
-  def mark_complete
-    self.status = 'completed'
-    self.save
+  def reset_values
+    answers.each do |answer|
+      answer.set_default_values
+    end
+  end
+
+  def email_to_evaluator
+    if self_eval?
+      EvaluationEmailer.send_invite_for_self_eval(participant)
+    else
+      EvaluationEmailer.send_peer_invites([self])
+    end
   end
   
 
@@ -67,20 +81,19 @@ class Evaluation < ActiveRecord::Base
     def build_questions
       questions = participant.program.questionnaire.questions
       questions.each do |question|
-        answers.create(question: question)
+        answers.create(numeric_response: 0, text_response: "", question: question)
       end
     end
 
     def set_defaults
-      return if !status.nil?
-      self.status = 'created'
+      return if completed? 
+      self.completed = false
       self.save
     end
 
-    #todo search does not work
-    ransacker :evaluator,
+    ransacker :evaluator_email,
       formatter: proc { |email|
-        results = Evaluation.where(evaluator: { email: email}).map(&:id)
+        results = Evaluation.includes(:evaluator).where(evaluators: { email: email }).map(&:id)
         results = results.present? ? results : nil
       }, splat_params: true do |parent|
       parent.table[:id]

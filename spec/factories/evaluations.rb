@@ -16,8 +16,8 @@ FactoryGirl.define do
     end
 
     factory :evaluation_with_answers do
-      after(:build) do |evaluation|
-        evaluation.answers << create(:answer)
+      after(:create) do |evaluation|
+        evaluation.answers << build(:answer, evaluation_id: evaluation.id)
       end
     end
 

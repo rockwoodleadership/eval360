@@ -11,10 +11,53 @@
 @import "active_admin/mixins";
 @import "active_admin/base";
 $skinLogo: url('<%= asset_path("rw_logo.jpg") %>') no-repeat 0 0; 
+$skinActiveColor: #7F2626; //highlight
+$skinHeaderBck: #EEEEEE; //titlebar
+$panelHeaderBck: #730101;
+
 @import "active_skin";
 
+#header {
+  background: #730101;
+}
 #header #utility_nav {
   background: inherit;
+}
+
+#header #utility_nav li a:hover {
+  color: white;
+}
+
+#header a, #header a:link {
+  color: white;
+}
+
+#header #utility_nav li#logout a {
+  text-decoration: none;
+}
+
+html {
+  background: #f9f9f9;
+}
+body.active_admin {
+  background: #f9f9f9;
+}
+
+#title_bar {
+  border-bottom: 0px;
+  box-shadow: 0 1px 4px;
+}
+
+#title_bar h2 {
+  color: #363636;
+}
+
+#header ul.tabs > li:hover > a, #header ul.tabs > li.current > a {
+  background: inherit;
+}
+
+#title_bar .action_items a:hover {
+  background: inherit !important;
 }
 
 // Overriding any non-variable SASS must be done after the fact.

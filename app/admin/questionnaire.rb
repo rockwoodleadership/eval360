@@ -8,6 +8,8 @@ ActiveAdmin.register Questionnaire do
     actions
   end
 
+  menu priority: 5
+
 
   show title: :admin_title do |questionnaire|
     attributes_table do
@@ -22,6 +24,9 @@ ActiveAdmin.register Questionnaire do
         column "Question Text" do |question|
           question.description
         end 
+        column "Question Type" do |question|
+          question.answer_type
+        end
         column "Actions" do |question|
           link_to("View", admin_question_path(question)) + "   " + link_to("Edit", edit_admin_question_path(question))
         end

@@ -1,6 +1,9 @@
 ActiveAdmin.register Participant do
   permit_params :training_id, :first_name, :last_name, :email
 
+  actions :index, :show 
+  menu priority: 2
+
   filter :training
   filter :first_name
   filter :last_name
@@ -40,14 +43,16 @@ ActiveAdmin.register Participant do
         participant.full_name
       end
       row :email
-      row "self evaluation status" do
-        link_to participant.self_evaluation.status, admin_evaluation_path(participant.self_evaluation) if participant.self_evaluation
+      row "self evaluation completed" do
+        if participant.self_evaluation
+          participant.self_evaluation.completed? ? "Yes" : "No"
+        end
       end
       row "self evaluation url" do
         evaluation_edit_url(participant.self_evaluation) if participant.self_evaluation
       end
-      row "export self evaluation pdf" do
-        "PDF"
+      row "actions" do
+        link_to("View", admin_evaluation_path(participant.self_evaluation)) + " " + link_to("Export PDF", admin_evaluation_path(participant.self_evaluation)) if participant.self_evaluation
       end
     end
 
@@ -56,11 +61,11 @@ ActiveAdmin.register Participant do
         column "Reviewer" do |evaluation|
           evaluation.evaluator.email
         end
-        column "Status" do |evaluation|
-          evaluation.status
+        column "Completed" do |evaluation|
+          evaluation.completed? ? "Yes" : "No"
         end
         column "Actions" do |evaluation|
-          link_to("View", admin_evaluation_path(evaluation)) + " " + link_to("Export PDF", admin_evaluation_path(evaluation)) if evaluation
+          link_to("View", admin_evaluation_path(evaluation)) + " " + link_to("Export PDF", admin_evaluation_path(evaluation))  if evaluation
         end
       end
     end

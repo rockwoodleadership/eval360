@@ -65,19 +65,12 @@ RSpec.describe Evaluation, :type => :model do
     end
   end
 
-  describe "#completed?" do
-    it 'returns true if status is completed' do
-      evaluation = build(:evaluation)
-      evaluation.status = 'completed'
-      expect(evaluation.completed?).to eq true
-    end
-  end
 
   describe "#mark_complete" do
     it 'sets evaluation status to completed' do
       evaluation = build(:evaluation)
       evaluation.mark_complete
-      expect(evaluation.status).to eq 'completed'
+      expect(evaluation.completed?).to eq true
     end
   end
 
@@ -117,6 +110,47 @@ RSpec.describe Evaluation, :type => :model do
     it 'returns the questionnaire for the participants training program' do
       evaluation = build(:evaluation)
       expect(evaluation.questionnaire).to eq evaluation.participant.training.program.questionnaire
+    end
+  end
+
+  describe "#eval_type_str" do
+    context "for self evaluations" do
+      it "returns the value 'Self Evaluation'" do
+        evaluation = build(:self_evaluation)
+        expect(evaluation.eval_type_str).to eq 'Self Evaluation'
+      end
+    end
+
+    context "for peer evaluations" do
+      it "returns the value 'Peer Evaluation'" do
+        evaluation = build(:evaluation)
+        expect(evaluation.eval_type_str).to eq 'Peer Evaluation'
+      end
+    end
+  end
+
+  describe "#reset_values" do
+    before do
+      @evaluation = create(:evaluation_with_answers)
+      answer = @evaluation.answers.first
+      answer.numeric_response = 9
+      answer.text_response = "great"
+      answer.save
+      @evaluation.reset_values
+    end
+    it "resets numeric answers to 0" do
+      expect(@evaluation.answers.first.numeric_response).to eq 0
+    end
+
+    it "resets text answers to blank" do
+      expect(@evaluation.answers.first.text_response).to eq ""
+    end
+  end
+
+  describe "#email_to_evaluator" do
+    it "returns the number of sent invites" do
+      evaluation = create(:evaluation)
+      expect(evaluation.email_to_evaluator).to eq 1
     end
   end
 

@@ -37,8 +37,7 @@ RSpec.describe Participant, :type => :model do
     it 'returns the number of completed peer evaluations' do
       participant = create(:participant_with_peer_evaluation)
       evaluation = participant.evaluations.first
-      evaluation.status = 'completed'
-      evaluation.save
+      evaluation.mark_complete
       expect(participant.completed_peer_evaluations).to eq 1
     end
   end

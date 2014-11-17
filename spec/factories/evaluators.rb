@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :evaluator do
-    sequence(:email) { |n| "evaluator#{n}@example.com" }
+    email "evaluator#{Time.now}@example.com"
   end
   
 
