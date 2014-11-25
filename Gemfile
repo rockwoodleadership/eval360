@@ -19,6 +19,7 @@ gem 'formtastic', '~> 3.0'
 gem 'formtastic-bootstrap'
 gem "cocoon"
 gem 'active_skin'
+gem 'bugsnag'
 
 group :production do
   gem 'unicorn'
