@@ -76,7 +76,7 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  #config.action_mailer.default_url_options = { host: 'staging-rockwood.herokuapp.com', port: 3000 }
+  config.action_mailer.default_url_options = { host: 'staging-rockwood.herokuapp.com', port: 3000 }
 
   config.action_mailer.smtp_settings = {
     :address   => "smtp.mandrillapp.com",
