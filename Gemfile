@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 ruby '2.1.2'
-gem 'rails', '4.1.6'
+gem 'rails', '4.1.8'
 gem 'pg'
 gem 'sass-rails', '5.0.0.beta1'
 gem 'uglifier', '>= 1.3.0'
@@ -20,6 +20,8 @@ gem 'formtastic-bootstrap'
 gem "cocoon"
 gem 'active_skin'
 gem 'bugsnag'
+gem 'prawn'
+gem 'delayed_job_active_record'
 
 group :production do
   gem 'unicorn'

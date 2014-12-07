@@ -11,8 +11,8 @@ class SalesforceConnectorController < ApplicationController
       participant = Participant.create!(attributes)
        
       if participant && participant.errors.empty?
-        Evaluation.create_self_evaluation(participant)
-        EvaluationEmailer.send_invite_for_self_eval(participant)
+        #Evaluation.create_self_evaluation(participant)
+        #EvaluationEmailer.send_invite_for_self_eval(participant)
         render json: 'success', status: 200 and return
       end
     end

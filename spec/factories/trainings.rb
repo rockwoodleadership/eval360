@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :training do
     name "Art of Leadership"
-    program
+    questionnaire
   end
 end

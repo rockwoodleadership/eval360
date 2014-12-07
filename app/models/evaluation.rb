@@ -15,12 +15,6 @@ class Evaluation < ActiveRecord::Base
 
   accepts_nested_attributes_for :answers
 
-  
-  
-  
-  def header
-    participant.program.questionnaire.header
-  end
 
   def self_eval?
     participant.evaluator.id.equal? evaluator.id
@@ -53,7 +47,7 @@ class Evaluation < ActiveRecord::Base
   end
 
   def questionnaire
-    participant.training.program.questionnaire
+    participant.training.questionnaire
   end
 
   def mark_complete
@@ -79,7 +73,7 @@ class Evaluation < ActiveRecord::Base
   private
   
     def build_questions
-      questions = participant.program.questionnaire.questions
+      questions = participant.training.questionnaire.questions
       questions.each do |question|
         answers.create(numeric_response: 0, text_response: "", question: question)
       end
@@ -89,14 +83,6 @@ class Evaluation < ActiveRecord::Base
       return if completed? 
       self.completed = false
       self.save
-    end
-
-    ransacker :evaluator_email,
-      formatter: proc { |email|
-        results = Evaluation.includes(:evaluator).where(evaluators: { email: email }).map(&:id)
-        results = results.present? ? results : nil
-      }, splat_params: true do |parent|
-      parent.table[:id]
     end
 
 end

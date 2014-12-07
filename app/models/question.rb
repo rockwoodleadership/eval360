@@ -1,6 +1,6 @@
 class Question < ActiveRecord::Base
-  has_many :answers
-  belongs_to :questionnaire, inverse_of: :questions
+  has_many :answers, dependent: :destroy
+  belongs_to :section, inverse_of: :questions
 
   validates_presence_of :answer_type
   validate :answer_type_value

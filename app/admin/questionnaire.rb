@@ -1,37 +1,52 @@
 ActiveAdmin.register Questionnaire do
-  permit_params :program_id, :header, :self_intro_text, :intro_text
+  permit_params :header, :self_intro_text, :intro_text, :name, sections_attributes: [:id, :header, questions_attributes: [:id, :answer_type, :description, :self_description ]]  
 
+  actions :index, :show, :edit, :update
   config.filters = false
   index do
     selectable_column
-    column :program
+    column :name
     actions
   end
 
   menu priority: 5
 
+  form do |f|
+    f.inputs do
+      f.input :name
+      f.input :intro_text
+      f.input :self_intro_text
+    end
 
-  show title: :admin_title do |questionnaire|
+    f.actions
+  end
+
+
+  show title: :name do |questionnaire|
     attributes_table do
-      row :program
-      row :header
+      row :name
       row :self_intro_text
       row :intro_text
     end
 
-    panel "Questions" do
-      table_for questionnaire.questions do
-        column "Question Text" do |question|
-          question.description
-        end 
-        column "Question Type" do |question|
-          question.answer_type
+    questionnaire.sections.each do |section|
+      
+      panel section.header do
+        div do
+          link_to("Edit header", edit_admin_questionnaire_section_path(questionnaire, section))
         end
-        column "Actions" do |question|
-          link_to("View", admin_question_path(question)) + "   " + link_to("Edit", edit_admin_question_path(question))
+        table_for section.questions do
+          column "Question Text" do |question|
+            question.description
+          end 
+          column "Question Type" do |question|
+            question.answer_type
+          end
+          column "Actions" do |question|
+            link_to("View", admin_questionnaire_section_question_path(questionnaire,section, question)) + "   " + link_to("Edit", edit_admin_questionnaire_section_question_path(questionnaire, section, question)) 
+          end
         end
       end
-
     end
   end
 

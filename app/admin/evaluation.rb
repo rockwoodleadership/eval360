@@ -1,14 +1,32 @@
 ActiveAdmin.register Evaluation do
   controller do
     defaults finder: :find_by_access_key
+    belongs_to :training do
+      belongs_to :participant, finder: :find_by_access_key, parent_class: :training 
+    end
   end
 
-  filter :evaluator_email_in, :as => :string, label: "Evaluator Email", :collection => proc { Evaluator.all.map(&:email) }
-  filter :participant
-  filter :completed
+  config.filters = false
+  navigation_menu :default
 
-  actions :all, :except => [:new, :edit]
-  menu priority: 3
+  actions :all, :except => [:new, :edit, :delete]
+  menu false
+
+  breadcrumb do
+    links = [
+              link_to('Admin', admin_root_path),
+              link_to('Trainings', admin_trainings_path),
+              link_to(training.name, admin_training_path(training)),
+              link_to('Participants', admin_training_participants_path(training)),
+              link_to(participant.full_name, admin_training_participant_path(training,participant))
+            ]
+    if controller.action_name == 'show'
+      links << link_to('Evaluations', admin_training_participant_evaluations_path(training, participant))
+    end
+    links
+  end
+
+  config.sort_order = 'created_at_asc'
 
   member_action :send_invite, method: :get do
     evaluation = Evaluation.find_by_access_key(params[:id])
@@ -38,36 +56,32 @@ ActiveAdmin.register Evaluation do
       evaluation.participant.full_name
     end
     column "Type" do |evaluation|
-      if evaluation.self_eval?
-        "Self Evaluation"
-      else
-        "Peer Evaluation"
-      end
+      evaluation.eval_type_str
     end
-    column :completed
+    column :completed do |evaluation|
+      evaluation.completed? ? "Yes" : "No"
+    end
     column :updated_at
     actions
   end
 
-  show :title => proc { |evaluation| evaluation.eval_type_str + " for " + evaluation.participant.full_name } do |evaluation|
+  show :title => proc { |evaluation| evaluation.eval_type_str } do |evaluation|
     attributes_table do
+      row "Type" do
+        evaluation.self_eval? ? "Self Evaluation" : "Peer Evaluation"
+      end
       row :participant do
-        link_to evaluation.participant.full_name, admin_participant_path(evaluation.participant)
+        link_to participant.full_name, admin_training_participant_path(training, participant)
       end
       row :evaluator
-      row :completed
-      row "Type" do
-        if evaluation.self_eval?
-          "Self Evaluation"
-        else
-          "Peer Evaluation"
-        end
+      row :completed do
+        evaluation.completed? ? "Yes" : "No"
       end
       row "Evaluation Url" do
         evaluation_edit_url(evaluation)
       end
       row "Actions" do
-        link_to "Resend Evaluation Invite", send_invite_admin_evaluation_path(evaluation)
+        link_to("Email Evaluation Invite", send_invite_admin_evaluation_path(evaluation)) + " " + link_to("Reset Evaluation Responses", reset_evaluation_admin_evaluation_path(evaluation), data: { confirm: "Are you sure you want to reset the response?" })
       end
     end
     panel "Evaluation Responses" do
@@ -81,14 +95,7 @@ ActiveAdmin.register Evaluation do
           answer.response 
         end
       end
-      div do
-        link_to "Reset Evaluation Responses", reset_evaluation_admin_evaluation_path(evaluation), data: { confirm: "Are you sure you want to reset the response?" }
-      end
-
     end
   end
-
-
-
 
 end

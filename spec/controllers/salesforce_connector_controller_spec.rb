@@ -16,24 +16,24 @@ RSpec.describe SalesforceConnectorController, :type => :controller do
         allow(EvaluationEmailer).to receive(:send_invite_for_self_eval).and_return('sent')
       end 
       
-      it "creates a new participant" do
+      xit "creates a new participant" do
         expect(Participant).to receive(:create!).with(@attributes)
         post :new_participant, :participant => @participant_param
       end 
 
-      it "creates a self evaluation" do
+      xit "creates a self evaluation" do
         allow(Participant).to receive(:create!).and_return(@participant)
         expect(Evaluation).to receive(:create_self_evaluation).with(@participant)
         post :new_participant, :participant => @participant_param
       end
 
-      it "sends self evaluation" do
+      xit "sends self evaluation" do
         allow(Participant).to receive(:create!).and_return(@participant)
         expect(EvaluationEmailer).to receive(:send_invite_for_self_eval).with(@participant)
         post :new_participant, :participant => @participant_param
       end
       
-      it "returns status code 200" do
+      xit "returns status code 200" do
         allow(Participant).to receive(:create!).and_return(@participant)
         post :new_participant, :participant => @participant_param
         expect(response.status).to eq 200
@@ -43,7 +43,7 @@ RSpec.describe SalesforceConnectorController, :type => :controller do
 
     context 'with invalid parameters' do
 
-      it "returns status code 422" do
+      xit "returns status code 422" do
         post :new_participant
         expect(response.status).to eq 422
       end

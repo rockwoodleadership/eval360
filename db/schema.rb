@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141115230900) do
+ActiveRecord::Schema.define(version: 20141208013152) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,22 @@ ActiveRecord::Schema.define(version: 20141115230900) do
     t.text     "text_response"
   end
 
+  create_table "delayed_jobs", force: true do |t|
+    t.integer  "priority",   default: 0, null: false
+    t.integer  "attempts",   default: 0, null: false
+    t.text     "handler",                null: false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+
   create_table "evaluations", force: true do |t|
     t.integer  "participant_id"
     t.string   "access_key"
@@ -89,36 +105,39 @@ ActiveRecord::Schema.define(version: 20141115230900) do
 
   add_index "participants", ["access_key"], name: "index_participants_on_access_key", using: :btree
 
-  create_table "programs", force: true do |t|
+  create_table "questionnaires", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "self_intro_text"
+    t.text     "intro_text"
     t.string   "name"
   end
 
-  create_table "questionnaires", force: true do |t|
-    t.integer  "program_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text     "header"
-    t.text     "self_intro_text"
-    t.text     "intro_text"
-  end
-
   create_table "questions", force: true do |t|
-    t.integer  "questionnaire_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "answer_type"
     t.text     "description"
     t.text     "self_description"
+    t.integer  "section_id"
+  end
+
+  create_table "sections", force: true do |t|
+    t.text     "header"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "questionnaire_id"
   end
 
   create_table "trainings", force: true do |t|
-    t.integer  "program_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
     t.datetime "start_date"
+    t.datetime "end_date"
+    t.string   "location"
+    t.string   "status"
+    t.integer  "questionnaire_id"
   end
 
 end

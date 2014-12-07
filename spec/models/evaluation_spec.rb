@@ -25,17 +25,6 @@ RSpec.describe Evaluation, :type => :model do
     expect_it { to callback(:set_access_key).before(:validation).on(:create) }
   end
 
-  
-  describe "#header" do
-    it 'returns the header for associated questionnaire' do
-      allow_any_instance_of(Evaluation).to receive(:build_questions)
-      evaluation = create(:evaluation)
-      questionnaire = create(:questionnaire_with_questions)
-      allow(evaluation).to receive_message_chain(:participant, :program, :questionnaire) { questionnaire }
-      expect(evaluation.header).to eq questionnaire.header
-    end
-  end
-
   describe "#self_eval?" do
     it 'returns true if evaluator and participant are same' do
       allow_any_instance_of(Evaluation).to receive(:build_questions)
@@ -109,7 +98,7 @@ RSpec.describe Evaluation, :type => :model do
   describe "#questionnaire" do
     it 'returns the questionnaire for the participants training program' do
       evaluation = build(:evaluation)
-      expect(evaluation.questionnaire).to eq evaluation.participant.training.program.questionnaire
+      expect(evaluation.questionnaire).to eq evaluation.participant.training.questionnaire
     end
   end
 

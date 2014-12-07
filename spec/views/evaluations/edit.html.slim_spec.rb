@@ -3,7 +3,6 @@ require 'rails_helper'
 describe 'evaluations/edit.html.slim' do
   before(:each) do
     @evaluation = create(:evaluation_with_questions)
-    allow(@evaluation).to receive(:header).and_return("test")
     assign(:evaluation, @evaluation)
   end
   it 'displays correct text for peer evaluations' do

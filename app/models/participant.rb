@@ -2,7 +2,7 @@ class Participant < ActiveRecord::Base
   include AccessKeys
 
   acts_as :evaluator
-  has_many :evaluations
+  has_many :evaluations, -> { order "created_at ASC" }, dependent: :destroy
   has_many :evaluators, through: :evaluations
   accepts_nested_attributes_for :evaluators, :reject_if => :all_blank, :allow_destroy => true
   belongs_to :training, inverse_of: :participants
@@ -10,13 +10,12 @@ class Participant < ActiveRecord::Base
   validates_uniqueness_of :access_key
 
   before_validation :set_access_key, on: :create
+  after_create { Evaluation.create_self_evaluation(self) }
+
+  MIN_PEER_EVALS = 6
 
   def self_evaluation
     evaluations.where(evaluator_id: self.evaluator.id).first
-  end
-
-  def program
-    self.training.program
   end
 
   def peer_evaluation_status
@@ -47,5 +46,12 @@ class Participant < ActiveRecord::Base
     evaluations.where("completed = ? AND evaluator_id != ?", false, self.evaluator.id )
   end
 
+  def report_ready?
+    if self_evaluation.completed? && (peer_evaluations.where(completed: true).count >= MIN_PEER_EVALS)
+      return true
+    else
+      return false
+    end
+  end
 
 end

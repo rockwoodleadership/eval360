@@ -1,19 +1,20 @@
 ActiveAdmin.register Participant do
   permit_params :training_id, :first_name, :last_name, :email
 
-  actions :index, :show 
-  menu priority: 2
+  actions :index, :show, :edit, :new, :create, :update 
 
-  filter :training
-  filter :first_name
-  filter :last_name
-  filter :email
+  belongs_to :training
+  navigation_menu :default
+  menu false 
+  config.filters = false
+  config.sort_order = "first_name_asc"
+
   controller do
     defaults finder: :find_by_access_key
   end
+
   form do |f|
     f.inputs do
-      f.input :training
       f.input :first_name
       f.input :last_name
       f.input :email
@@ -22,23 +23,24 @@ ActiveAdmin.register Participant do
   end
 
   index do
-    selectable_column
     column "Name" do |participant|
       participant.full_name
     end
     column :email
-    column :training
-    column :program
-    actions
+    column "Self Evaluation Complete" do |participant|
+      if participant.self_evaluation
+        participant.self_evaluation.completed? ? "Yes" : "No"
+      end
+    end
+    column "Peer Evaluation Status" do |participant|
+      participant.peer_evaluation_status
+    end
+    actions 
   end
-
 
   show do |participant|
     attributes_table do
       row :training
-      row "Program" do
-        link_to participant.program.name, admin_program_path(participant.training.program)
-      end
       row "Name" do
         participant.full_name
       end
@@ -52,7 +54,11 @@ ActiveAdmin.register Participant do
         evaluation_edit_url(participant.self_evaluation) if participant.self_evaluation
       end
       row "actions" do
-        link_to("View", admin_evaluation_path(participant.self_evaluation)) + " " + link_to("Export PDF", admin_evaluation_path(participant.self_evaluation)) if participant.self_evaluation
+        if participant.report_ready?
+          link_to("View Self Evaluation", admin_training_participant_evaluation_path(participant.training, participant, participant.self_evaluation)) + " " + link_to("Email Evaluation Invite", send_invite_admin_evaluation_path(participant.self_evaluation)) + " " + link_to("Download Evaluation Report", evaluation_report_participant_path(participant)) 
+        else
+          link_to("View Self Evaluation", admin_training_participant_evaluation_path(participant.training, participant, participant.self_evaluation)) + " " + link_to("Email Evaluation Invite", send_invite_admin_evaluation_path(participant.self_evaluation))
+        end
       end
     end
 
@@ -65,12 +71,11 @@ ActiveAdmin.register Participant do
           evaluation.completed? ? "Yes" : "No"
         end
         column "Actions" do |evaluation|
-          link_to("View", admin_evaluation_path(evaluation)) + " " + link_to("Export PDF", admin_evaluation_path(evaluation))  if evaluation
+          link_to("View", admin_training_participant_evaluation_path(participant.training, participant, evaluation)) if evaluation
         end
       end
     end
     active_admin_comments
   end 
-
 
 end

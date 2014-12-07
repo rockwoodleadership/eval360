@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   resources :participants do
     post :update
+    get :evaluation_report, on: :member, defaults: { format: 'pdf' }
   end
 
   resources :answers do
@@ -18,6 +19,20 @@ Rails.application.routes.draw do
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
+
+  namespace :admin do
+    resources :questionnaires do
+      resources :sections do
+        resources :questions
+      end
+    end
+
+    resources :trainings do
+      resources :participants do
+        resources :evaluations
+      end
+    end
+  end
   
 
   root to: redirect('/admin') 

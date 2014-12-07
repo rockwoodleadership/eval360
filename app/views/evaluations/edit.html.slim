@@ -1,4 +1,6 @@
 - self_eval = @evaluation.self_eval?
+- questionnaire = @evaluation.questionnaire
+- section_ids = []
 #evaluation-edit
   h1.text.title = @evaluation.title 
   p
@@ -13,6 +15,11 @@
       | Please take time to think about the following questions. You can save your work and return at a later time by clicking the button below.
   = semantic_form_for @evaluation do |f|
     = f.inputs :for => :answers do |answer, i|
+      - question = answer.object.question
+      - section = question.section
+      - if !section_ids.include?(section.id)
+        div.section-header = section.header
+      - section_ids.push(section.id)
       - label = self_eval ? answer.object.question.self_description : answer.object.question.description
       - if answer.object.question.answer_type == 'numeric'
         = answer.input :numeric_response, :as => :radio, 

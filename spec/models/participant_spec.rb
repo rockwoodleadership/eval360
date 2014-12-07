@@ -1,7 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Participant, :type => :model do
-
+  before(:each) do
+    allow_any_instance_of(Evaluation).to receive(:build_questions)
+  end
   expect_it { to validate_presence_of :email }
   expect_it { to have_many :evaluations }
   expect_it { to have_many(:evaluators).through(:evaluations) }
@@ -10,13 +12,6 @@ RSpec.describe Participant, :type => :model do
   expect_it { to validate_uniqueness_of :access_key }
   expect_it { to have_db_index(:access_key) }
   expect_it { to callback(:set_access_key).before(:validation).on(:create) }
-
-  describe '#program' do
-    it 'returns the participant program' do
-      participant = build(:participant)
-      expect(participant.program).to be_kind_of Program
-    end
-  end
 
   describe '#self_evaluation' do
     it 'returns the self evaluation' do
@@ -35,9 +30,8 @@ RSpec.describe Participant, :type => :model do
 
   describe "#completed_peer_evaluations" do
     it 'returns the number of completed peer evaluations' do
-      participant = create(:participant_with_peer_evaluation)
-      evaluation = participant.evaluations.first
-      evaluation.mark_complete
+      participant = create(:participant)
+      evaluation = create(:evaluation, participant_id: participant.id, completed: true)
       expect(participant.completed_peer_evaluations).to eq 1
     end
   end
@@ -65,8 +59,10 @@ RSpec.describe Participant, :type => :model do
 
   describe "#peer_evals_not_completed" do
     it 'returns the peer evaluations not completed' do
-      participant = create(:participant_with_peer_evaluation)
-      expect(participant.peer_evals_not_completed).to eq participant.evaluations
+      participant = create(:participant)
+      create(:evaluation, participant_id: participant.id, completed: true)
+      evaluation = create(:evaluation, participant_id: participant.id)
+      expect(participant.peer_evals_not_completed.first).to eq evaluation
     end
   end
 

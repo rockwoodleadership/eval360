@@ -40,5 +40,15 @@ class ParticipantsController < ApplicationController
     render json: "success", status: 200 
   end
 
+
+  def evaluation_report
+    respond_to do |format|
+      format.pdf do
+        pdf = ReportPdf.new(@participant)
+        send_data pdf.render, filename: "evaluation_report_#{@participant.full_name.downcase.tr(" ","_")}.pdf", type: 'application/pdf'
+      end
+    end
+  end
+
   
 end

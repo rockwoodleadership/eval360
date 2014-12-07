@@ -1,18 +1,31 @@
 require 'yaml'
 class Questionnaire < ActiveRecord::Base
-  has_many :questions, inverse_of: :questionnaire
-  belongs_to :program, inverse_of: :questionnaire
+  has_many :sections, -> { order "created_at ASC" }, dependent: :destroy, inverse_of: :questionnaire
+  validates_uniqueness_of :name
+  accepts_nested_attributes_for :sections
 
-  def self.generate_from_yaml(filename, program)
-    yaml = YAML.load_file(filename).first
-    q = program.create_questionnaire(header: yaml["header"])
-    yaml["questions"].each do |question|
-      q.questions << Question.generate_from_parsed_yaml(question)
+  #example from rails console
+  #Questionnaire.generate_from_yaml('config/questionnaires/individual.yml')
+
+  def self.generate_from_yaml(filename)
+    yaml = YAML.load_file(filename)
+    name = filename.split("/").last.split(".").first
+    q = Questionnaire.create(name: name)
+    yaml.each do |section|
+      s = Section.generate_from_parsed_yaml(section)
+      q.sections << s 
     end
     return q
   end
 
-  def admin_title
-    "#{program.name} Questionnaire"
+  def questions
+    q = sections.map {|s| s.questions }
+    q.flatten
   end
+
+  def numeric_questions
+    q = sections.map { |s| s.questions.where(answer_type: 'numeric') }
+    q.flatten
+  end
+
 end
