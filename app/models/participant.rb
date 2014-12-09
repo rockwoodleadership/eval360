@@ -35,7 +35,7 @@ class Participant < ActiveRecord::Base
   end
 
   def full_name
-    "#{first_name} #{last_name}"
+    "#{first_name} #{last_name}".titleize
   end
 
   def peer_evaluators

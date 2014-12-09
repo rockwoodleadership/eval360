@@ -7,11 +7,13 @@ class EvaluationResults
   def histogram_for_q(question_id)
     histogram = []
     0.upto(10) { histogram.push(0) }
-    a = peer_evaluations.first.answers.where(question_id: question_id).first
-    a_index = peer_evaluations.first.answers.index(a)
-    peer_evaluations.each do |pe|
-      response = pe.answers[a_index].numeric_response
-      histogram[response] += 1 unless response.nil? || response.zero?
+    if peer_evaluations.any?
+      a = peer_evaluations.first.answers.where(question_id: question_id).first
+      a_index = peer_evaluations.first.answers.index(a)
+      peer_evaluations.each do |pe|
+        response = pe.answers[a_index].numeric_response
+        histogram[response] += 1 unless response.nil? || response.zero?
+      end
     end
     return histogram
   end
@@ -23,15 +25,16 @@ class EvaluationResults
   def mean_score_for_q(question_id)
     answers = peer_evaluations.map { |pe| pe.answers.where(question_id: question_id).first }
     responses = answers.map { |a| a.numeric_response unless a.numeric_response.nil? || a.numeric_response.zero? }
-    responses.sum.to_f/responses.length
+    responses.any? ? responses.sum.to_f/responses.length : nil
   end
 
   def mean_score_for_s(section)
     scores = []
     section.questions.each do |question|
-      scores << mean_score_for_q(question.id)
+      mean = mean_score_for_q(question.id)
+      scores <<  mean if mean
     end
-    scores.sum.to_f/scores.length
+    scores.any? ? scores.sum.to_f/scores.length : nil
   end
 
   def rw_quartile(question_id)
@@ -83,7 +86,7 @@ class EvaluationResults
         mean_score: mean_score_for_q(q.id),
         description: q.description
       }
-      results.push info
+      results.push(info) if info['mean_score']
     end
     results.sort! { |a,b| b[:mean_score] <=> a[:mean_score] }
   end

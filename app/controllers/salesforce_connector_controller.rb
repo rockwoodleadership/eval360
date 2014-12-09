@@ -18,19 +18,27 @@ class SalesforceConnectorController < ApplicationController
     # end
 
     # render json: 'something went wrong', status: 422
+    puts "****new_participant"
+    puts params
 
     render json: 'success', status: 200
   end
 
   def new_training
+    puts "***new_training"
+    puts params
     render json: 'success', status: 200
   end
 
   def update_participant
+    puts "***update_participant"
+    puts params
     render json: 'success', status: 200
   end
 
   def update_training
+    puts "****update_training"
+    puts params
     render json: 'success', status: 200
   end
 

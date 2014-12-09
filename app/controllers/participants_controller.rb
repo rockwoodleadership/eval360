@@ -45,7 +45,7 @@ class ParticipantsController < ApplicationController
     respond_to do |format|
       format.pdf do
         pdf = ReportPdf.new(@participant)
-        send_data pdf.render, filename: "evaluation_report_#{@participant.full_name.downcase.tr(" ","_")}.pdf", type: 'application/pdf'
+        send_data pdf.render, filename: "#{@participant.full_name}.pdf", type: 'application/pdf'
       end
     end
   end

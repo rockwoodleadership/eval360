@@ -42,6 +42,10 @@ class ReportPdf < Prawn::Document
     section_ids = []
     @questions.each do |question|
       unless section_ids.include?(question.section.id)
+        if section_ids.any?
+          start_new_page
+          print_header
+        end
         section_ids << question.section.id
         print_section_header(question.section)
       end
@@ -83,7 +87,8 @@ class ReportPdf < Prawn::Document
       draw_endpoints
       draw_histogram @results.histogram_for_q(question.id)
       draw_text "Self Score: %0.1f" % @results.self_score_for_q(question.id), at: [ 0, LAYOUT_LINE*2 ], size: 10
-      draw_text "Average score: %0.1f" % @results.mean_score_for_q(question.id ), at: [ 0, LAYOUT_LINE*3 ], size: 10
+      mean_score = @results.mean_score_for_q(question.id)
+      draw_text "Average score: %0.1f" % mean_score, at: [ 0, LAYOUT_LINE*3 ], size: 10 unless mean_score.nil?
       #todo need clarifcation on legacy answers
       #draw_text "Rockwood quartile: #{@results.rw_quartile(question_id )}", :at=>[ 350, LAYOUT_LINE*3 ], :size => 10
     end

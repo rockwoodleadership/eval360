@@ -54,7 +54,7 @@ ActiveAdmin.register Participant do
         evaluation_edit_url(participant.self_evaluation) if participant.self_evaluation
       end
       row "actions" do
-        if participant.report_ready?
+        if participant.self_evaluation.completed?
           link_to("View Self Evaluation", admin_training_participant_evaluation_path(participant.training, participant, participant.self_evaluation)) + " " + link_to("Email Evaluation Invite", send_invite_admin_evaluation_path(participant.self_evaluation)) + " " + link_to("Download Evaluation Report", evaluation_report_participant_path(participant)) 
         else
           link_to("View Self Evaluation", admin_training_participant_evaluation_path(participant.training, participant, participant.self_evaluation)) + " " + link_to("Email Evaluation Invite", send_invite_admin_evaluation_path(participant.self_evaluation))
