@@ -40,5 +40,8 @@ Rails.application.routes.draw do
   get 'thank_you' => 'pages#thank_you'
 
   post 'salesforce_connector/new_participant'
+  post 'salesforce_connector/update_participant'
+  post 'salesforce_connector/new_training'
+  post 'salesforce_connector/update_training'
   
 end
