@@ -12,8 +12,6 @@ class Participant < ActiveRecord::Base
   before_validation :set_access_key, on: :create
   after_create { Evaluation.create_self_evaluation(self) }
 
-  MIN_PEER_EVALS = 6
-
   def self_evaluation
     evaluations.where(evaluator_id: self.evaluator.id).first
   end
@@ -44,14 +42,6 @@ class Participant < ActiveRecord::Base
 
   def peer_evals_not_completed
     evaluations.where("completed = ? AND evaluator_id != ?", false, self.evaluator.id )
-  end
-
-  def report_ready?
-    if self_evaluation.completed? && (peer_evaluations.where(completed: true).count >= MIN_PEER_EVALS)
-      return true
-    else
-      return false
-    end
   end
 
 end

@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     get :evaluation_report, on: :member, defaults: { format: 'pdf' }
   end
 
+  post '/trainings/:id/email_reports', to: 'trainings#email_reports'
+
   resources :answers do
     post :update
   end

@@ -1,5 +1,54 @@
 require 'mandrill'
+require 'rubygems'
+require 'zip'
 class EvaluationEmailer
+
+  class << self
+    def send_pdf_reports(training_id, email)
+      training = Training.find(training_id)
+      participants = training.participants
+      dir = File.dirname("#{Rails.root}/tmp/pdfs/test")
+      FileUtils.mkdir_p(dir) unless File.directory?(dir)
+      folder = "#{Rails.root}/tmp/pdfs"
+      input_filenames = []
+      participants.each do |p|
+        if p.self_evaluation.completed?
+          pdf = ReportPdf.new(p)
+          pdf.render_file "#{Rails.root}/tmp/pdfs/#{p.full_name}.pdf"
+          input_filenames << "#{p.full_name}.pdf"
+        end
+      end
+      zipfile_name = "#{Rails.root}/tmp/pdfs/#{training_id}.zip"
+      Zip::File.open(zipfile_name, Zip::File::CREATE) do |zipfile|
+        input_filenames.each do |filename|
+          zipfile.add(filename, folder + '/' + filename)
+        end
+      end
+
+      message = {
+        "text"=> "Evaluation Reports for #{training.name}",
+        "subject"=> "Evaluation Reports for #{training.name}",
+        "from_email"=> 'registration@rockwoodleadership.org',
+        "to"=> [
+          {
+            "email"=> email
+          }
+        ],
+        "attachments"=> [
+          {
+            "type"=> "application/zip",
+            "name"=> "#{training_id}.zip",
+            "content"=> Base64.encode64(File.open(zipfile_name).read)
+          }
+        ]
+        
+      }
+      mandrill.messages.send(message)
+      FileUtils.rm_rf(dir)
+    end
+    handle_asynchronously :send_pdf_reports
+  end
+
 
   def self.send_invite_for_self_eval(participant)
     
@@ -49,7 +98,6 @@ class EvaluationEmailer
 
   private
     def self.send_template(template_name, message)
-      mandrill = Mandrill::API.new ENV['MANDRILL_APIKEY']
       results = mandrill.messages.send_template(template_name, [], message)
       sent_count = 0
       results.each do |result|
@@ -61,6 +109,11 @@ class EvaluationEmailer
       end
       return sent_count
     end
+
+    def self.mandrill
+      mandrill = Mandrill::API.new ENV['MANDRILL_APIKEY']
+    end
+
 
     def self.generate_message(evaluations)
       participant = evaluations.first.participant

@@ -22,6 +22,7 @@ gem 'active_skin'
 gem 'bugsnag'
 gem 'prawn'
 gem 'delayed_job_active_record'
+gem 'rubyzip'
 
 group :production do
   gem 'unicorn'

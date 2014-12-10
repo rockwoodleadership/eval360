@@ -1,5 +1,8 @@
 $('#send-btn').on('click', function() {
-  var email = $('input#email').val();
-  console.log(email);
+  var data = {};
+  data.email = $('input#email').val();
+  $.post("/trainings/"+ training_id + "/email_reports", data, function() {
+    window.location.reload();
+  }, "html");
   //todo
 });

@@ -3,7 +3,7 @@ class ParticipantsController < ApplicationController
   before_filter { @participant = Participant.find_by_access_key(params[:id]) }
 
   def invitations
-    8.times { @participant.evaluators.build }
+    10.times { @participant.evaluators.build }
     render 'invitations'
   end
 
