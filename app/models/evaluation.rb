@@ -55,12 +55,6 @@ class Evaluation < ActiveRecord::Base
     self.save
   end
 
-  def reset_values
-    answers.each do |answer|
-      answer.set_default_values
-    end
-  end
-
   def email_to_evaluator
     if self_eval?
       EvaluationEmailer.send_invite_for_self_eval(participant)

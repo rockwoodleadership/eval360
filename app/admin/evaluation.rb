@@ -39,10 +39,11 @@ ActiveAdmin.register Evaluation do
      redirect_to :back 
   end
 
-  member_action :reset_evaluation, method: :get do
+  member_action :reopen_evaluation, method: :get do
     evaluation = Evaluation.find_by_access_key(params[:id])
-    evaluation.reset_values
-    flash[:notice] = "Evaluation has been reset"
+    evaluation.completed = false
+    evaluation.save
+    flash[:notice] = "Evaluation has been reopened"
     redirect_to :back
   end
 
@@ -81,7 +82,7 @@ ActiveAdmin.register Evaluation do
         evaluation_edit_url(evaluation)
       end
       row "Actions" do
-        link_to("Email Evaluation Invite", send_invite_admin_evaluation_path(evaluation)) + " " + link_to("Reset Evaluation Responses", reset_evaluation_admin_evaluation_path(evaluation), data: { confirm: "Are you sure you want to reset the response?" })
+        link_to("Email Evaluation Invite", send_invite_admin_evaluation_path(evaluation)) + " " + link_to("Reopen Evaluation", reopen_evaluation_admin_evaluation_path(evaluation))
       end
     end
     panel "Evaluation Responses" do

@@ -98,7 +98,7 @@ class ReportPdf < Prawn::Document
     text "\n\n#{@questions.index(question)+1}. #{question.description}", :style=>:bold
     text_answers = @results.text_answers_for_q(question.id)
     text_answers.each do |answer|
-      text "- " + answer + "\n\n"
+      text "- " + answer + "\n\n" unless answer.nil?
     end
     text "\n\nYou Answered:\n\n", style: :bold
     text @results.self_answer_for_q(question.id)

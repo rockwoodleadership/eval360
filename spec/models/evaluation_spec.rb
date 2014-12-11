@@ -118,24 +118,6 @@ RSpec.describe Evaluation, :type => :model do
     end
   end
 
-  describe "#reset_values" do
-    before do
-      @evaluation = create(:evaluation_with_answers)
-      answer = @evaluation.answers.first
-      answer.numeric_response = 9
-      answer.text_response = "great"
-      answer.save
-      @evaluation.reset_values
-    end
-    it "resets numeric answers to 0" do
-      expect(@evaluation.answers.first.numeric_response).to eq 0
-    end
-
-    it "resets text answers to blank" do
-      expect(@evaluation.answers.first.text_response).to eq ""
-    end
-  end
-
   describe "#email_to_evaluator" do
     it "returns the number of sent invites" do
       evaluation = create(:evaluation)

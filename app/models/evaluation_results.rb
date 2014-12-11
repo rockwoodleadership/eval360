@@ -25,7 +25,8 @@ class EvaluationResults
   def mean_score_for_q(question_id)
     answers = peer_evaluations.map { |pe| pe.answers.where(question_id: question_id).first }
     responses = answers.map { |a| a.numeric_response unless a.numeric_response.nil? || a.numeric_response.zero? }
-    responses.any? ? responses.sum.to_f/responses.length : nil
+    r = responses.compact
+    r.any? ? r.sum.to_f/r.length : nil
   end
 
   def mean_score_for_s(section)

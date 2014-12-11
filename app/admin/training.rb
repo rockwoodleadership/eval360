@@ -28,7 +28,7 @@ ActiveAdmin.register Training do
       f.input :start_date
       f.input :end_date
       f.input :location
-      f.input :status
+      f.input :status, :as => :select, :collection => ["Planned", "On hold", "In progress", "Completed", "Cancelled"]
       f.input :questionnaire
     end
     f.inputs "Participants" do

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141208013152) do
+ActiveRecord::Schema.define(version: 20141211070416) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,6 +101,8 @@ ActiveRecord::Schema.define(version: 20141208013152) do
     t.datetime "updated_at"
     t.integer  "training_id"
     t.string   "access_key"
+    t.string   "sf_registration_id"
+    t.string   "sf_contact_id"
   end
 
   add_index "participants", ["access_key"], name: "index_participants_on_access_key", using: :btree
@@ -138,6 +140,7 @@ ActiveRecord::Schema.define(version: 20141208013152) do
     t.string   "location"
     t.string   "status"
     t.integer  "questionnaire_id"
+    t.string   "sf_training_id"
   end
 
 end
