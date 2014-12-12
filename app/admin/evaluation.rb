@@ -9,7 +9,7 @@ ActiveAdmin.register Evaluation do
   config.filters = false
   navigation_menu :default
 
-  actions :all, :except => [:new, :edit, :delete]
+  actions :all, :except => [:new, :edit]
   menu false
 
   breadcrumb do
@@ -82,7 +82,11 @@ ActiveAdmin.register Evaluation do
         evaluation_edit_url(evaluation)
       end
       row "Actions" do
-        link_to("Email Evaluation Invite", send_invite_admin_evaluation_path(evaluation)) + " " + link_to("Reopen Evaluation", reopen_evaluation_admin_evaluation_path(evaluation))
+        if evaluation.self_eval? && !evaluation.completed?
+          link_to("Email Evaluation Invite", send_invite_admin_evaluation_path(evaluation)) + " " + link_to("Reopen Evaluation", reopen_evaluation_admin_evaluation_path(evaluation))
+        else
+          link_to("Reopen Evaluation", reopen_evaluation_admin_evaluation_path(evaluation))
+        end
       end
     end
     panel "Evaluation Responses" do

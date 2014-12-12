@@ -54,11 +54,14 @@ ActiveAdmin.register Participant do
         evaluation_edit_url(participant.self_evaluation) if participant.self_evaluation
       end
       row "actions" do
-        if participant.self_evaluation.completed?
-          link_to("View Self Evaluation", admin_training_participant_evaluation_path(participant.training, participant, participant.self_evaluation)) + " " + link_to("Email Evaluation Invite", send_invite_admin_evaluation_path(participant.self_evaluation)) + " " + link_to("Download Evaluation Report", evaluation_report_participant_path(participant)) 
-        else
-          link_to("View Self Evaluation", admin_training_participant_evaluation_path(participant.training, participant, participant.self_evaluation)) + " " + link_to("Email Evaluation Invite", send_invite_admin_evaluation_path(participant.self_evaluation))
+        if participant.self_evaluation
+          if participant.self_evaluation.completed?
+            link_to("View Self Evaluation", admin_training_participant_evaluation_path(participant.training, participant, participant.self_evaluation)) + " " + link_to("Email Evaluation Invite", send_invite_admin_evaluation_path(participant.self_evaluation)) + " " + link_to("Download Evaluation Report", evaluation_report_participant_path(participant)) 
+          else
+            link_to("View Self Evaluation", admin_training_participant_evaluation_path(participant.training, participant, participant.self_evaluation)) + " " + link_to("Email Evaluation Invite", send_invite_admin_evaluation_path(participant.self_evaluation))
+          end
         end
+
       end
     end
 
@@ -68,10 +71,15 @@ ActiveAdmin.register Participant do
           evaluation.evaluator.email
         end
         column "Completed" do |evaluation|
-          evaluation.completed? ? "Yes" : "No"
+          if evaluation
+            evaluation.completed? ? "Yes" : "No"
+          end
         end
         column "Actions" do |evaluation|
-          link_to("View", admin_training_participant_evaluation_path(participant.training, participant, evaluation)) if evaluation
+          if evaluation
+           link_to("View", admin_training_participant_evaluation_path(participant.training, participant, evaluation)) + " " + link_to("Edit Email Address", edit_admin_evaluator_path(evaluation.evaluator)) + " " + link_to("Delete Peer Evaluation", admin_training_participant_evaluation_path(participant.training, participant, evaluation), data: { confirm: "Are you sure you want to delete this peer evaluation?" }, method: :delete)
+          end
+
         end
       end
     end

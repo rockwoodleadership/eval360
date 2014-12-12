@@ -85,7 +85,7 @@ class EvaluationResults
       info = {
         position: i + 1,
         mean_score: mean_score_for_q(q.id),
-        description: q.description
+        description: q.self_description
       }
       results.push(info) if info['mean_score']
     end

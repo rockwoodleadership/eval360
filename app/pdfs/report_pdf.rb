@@ -81,21 +81,26 @@ class ReportPdf < Prawn::Document
 
   def print_numeric_answers(question)
     bounding_box [0, @block_start + 50], width: PAGE_WIDTH do
-       text "\n\n#{@questions.index(question)+1}. #{question.description}", :style=>:bold
+       text "\n\n#{@questions.index(question)+1}. #{question.self_description}", :style=>:bold
     end
     bounding_box [ 0, @block_start - 100 ], width: PAGE_WIDTH do
       draw_endpoints
       draw_histogram @results.histogram_for_q(question.id)
       draw_text "Self Score: %0.1f" % @results.self_score_for_q(question.id), at: [ 0, LAYOUT_LINE*2 ], size: 10
       mean_score = @results.mean_score_for_q(question.id)
-      draw_text "Average score: %0.1f" % mean_score, at: [ 0, LAYOUT_LINE*3 ], size: 10 unless mean_score.nil?
+      if mean_score
+        draw_text "Average score: %0.1f" % mean_score, at: [ 0, LAYOUT_LINE*3 ], size: 10
+      else
+        draw_text "Average score:", at: [ 0, LAYOUT_LINE*3 ], size: 10
+      end
+
       #todo need clarifcation on legacy answers
       #draw_text "Rockwood quartile: #{@results.rw_quartile(question_id )}", :at=>[ 350, LAYOUT_LINE*3 ], :size => 10
     end
   end
 
   def print_text_answers(question)
-    text "\n\n#{@questions.index(question)+1}. #{question.description}", :style=>:bold
+    text "\n\n#{@questions.index(question)+1}. #{question.self_description}", :style=>:bold
     text_answers = @results.text_answers_for_q(question.id)
     text_answers.each do |answer|
       text "- " + answer + "\n\n" unless answer.nil?
