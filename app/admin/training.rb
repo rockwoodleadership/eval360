@@ -16,8 +16,12 @@ ActiveAdmin.register Training do
     selectable_column
     column :name
     column :location
-    column :start_date
-    column :end_date
+    column "Start Date" do |training|
+      training.start_date.strftime("%b %d %Y") if training.start_date
+    end
+    column "End Date" do |training|
+      training.end_date.strftime("%b %d %Y") if training.end_date
+    end
     column :status
     actions 
   end 
@@ -47,8 +51,12 @@ ActiveAdmin.register Training do
     render "admin/download_reports"
     attributes_table do
       row :name
-      row :start_date
-      row :end_date
+      row "Start Date" do |training|
+        training.start_date.strftime("%b %d %Y") if training.start_date
+      end
+      row "End Date" do |training|
+        training.end_date.strftime("%b %d %Y") if training.end_date
+      end
       row :location
       row :status
       row :questionnaire
