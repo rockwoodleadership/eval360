@@ -10,7 +10,7 @@ class ParticipantsController < ApplicationController
   def update
     flash[:errors] = []
     email_hash = params[:participant]['evaluators_attributes']
-    existing_emails = @participant.peer_evaluators.map {|e| e.email}
+    existing_emails = @participant.invited_peers.map {|e| e.email}
     emails = [] 
     email_hash.each_value do |attr|
       if attr['email'] == @participant.email
@@ -25,6 +25,7 @@ class ParticipantsController < ApplicationController
       evaluators = Evaluator.bulk_create(emails)
       evaluations = Evaluation.create_peer_evaluations(evaluators, @participant)
       sent_count = EvaluationEmailer.send_peer_invites(evaluations)
+      @participant.added_peer_evaluators
       flash[:notice] = "#{sent_count} invitation(s) sent"
     else
       if flash[:errors].empty?

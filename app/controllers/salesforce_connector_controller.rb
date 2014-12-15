@@ -7,6 +7,9 @@ class SalesforceConnectorController < ApplicationController
     puts params
 
     render json: 'success', status: 200
+
+    #todo
+    #set status as "Not Started"
     
     #todo Add check for api_key
     # hash = JSON.parse(params[:participant])

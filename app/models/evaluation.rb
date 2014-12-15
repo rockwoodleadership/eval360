@@ -48,9 +48,6 @@ class Evaluation < ActiveRecord::Base
   def mark_complete
     self.completed = true
     self.save
-    unless self_eval?
-      EvaluationEmailer.send_thank_you(self)
-    end
   end
 
   private

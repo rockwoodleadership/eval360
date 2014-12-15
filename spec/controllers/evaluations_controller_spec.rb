@@ -49,7 +49,9 @@ RSpec.describe EvaluationsController, :type => :controller do
   describe "POST update" do
     context "when access_key is found" do
       before(:each) do
-        @evaluation = create(:self_evaluation_with_answers)
+        participant = create(:participant)
+        @evaluation = participant.self_evaluation
+        @evaluation.answers << create(:answer, evaluation_id: @evaluation.id) 
         @evaluation_attributes = {} 
         @evaluation_attributes["answers_attributes"] = {"0" => {"numeric_response" => 10, "id" => @evaluation.answers.first.id}} 
         allow(Evaluation).to receive(:find_by_access_key) { @evaluation }
@@ -69,8 +71,10 @@ RSpec.describe EvaluationsController, :type => :controller do
           end 
           
           it 'completes evaluation' do
+            @evaluation.reload
             expect(@evaluation.completed?).to eq true
           end
+
           it 'redirects to invitation page' do
             expect(response).to redirect_to(invitations_path(@evaluation.participant))
           end
