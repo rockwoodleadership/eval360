@@ -13,6 +13,24 @@ ActiveAdmin.register Participant do
     defaults finder: :find_by_access_key
   end
 
+  member_action :remind, method: :get do
+    participant = Participant.find_by_access_key(params[:id])
+    if participant.remind
+      flash[:notice] = "Reminder sent"
+    else
+      flash[:notice] = "Error sending reminder"
+    end
+    redirect_to :back 
+  end
+
+  member_action :add_peers, method: :get do
+    participant = Participant.find_by_access_key(params[:id])
+    participant.remind_to_add_peers
+    flash[:notice] = "Reminder sent"
+    
+    redirect_to :back
+  end
+
   form do |f|
     f.inputs do
       f.input :first_name
@@ -55,10 +73,14 @@ ActiveAdmin.register Participant do
       end
       row "actions" do
         if participant.self_evaluation
+          links =  link_to("View Self Evaluation", admin_training_participant_evaluation_path(training, participant, participant.self_evaluation))
           if participant.self_evaluation.completed?
-            link_to("View Self Evaluation", admin_training_participant_evaluation_path(participant.training, participant, participant.self_evaluation)) + " " + link_to("Email Evaluation Invite", send_invite_admin_evaluation_path(participant.self_evaluation)) + " " + link_to("Download Evaluation Report", evaluation_report_participant_path(participant)) 
+            links += link_to("Download Evaluation Report", evaluation_report_participant_path(participant)) 
+            if (participant.completed_peer_evaluations < 10 && participant.peer_evaluators.count > 0)
+              links += link_to("Email Add Peers Reminder", add_peers_admin_training_participant_path(training, participant))
+            end
           else
-            link_to("View Self Evaluation", admin_training_participant_evaluation_path(participant.training, participant, participant.self_evaluation)) + " " + link_to("Email Evaluation Invite", send_invite_admin_evaluation_path(participant.self_evaluation))
+            links += link_to("Email Evaluation Reminder", reminder_admin_training_participant_path(training, participant))
           end
         end
 
@@ -82,6 +104,15 @@ ActiveAdmin.register Participant do
 
         end
       end
+
+      if participant.declined_peers.any?
+        table_for participant.declined_peers do
+          column "Reviewer" do |evaluator|
+            evaluator.email
+          end
+        end
+      end
+
     end
     active_admin_comments
   end 

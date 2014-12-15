@@ -8,13 +8,13 @@ RSpec.describe Evaluation, :type => :model do
     before(:each) do
       allow_any_instance_of(Evaluation).to receive(:build_questions)
     end
-
+    expect_it { to belong_to :evaluator }
+    expect_it { to belong_to :participant }
+    expect_it { to have_many :answers }
     expect_it { to validate_uniqueness_of :access_key }
     expect_it { to validate_presence_of :participant }
     expect_it { to validate_presence_of :evaluator }
-    expect_it { to belong_to :participant }
-    expect_it { to belong_to :evaluator }
-    expect_it { to have_many :answers }
+    
     expect_it { to have_db_index(:access_key) }
     
   end
@@ -30,6 +30,22 @@ RSpec.describe Evaluation, :type => :model do
       allow_any_instance_of(Evaluation).to receive(:build_questions)
       evaluation = create(:self_evaluation)
       expect(evaluation.self_eval?).to eq true
+    end
+  end
+
+  describe "#eval_type_str" do
+    context "for self evaluations" do
+      it "returns the value 'Self Evaluation'" do
+        evaluation = build(:self_evaluation)
+        expect(evaluation.eval_type_str).to eq 'Self Evaluation'
+      end
+    end
+
+    context "for peer evaluations" do
+      it "returns the value 'Peer Evaluation'" do
+        evaluation = build(:evaluation)
+        expect(evaluation.eval_type_str).to eq 'Peer Evaluation'
+      end
     end
   end
 
@@ -54,15 +70,6 @@ RSpec.describe Evaluation, :type => :model do
     end
   end
 
-
-  describe "#mark_complete" do
-    it 'sets evaluation status to completed' do
-      evaluation = build(:evaluation)
-      evaluation.mark_complete
-      expect(evaluation.completed?).to eq true
-    end
-  end
-
   describe "#title" do
     context "for self evaluations" do
       it "returns string 'Self Evaluation'" do
@@ -79,22 +86,6 @@ RSpec.describe Evaluation, :type => :model do
     end
   end
 
-  describe "#intro_text" do
-    context "for self evaluations" do
-      it 'returns the self intro text for its questionnaire' do
-        evaluation = build(:self_evaluation) 
-        expect(evaluation.intro_text).to eq evaluation.questionnaire.self_intro_text
-      end
-    end
-
-    context "for peer evaluations" do
-      it 'returns the peer intro text for its questionnaire' do
-        evaluation = build(:evaluation)
-        expect(evaluation.intro_text).to eq evaluation.questionnaire.intro_text
-      end
-    end
-  end
-
   describe "#questionnaire" do
     it 'returns the questionnaire for the participants training program' do
       evaluation = build(:evaluation)
@@ -102,26 +93,11 @@ RSpec.describe Evaluation, :type => :model do
     end
   end
 
-  describe "#eval_type_str" do
-    context "for self evaluations" do
-      it "returns the value 'Self Evaluation'" do
-        evaluation = build(:self_evaluation)
-        expect(evaluation.eval_type_str).to eq 'Self Evaluation'
-      end
-    end
-
-    context "for peer evaluations" do
-      it "returns the value 'Peer Evaluation'" do
-        evaluation = build(:evaluation)
-        expect(evaluation.eval_type_str).to eq 'Peer Evaluation'
-      end
-    end
-  end
-
-  describe "#email_to_evaluator" do
-    it "returns the number of sent invites" do
-      evaluation = create(:evaluation)
-      expect(evaluation.email_to_evaluator).to eq 1
+  describe "#mark_complete" do
+    it 'sets evaluation status to completed' do
+      evaluation = build(:evaluation)
+      evaluation.mark_complete
+      expect(evaluation.completed?).to eq true
     end
   end
 

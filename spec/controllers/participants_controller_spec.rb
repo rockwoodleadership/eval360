@@ -77,4 +77,21 @@ RSpec.describe ParticipantsController, :type => :controller do
       end
     end
   end
+
+  describe "GET evaluation report" do
+    it 'creates a pdf report and downloads it' do
+      expect(controller).to receive(:send_data)
+      allow(controller).to receive(:render)
+      get :evaluation_report, id: @participant.access_key, format: :pdf
+       
+    end
+  end
+  describe "GET peer_decline" do
+    it 'redirects to peer decline page' do
+      evaluator = create(:evaluator)
+      @participant.evaluations.create(evaluator_id: evaluator.id)
+      post :peer_decline, id: @participant.access_key, e: evaluator.id
+      expect(response).to redirect_to(peer_decline_path)
+    end
+  end
 end

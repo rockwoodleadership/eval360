@@ -41,11 +41,6 @@ class Evaluation < ActiveRecord::Base
     "Peer Evaluation for #{participant.full_name}"
   end
 
-  def intro_text
-    return questionnaire.self_intro_text if self_eval?
-    questionnaire.intro_text
-  end
-
   def questionnaire
     participant.training.questionnaire
   end
@@ -53,16 +48,10 @@ class Evaluation < ActiveRecord::Base
   def mark_complete
     self.completed = true
     self.save
-  end
-
-  def email_to_evaluator
-    if self_eval?
-      EvaluationEmailer.send_invite_for_self_eval(participant)
-    else
-      EvaluationEmailer.send_peer_invites([self])
+    unless self_eval?
+      EvaluationEmailer.send_thank_you(self)
     end
   end
-  
 
   private
   

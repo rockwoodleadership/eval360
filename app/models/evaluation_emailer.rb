@@ -49,14 +49,20 @@ class EvaluationEmailer
     handle_asynchronously :send_pdf_reports
   end
 
+  def self.self_evaluation_reminder(participant)
+    #todo
+    #template_name = "self-reminder-" + participant.training.questionnaire.name
+    self_evaluation_invite(participant)
+  end
 
-  def self.send_invite_for_self_eval(participant)
+  def self.self_evaluation_invite(participant)
     
     
     #todo: use template name from training
     #get training Training.find(participant.training_id)
 
     template_name = "self-eval-invitation-demo"
+    #template_name = "self-invite-" + participant.training.questionnaire.name
     message = {
       "subject" => "Welcome to Rockwood Leadership",
       "global_merge_vars" => [{ "name" => "FIRST_NAME",
@@ -74,10 +80,19 @@ class EvaluationEmailer
     send_template(template_name, message) 
   end
 
+  def self.add_peers_reminder(participant)
+    #todo
+    #template_name = "add-peer-" + participant.training.questionnaire.name
+    true
+  end
+
 
   def self.send_peer_invites(evaluations)
     
     template_name = "peer-eval-invitation-demo"
+    #todo
+    #template_name = "peer-invite-" + evaluation.first.questionnaire.name
+    #todo add peer_decline link to email
     message = generate_message(evaluations)
     send_template(template_name, message)
     
@@ -87,6 +102,10 @@ class EvaluationEmailer
     evaluations = participant.peer_evals_not_completed
     if custom_message
       template_name = 'peer-eval-custom-reminder-demo'
+      #todo
+      #template_name = "peer-reminder-" + participant.training.questionnaire.name
+      #todo add peer_decline link to email
+      #base_url +"/participants/#{participant.id"/peer_decline?e=#{evaluator.id}"
       message = generate_message(evaluations)       
       message["global_merge_vars"] << { "name" => "CUSTOM_MESSAGE",
                                         "content" => custom_message }
@@ -96,7 +115,22 @@ class EvaluationEmailer
     end
   end
 
+  def self.send_thank_you(evaluation)
+    #todo
+    #template_name = "peer-thanks-" + evaluation.questionnaire.name
+    true
+  end
+
+  def self.remind_peers_reminder(participant)
+    #todo
+    #template_name = "reminder-to-remind-" + participant.training.questionnaire.name
+    true
+  end
+
   private
+    def self.base_url
+      "https://#{Rails.application.config.action_mailer.default_url_options}"
+    end
     def self.send_template(template_name, message)
       results = mandrill.messages.send_template(template_name, [], message)
       sent_count = 0

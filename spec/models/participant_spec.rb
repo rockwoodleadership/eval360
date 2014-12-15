@@ -4,14 +4,17 @@ RSpec.describe Participant, :type => :model do
   before(:each) do
     allow_any_instance_of(Evaluation).to receive(:build_questions)
   end
+  #validates emai through acts_as for evaluator
   expect_it { to validate_presence_of :email }
   expect_it { to have_many :evaluations }
   expect_it { to have_many(:evaluators).through(:evaluations) }
   expect_it { to belong_to :training }
   expect_it { to validate_presence_of :training }
   expect_it { to validate_uniqueness_of :access_key }
+  
   expect_it { to have_db_index(:access_key) }
   expect_it { to callback(:set_access_key).before(:validation).on(:create) }
+  expect_it { to callback(:create_self_evaluation).after(:create) }
 
   describe '#self_evaluation' do
     it 'returns the self evaluation' do
@@ -43,6 +46,18 @@ RSpec.describe Participant, :type => :model do
     end
   end
 
+  describe "#peer_evaluations" do
+    it 'returns all the peer evaluations where the peer has not declined' do
+      accepted_evaluator = create(:evaluator, declined: false)
+      declined_evaluator = create(:evaluator, declined: true)
+      participant = create(:participant)
+      participant.evaluations.create(evaluator_id: accepted_evaluator.id)
+      participant.evaluations.create(evaluator_id: declined_evaluator.id) 
+      expect(participant.peer_evaluations.length).to eq 1
+    end
+  end
+
+  
   describe "#full_name" do
     it 'returns first and last name as a string' do
       participant = build(:participant)
@@ -51,9 +66,35 @@ RSpec.describe Participant, :type => :model do
   end
 
   describe "#peer_evaluators" do
-    it 'returns the peer evaluators' do
-      participant = create(:participant_with_self_and_peer_eval)
-      expect(participant.peer_evaluators.count).to eq 1
+    it 'returns the peer evaluators who have not declined' do
+      accepted_evaluator = create(:evaluator, declined: false)
+      declined_evaluator = create(:evaluator, declined: true)
+      participant = create(:participant)
+      participant.evaluations.create(evaluator_id: accepted_evaluator.id)
+      participant.evaluations.create(evaluator_id: declined_evaluator.id) 
+      expect(participant.peer_evaluators.length).to eq 1 
+    end
+  end
+
+  describe "#invited_peers" do
+    it 'returns all invited peers' do
+      accepted_evaluator = create(:evaluator, declined: false)
+      declined_evaluator = create(:evaluator, declined: true)
+      participant = create(:participant)
+      participant.evaluations.create(evaluator_id: accepted_evaluator.id)
+      participant.evaluations.create(evaluator_id: declined_evaluator.id) 
+      expect(participant.invited_peers.length).to eq 2 
+    end
+  end
+
+  describe "#declined_peers" do
+    it 'returns all peers who have declined' do
+      accepted_evaluator = create(:evaluator, declined: false)
+      declined_evaluator = create(:evaluator, declined: true)
+      participant = create(:participant)
+      participant.evaluations.create(evaluator_id: accepted_evaluator.id)
+      participant.evaluations.create(evaluator_id: declined_evaluator.id) 
+      expect(participant.declined_peers.length).to eq 1 
     end
   end
 
@@ -66,5 +107,36 @@ RSpec.describe Participant, :type => :model do
     end
   end
 
+  describe "#invite" do
+    it 'sends invite to participant' do
+      participant = build(:participant)
+      expect(EvaluationEmailer).to receive(:self_evaluation_invite)
+      participant.invite
+    end
+  end
+
+  describe "#remind" do
+    it 'sends reminder for self evaluation' do
+      participant = build(:participant)
+      expect(EvaluationEmailer).to receive(:self_evaluation_reminder)
+      participant.remind
+    end
+  end
+
+  describe "#remind_to_add_peers" do
+    it 'sends reminder to add peers' do
+      participant = build(:participant)
+      expect(EvaluationEmailer).to receive(:add_peers_reminder)
+      participant.remind_to_add_peers
+    end
+  end
+
+  describe "#remind_to_remind_peers" do
+    it 'sends reminder to remind peers' do
+      participant = build(:participant)
+      expect(EvaluationEmailer).to receive(:remind_peers_reminder)
+      participant.remind_to_remind_peers
+    end
+  end
 
 end

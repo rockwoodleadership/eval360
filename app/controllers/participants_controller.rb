@@ -50,5 +50,11 @@ class ParticipantsController < ApplicationController
     end
   end
 
+  def peer_decline
+    peer = @participant.evaluators.where(id: params[:e]).first
+    peer.decline
+    redirect_to peer_decline_path
+  end
+
   
 end

@@ -31,4 +31,11 @@ RSpec.describe Evaluator, :type => :model do
     end
   end
 
+  describe '#decline' do
+    it 'sets declined to true' do
+      subject.decline
+      expect(subject.declined?).to eq true
+    end
+  end
+
 end

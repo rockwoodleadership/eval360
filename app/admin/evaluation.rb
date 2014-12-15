@@ -28,16 +28,7 @@ ActiveAdmin.register Evaluation do
 
   config.sort_order = 'created_at_asc'
 
-  member_action :send_invite, method: :get do
-    evaluation = Evaluation.find_by_access_key(params[:id])
-     if evaluation.email_to_evaluator
-       flash[:notice] = "Invite sent"
-     else
-       flash[:notice] = "Error sending invite"
-     end
-
-     redirect_to :back 
-  end
+  
 
   member_action :reopen_evaluation, method: :get do
     evaluation = Evaluation.find_by_access_key(params[:id])

@@ -10,7 +10,7 @@ class Participant < ActiveRecord::Base
   validates_uniqueness_of :access_key
 
   before_validation :set_access_key, on: :create
-  after_create { Evaluation.create_self_evaluation(self) }
+  after_create :create_self_evaluation
 
   def self_evaluation
     evaluations.where(evaluator_id: self.evaluator.id).first
@@ -21,7 +21,9 @@ class Participant < ActiveRecord::Base
   end
 
   def completed_peer_evaluations
-    evaluations.where("completed = ? AND evaluator_id != ?", true, self.evaluator.id ).count
+    count = 0
+    peer_evaluations.each { |pe| count += 1 if pe.completed? && !pe.evaluator.declined? }
+    count
   end
 
   def total_peer_evaluations
@@ -29,7 +31,11 @@ class Participant < ActiveRecord::Base
   end
 
   def peer_evaluations
-    evaluations.where("evaluator_id != ?", self.evaluator.id )
+    pes = []
+    evaluations.where("evaluator_id != ?", self.evaluator.id ).each do |pe|
+      pes << pe unless pe.evaluator.declined?
+    end
+    pes
   end
 
   def full_name
@@ -37,11 +43,50 @@ class Participant < ActiveRecord::Base
   end
 
   def peer_evaluators
+    evs = []
+    invited_peers.each do |ev|
+      evs << ev unless ev.declined?
+    end 
+    evs
+  end
+
+  def invited_peers
     evaluators.where.not(id: self.evaluator.id)
   end
 
+  def declined_peers
+    evs = []
+    invited_peers.each do |ev|
+      evs << ev if ev.declined?
+    end
+    evs
+  end
+
   def peer_evals_not_completed
-    evaluations.where("completed = ? AND evaluator_id != ?", false, self.evaluator.id )
+    evs = evaluations.where("completed = ? AND evaluator_id != ?", false, self.evaluator.id )
+    evs.map { |ev| ev unless ev.evaluator.declined? }
+  end
+
+  def invite
+    EvaluationEmailer.self_evaluation_invite(participant)
+  end
+
+  def remind
+    EvaluationEmailer.self_evaluation_reminder(participant)
+  end
+
+  def remind_to_add_peers
+    EvaluationEmailer.add_peers_reminder(participant)
+  end
+
+  def remind_to_remind_peers
+    EvaluationEmailer.remind_peers_reminder(participant)
+  end
+
+  private
+  
+  def create_self_evaluation
+    Evaluation.create_self_evaluation(self)
   end
 
 end

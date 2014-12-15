@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :participants do
     post :update
     get :evaluation_report, on: :member, defaults: { format: 'pdf' }
+    post :peer_decline, on: :member
   end
 
   post '/trainings/:id/email_reports', to: 'trainings#email_reports'
@@ -38,8 +39,8 @@ Rails.application.routes.draw do
   
 
   root to: redirect('/admin') 
-  get 'logout' => 'pages#logout'
   get 'thank_you' => 'pages#thank_you'
+  get 'peer_decline' => 'pages#peer_decline'
 
   post 'salesforce_connector/new_participant'
   post 'salesforce_connector/update_participant'

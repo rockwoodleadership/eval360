@@ -10,14 +10,17 @@
   p
     | The peer survey process is confidential &mdash; you will not be able to track any comments back to their source, nor will you know which of your peers responded on your behalf. Rockwood will not save or use your evaluators' email addresses for solicitation or outreach purposes.
 
-  - if @participant.peer_evaluators.any?
+  - if @participant.invited_peers.any?
     h3#show-invites-trigger Who have I already invited?
     #invites.well.well-lg
       b
         | You have already sent evaluation requests to the following addresses:
       ul.previously_invited.text
-        - @participant.peer_evaluators.each do |ev|
-          li= ev.email
+        - @participant.invited_peers.each do |ev|
+          - if ev.declined?
+            li= "#{ev.email} {declined}"
+          - else
+            li= ev.email
       button.btn.btn-warning data-toggle="modal" data-target="#reminder-modal"
         | Remind Peers
       = render 'reminder_modal'
