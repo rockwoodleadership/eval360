@@ -93,9 +93,10 @@ class ReportPdf < Prawn::Document
       else
         draw_text "Average score:", at: [ 0, LAYOUT_LINE*3 ], size: 10
       end
-
-      #todo need clarifcation on legacy answers
-      #draw_text "Rockwood quartile: #{@results.rw_quartile(question_id )}", :at=>[ 350, LAYOUT_LINE*3 ], :size => 10
+      # rw_quartile = @results.rw_quartile(question.id)
+      # if rw_quartile
+      #   draw_text "Rockwood quartile: #{@results.rw_quartile(question_id)}", :at=>[ 350, LAYOUT_LINE*3 ], :size => 10
+      # end
     end
   end
 

@@ -80,7 +80,7 @@ ActiveAdmin.register Participant do
               links += link_to("Email Add Peers Reminder", add_peers_admin_training_participant_path(training, participant))
             end
           else
-            links += link_to("Email Evaluation Reminder", reminder_admin_training_participant_path(training, participant))
+            links += link_to("Email Evaluation Reminder", remind_admin_training_participant_path(training, participant))
           end
         end
 
