@@ -66,7 +66,11 @@ class Participant < ActiveRecord::Base
 
   def peer_evals_not_completed
     evs = evaluations.where("completed = ? AND evaluator_id != ?", false, self.evaluator.id )
-    evs.map { |ev| ev unless ev.evaluator.declined? }
+    incomplete_evals = []
+    evs.each do |e|
+      incomplete_evals << e unless e.evaluator.declined?
+    end
+    incomplete_evals
   end
 
   def invite

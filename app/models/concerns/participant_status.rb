@@ -1,8 +1,8 @@
 module ParticipantStatus
 
-  EVAL_STATUSES = ["Not Started", "Needs to Send Peer Invites",
-                   "Sent Peer Invites", "Peer Evaluations Incomplete",
-                   "360 Evaluation Completed"]
+  EVAL_STATUSES = ["Needs to Complete Self-Assessment", "Needs to Send Peer Invites",
+                   "Peer Assessment Incomplete",
+                   "360 Assessment Completed"]
 
   def added_peer_evaluators
     #update_salesforce
@@ -16,6 +16,7 @@ module ParticipantStatus
   def peer_evaluation_completed(evaluation)
     evaluation.mark_complete
     EvaluationEmailer.send_thank_you(evaluation)
+    EvaluationEmailer.send_evaluation_done(self) if evaluation_complete?
     #update_salesforce
   end
 
@@ -27,11 +28,9 @@ module ParticipantStatus
     if evaluation_complete?
       status = EVAL_STATUSES.last
     elsif self_evaluation.completed?
-      if completed_peer_evaluations > 0 
-        status = EVAL_STATUSES[3]
-      elsif peer_evaluators.any?
+      if completed_peer_evaluations < 10 
         status = EVAL_STATUSES[2]
-      else
+      elsif peer_evaluators.empty?
         status = EVAL_STATUSES[1]
       end
     else
@@ -40,7 +39,11 @@ module ParticipantStatus
 
     #todo verify class name and evaluation status field
     #client.update('Registration', sf_registration_id,
-    #              {"Evaluation_Status" => status} )
+    #              {"ruby360_Assessment_Status__c" => status} )
+  end
+
+  def evaluation_complete?
+    self_evaluation.completed? && (completed_peer_evaluations > 9)
   end
 
 

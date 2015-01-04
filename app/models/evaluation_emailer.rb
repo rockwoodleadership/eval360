@@ -50,49 +50,37 @@ class EvaluationEmailer
   end
 
   def self.self_evaluation_reminder(participant)
-    #todo
-    #template_name = "self-reminder-" + participant.training.questionnaire.name
-    self_evaluation_invite(participant)
+    training = participant.training
+    template_name = "self-reminder-#{training.questionnaire.name}"
+    message = generate_participant_message(participant)
+    send_template(template_name, message)
   end
 
   def self.self_evaluation_invite(participant)
-    
-    
-    #todo: use template name from training
-    #get training Training.find(participant.training_id)
-
-    template_name = "self-eval-invitation-demo"
-    #template_name = "self-invite-" + participant.training.questionnaire.name
-    message = {
-      "subject" => "Welcome to Rockwood Leadership",
-      "global_merge_vars" => [{ "name" => "FIRST_NAME",
-                                "content" => participant.first_name },
-                              { "name" => "LAST_NAME",
-                                "content" =>  participant.last_name },
-                              { "name" => "EVAL_URL",
-                                "content" =>  "https://staging-rockwood.herokuapp.com/evaluations/#{participant.self_evaluation.access_key}/edit" }],
-      "merge" => true,
-      "to" => [{ "email" => participant.email, 
-                 "name" => "#{participant.first_name} #{participant.last_name}",
-                 "type" => "to" }]
-      
-    }
+    training = participant.training
+    template_name = "self-invite-#{training.questionnaire.name}"
+    message = generate_participant_message(participant)
     send_template(template_name, message) 
   end
 
+
   def self.add_peers_reminder(participant)
-    #todo
-    #template_name = "add-peer-" + participant.training.questionnaire.name
-    true
+    training = participant.training
+    template_name = "add-peer-#{training.questionnaire.name}"
+    message = generate_participant_message(participant)
+    send_template(template_name, message)
+  end
+
+  def self.remind_peers_reminder(participant)
+    training = participant.training
+    template_name = "reminder-to-remind-#{training.questionnaire.name}"
+    message = generate_participant_message(participant)
+    send_template(template_name, message)
   end
 
 
   def self.send_peer_invites(evaluations)
-    
-    template_name = "peer-eval-invitation-demo"
-    #todo
-    #template_name = "peer-invite-" + evaluation.first.questionnaire.name
-    #todo add peer_decline link to email
+    template_name = "peer-invite-#{evaluations.first.questionnaire.name}"
     message = generate_message(evaluations)
     send_template(template_name, message)
     
@@ -100,36 +88,30 @@ class EvaluationEmailer
 
   def self.send_peer_reminders(participant, custom_message)
     evaluations = participant.peer_evals_not_completed
+    template_name = "peer-reminder-#{participant.training.questionnaire.name}"
+    message = generate_message(evaluations)
     if custom_message
-      template_name = 'peer-eval-custom-reminder-demo'
-      #todo
-      #template_name = "peer-reminder-" + participant.training.questionnaire.name
-      #todo add peer_decline link to email
-      #base_url +"/participants/#{participant.id"/peer_decline?e=#{evaluator.id}"
-      message = generate_message(evaluations)       
       message["global_merge_vars"] << { "name" => "CUSTOM_MESSAGE",
                                         "content" => custom_message }
-      send_template(template_name, message)
-    else
-      send_peer_invites(evaluations)
     end
+    send_template(template_name, message)
   end
 
   def self.send_thank_you(evaluation)
-    #todo
-    #template_name = "peer-thanks-" + evaluation.questionnaire.name
-    true
+    template_name = "peer-thanks-#{evaluation.questionnaire.name}"
+    message = generate_message([evaluation])
+    send_template(template_name, message)
   end
 
-  def self.remind_peers_reminder(participant)
-    #todo
-    #template_name = "reminder-to-remind-" + participant.training.questionnaire.name
-    true
+  def self.send_evaluation_done(participant)
+    template_name = "eval-done-#{participant.training.questionnaire.name}"
+    message = generate_participant_message(participant)
+    send_template(template_name, message)
   end
 
   private
     def self.base_url
-      "https://#{Rails.application.config.action_mailer.default_url_options}"
+      "https://#{Rails.application.config.action_mailer.default_url_options[:host]}"
     end
     def self.send_template(template_name, message)
       results = mandrill.messages.send_template(template_name, [], message)
@@ -157,17 +139,58 @@ class EvaluationEmailer
         to_array << { "email" => ev.evaluator.email }
         merge_vars << { "rcpt" => ev.evaluator.email,
                         "vars" =>  [{"name" => "EVAL_URL",
-                                     "content" => "https://staging-rockwood.herokuapp.com/evaluations/#{ev.access_key}/edit"}]}
+                                     "content" => "#{base_url}/evaluations/#{ev.access_key}/edit"},
+                                    {"name" => "DECLINE_URL",
+                                     "content" => "#{base_url}/participants/#{participant.access_key}/peer_decline"}]}
       end
       message = {
         "to" => to_array,
         "merge" => true,
-        "global_merge_vars" => [{ "name" => "PARTICIPANT_FULL_NAME",
-                                  "content" => participant.full_name },
-                                { "name" => "PARTICIPANT_FIRST_NAME",
-                                  "content" => participant.first_name }],
-        "merge_vars" => merge_vars 
+        "global_merge_vars" => [{ "name" => "firstname",
+                                  "content" => participant.first_name },
+                                { "name" => "lastname",
+                                  "content" => participant.last_name },
+                                { "name" => "email",
+                                  "content" => participant.email },
+                                { "name" => "ruby360_Assessment_Deadline_c",
+                                  "content" => participant.training.formatted_deadline }],
+        "merge_vars" => merge_vars,
+        "from_email" => "registration@rockwoodleadership.org",
+        "from_name" => "Rockwood Leadership Institute" 
       }
       
+    end
+
+    def self.generate_participant_message(participant)
+      training = participant.training
+      subject = "Welcome to Rockwood's #{training.name} training, #{training.formatted_date}, #{training.city} #{training.state}"
+      message = {
+        "subject" => subject,
+        "global_merge_vars" => [{ "name" => "firstname",
+                                  "content" => participant.first_name },
+                                { "name" => "lastname",
+                                  "content" =>  participant.last_name },
+                                { "name" => "ruby360_url__c",
+                                  "content" =>  "#{base_url}/evaluations/#{participant.self_evaluation.access_key}/edit" },
+                                { "name" => "ruby360_Assessment_Deadline_c",
+                                  "content" => training.formatted_deadline },
+                                { "name" => "training_curriculum__c",
+                                  "content" => training.curriculum },
+                                { "name" => "training_site_name_c",
+                                  "content" => training.site_name },
+                                { "name" => "start_date__c",
+                                  "content" => training.formatted_start_date },
+                                { "name" => "end_date__c",
+                                  "content" => training.formatted_end_date },
+                                { "name" => "ruby360_peer_complete_number",
+                                  "content" => participant.total_peer_evaluations }],
+        "merge" => true,
+        "to" => [{ "email" => participant.email, 
+                   "name" => "#{participant.first_name} #{participant.last_name}",
+                   "type" => "to" }],
+        "from_email" => "registration@rockwoodleadership.org",
+        "from_name" => "Rockwood Leadership Institute" 
+        
+      }
     end
 end

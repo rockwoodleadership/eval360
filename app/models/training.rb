@@ -6,7 +6,7 @@ class Training < ActiveRecord::Base
   validates_presence_of :questionnaire_id
 
   def self.send_self_eval_reminders
-    upcoming_trainings = Training.includes(:participants).where("start_date IN (?)", Date.today..30.days.from_now)
+    upcoming_trainings = Training.includes(:participants).where("deadline IN (?)", Date.today..30.days.from_now)
     
     upcoming_trainings.each do |training|
       training.participants.each do |participant|
@@ -16,7 +16,7 @@ class Training < ActiveRecord::Base
   end
 
   def self.send_add_peers_reminders
-    upcoming_trainings = Training.includes(:participants).where("start_date IN (?)", Date.today..30.days.from_now)
+    upcoming_trainings = Training.includes(:participants).where("deadline IN (?)", Date.today..30.days.from_now)
     
     upcoming_trainings.each do |training|
       training.participants.each do |participant|
@@ -26,7 +26,7 @@ class Training < ActiveRecord::Base
   end
 
   def self.send_remind_peers_reminders
-    upcoming_trainings = Training.includes(:participants).where("start_date IN (?)", Date.today..30.days.from_now)
+    upcoming_trainings = Training.includes(:participants).where("deadline IN (?)", Date.today..30.days.from_now)
     
     upcoming_trainings.each do |training|
       training.participants.each do |participant|
@@ -34,6 +34,30 @@ class Training < ActiveRecord::Base
           participant.remind_to_remind_peers
         end
       end
+    end
+  end
+
+  def formatted_date
+    if start_date && end_date
+      "#{start_date.strftime('%B %e')} - #{end_date.strftime('%e, %Y')}"
+    end
+  end
+
+  def formatted_deadline
+    if deadline
+      deadline.strftime('%B %e, %Y')
+    end
+  end
+
+  def formatted_start_date
+    if start_date
+      start_date.strftime('%B %e, %Y')
+    end
+  end
+
+  def formatted_end_date
+    if end_date
+      end_date.strftime('%B %e, %Y')
     end
   end
 
