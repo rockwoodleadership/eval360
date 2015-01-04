@@ -21,7 +21,7 @@ class Evaluation < ActiveRecord::Base
   end
 
   def eval_type_str
-    self_eval? ? "Self Evaluation" : "Peer Evaluation"
+    self_eval? ? "Self Assessment" : "Peer Assessment"
   end
 
   def self.create_self_evaluation(participant)

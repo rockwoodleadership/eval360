@@ -129,8 +129,6 @@ class EvaluationEmailer
     def self.mandrill
       mandrill = Mandrill::API.new ENV['MANDRILL_APIKEY']
     end
-
-
     def self.generate_message(evaluations)
       participant = evaluations.first.participant
       to_array = []

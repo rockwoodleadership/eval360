@@ -35,16 +35,16 @@ RSpec.describe Evaluation, :type => :model do
 
   describe "#eval_type_str" do
     context "for self evaluations" do
-      it "returns the value 'Self Evaluation'" do
+      it "returns the value 'Self Assessment'" do
         evaluation = build(:self_evaluation)
-        expect(evaluation.eval_type_str).to eq 'Self Evaluation'
+        expect(evaluation.eval_type_str).to eq 'Self Assessment'
       end
     end
 
     context "for peer evaluations" do
-      it "returns the value 'Peer Evaluation'" do
+      it "returns the value 'Peer Assessment'" do
         evaluation = build(:evaluation)
-        expect(evaluation.eval_type_str).to eq 'Peer Evaluation'
+        expect(evaluation.eval_type_str).to eq 'Peer Assessment'
       end
     end
   end

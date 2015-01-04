@@ -1,4 +1,4 @@
-ActiveAdmin.register Questionnaire do
+ActiveAdmin.register Questionnaire, as: "Assessment" do
   permit_params :header, :self_intro_text, :intro_text, :name, sections_attributes: [:id, :header, questions_attributes: [:id, :answer_type, :description, :self_description ]]  
 
   actions :index, :show, :edit, :update
@@ -9,7 +9,7 @@ ActiveAdmin.register Questionnaire do
     actions
   end
 
-  menu priority: 5
+  menu priority: 5, label: "Assessments"
 
   form do |f|
     f.inputs do

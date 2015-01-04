@@ -23,3 +23,8 @@ en:
   hello: "Hello world"
   active_admin:                                                                  
     powered_by: ""
+  activerecord:
+    models:
+      evaluation:
+        one: "Assessment"
+        other: "Assessments"

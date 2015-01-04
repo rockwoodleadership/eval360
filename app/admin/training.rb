@@ -59,7 +59,9 @@ ActiveAdmin.register Training do
       end
       row :location
       row :status
-      row :questionnaire
+      row "Assessment" do
+        training.questionnaire
+      end
     end
 
     panel "Participants" do
@@ -68,12 +70,12 @@ ActiveAdmin.register Training do
           participant.full_name
         end
         column :email
-        column "Self Evaluation Complete" do |participant|
+        column "Self Assessment Complete" do |participant|
           if participant.self_evaluation
             participant.self_evaluation.completed? ? "Yes" : "No"
           end
         end
-        column "Peer Evaluation Status" do |participant|
+        column "Peer Assessment Status" do |participant|
           participant.peer_evaluation_status
         end
         column "Actions" do |participant|

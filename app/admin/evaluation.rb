@@ -21,7 +21,7 @@ ActiveAdmin.register Evaluation do
               link_to(participant.full_name, admin_training_participant_path(training,participant))
             ]
     if controller.action_name == 'show'
-      links << link_to('Evaluations', admin_training_participant_evaluations_path(training, participant))
+      links << link_to('Assessments', admin_training_participant_evaluations_path(training, participant))
     end
     links
   end
@@ -34,7 +34,7 @@ ActiveAdmin.register Evaluation do
     evaluation = Evaluation.find_by_access_key(params[:id])
     evaluation.completed = false
     evaluation.save
-    flash[:notice] = "Evaluation has been reopened"
+    flash[:notice] = "Assessment has been reopened"
     redirect_to :back
   end
 
@@ -58,29 +58,32 @@ ActiveAdmin.register Evaluation do
   end
 
   show :title => proc { |evaluation| evaluation.eval_type_str } do |evaluation|
-    attributes_table do
-      row "Type" do
-        evaluation.self_eval? ? "Self Evaluation" : "Peer Evaluation"
-      end
-      row :participant do
-        link_to participant.full_name, admin_training_participant_path(training, participant)
-      end
-      row :evaluator
-      row :completed do
-        evaluation.completed? ? "Yes" : "No"
-      end
-      row "Evaluation Url" do
-        evaluation_edit_url(evaluation)
-      end
-      row "Actions" do
-        if evaluation.self_eval? && !evaluation.completed?
-          link_to("Email Evaluation Invite", send_invite_admin_evaluation_path(evaluation)) + " " + link_to("Reopen Evaluation", reopen_evaluation_admin_evaluation_path(evaluation))
-        else
-          link_to("Reopen Evaluation", reopen_evaluation_admin_evaluation_path(evaluation))
+    panel "Assessment Details" do
+      attributes_table_for evaluation do
+        row "Type" do
+          evaluation.self_eval? ? "Self Assessment" : "Peer Assessment"
+        end
+        row :participant do
+          link_to participant.full_name, admin_training_participant_path(training, participant)
+        end
+        row :evaluator
+        row :completed do
+          evaluation.completed? ? "Yes" : "No"
+        end
+        row "Assessment Url" do
+          evaluation_edit_url(evaluation)
+        end
+        row "Actions" do
+          if evaluation.self_eval? && !evaluation.completed?
+            link_to("Email Assessment Invite", send_invite_admin_evaluation_path(evaluation)) + " " + link_to("Reopen Assessment", reopen_evaluation_admin_evaluation_path(evaluation))
+          else
+            link_to("Reopen Assessment", reopen_evaluation_admin_evaluation_path(evaluation))
+          end
         end
       end
     end
-    panel "Evaluation Responses" do
+
+    panel "Assessment Responses" do
       evaluation.answers.each do |answer|
         if evaluation.self_eval?
           h5 answer.question.self_description
