@@ -42,8 +42,32 @@ class EvaluationResults
     scores.any? ? scores.sum.to_f/scores.length : nil
   end
 
+  def quartile_rank( score, all_scores )
+    lower_scores = all_scores.select{ |value| !value.nil? && value < score }.size
+    return 4 if lower_scores.zero?
+    quartile_size = all_scores.size.to_f / 4.0
+    case
+      when lower_scores > quartile_size * 3
+        1
+      when lower_scores > quartile_size * 2
+        2
+      when lower_scores > quartile_size
+        3
+      else 
+        4 
+      end
+  end
+
   def rw_quartile(question_id)
-    #rw_dataset = 
+    rw_dataset = Answer.peer_assessment_scores(question_id, @participant.id) 
+    question = Question.find(question_id)
+    if question.legacy_tag
+      @legacy_values = LegacyMeanScores.mean_scores question.legacy_tag
+      rw_dataset +=  @legacy_values if @legacy_values
+    end
+    return 0 if rw_dataset.empty? 
+    eval_mean = mean_score_for_q(question_id)
+    quartile_rank eval_mean, rw_dataset
   end
 
   def text_answers_for_q(question_id)

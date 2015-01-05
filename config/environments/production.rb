@@ -76,7 +76,7 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  config.action_mailer.default_url_options = { host: 'staging-rockwood.herokuapp.com' }
+  config.action_mailer.default_url_options = { host: '360.rockwoodleadership.org' }
 
   config.action_mailer.smtp_settings = {
     :address   => "smtp.mandrillapp.com",
@@ -85,6 +85,6 @@ Rails.application.configure do
     :user_name => ENV['MANDRILL_USERNAME'],
     :password  => ENV['MANDRILL_APIKEY'], # SMTP password is any valid API key
     :authentication => 'login', # Mandrill supports 'plain' or 'login'
-    :domain => 'staging-rockwood.herokuapp.com', # your domain to identify your server when connecting
+    :domain => '360.rockwoodleadership.org', # your domain to identify your server when connecting
   }
 end

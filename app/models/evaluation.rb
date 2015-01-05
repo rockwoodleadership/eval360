@@ -15,17 +15,12 @@ class Evaluation < ActiveRecord::Base
 
   accepts_nested_attributes_for :answers
 
-
-  def self_eval?
-    participant.evaluator.id.equal? evaluator.id
-  end
-
   def eval_type_str
     self_eval? ? "Self Assessment" : "Peer Assessment"
   end
 
   def self.create_self_evaluation(participant)
-    participant.evaluations.create(evaluator_id: participant.evaluator.id)
+    participant.evaluations.create(evaluator_id: participant.evaluator.id, self_eval: true)
   end
 
   def self.create_peer_evaluations(evaluators, participant)

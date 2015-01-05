@@ -6,6 +6,7 @@ FactoryGirl.define do
     
     factory :self_evaluation do
       after(:build) do |evaluation|
+        evaluation.self_eval = true
         evaluation.evaluator_id = evaluation.participant.evaluator.id
       end
     end

@@ -25,14 +25,6 @@ RSpec.describe Evaluation, :type => :model do
     expect_it { to callback(:set_access_key).before(:validation).on(:create) }
   end
 
-  describe "#self_eval?" do
-    it 'returns true if evaluator and participant are same' do
-      allow_any_instance_of(Evaluation).to receive(:build_questions)
-      evaluation = create(:self_evaluation)
-      expect(evaluation.self_eval?).to eq true
-    end
-  end
-
   describe "#eval_type_str" do
     context "for self evaluations" do
       it "returns the value 'Self Assessment'" do

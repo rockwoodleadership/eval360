@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150103125849) do
+ActiveRecord::Schema.define(version: 20150105170945) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(version: 20150103125849) do
     t.datetime "updated_at"
     t.boolean  "completed"
     t.integer  "evaluator_id"
+    t.boolean  "self_eval",      default: false
   end
 
   add_index "evaluations", ["access_key"], name: "index_evaluations_on_access_key", using: :btree
@@ -97,9 +98,9 @@ ActiveRecord::Schema.define(version: 20150103125849) do
   create_table "legacy_mean_scores", force: true do |t|
     t.string   "key"
     t.string   "value"
-    t.string   "questionnaire_tag"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "questionnaire_tag"
   end
 
   add_index "legacy_mean_scores", ["key"], name: "index_legacy_mean_scores_on_key", using: :btree

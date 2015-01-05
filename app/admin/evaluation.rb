@@ -74,10 +74,10 @@ ActiveAdmin.register Evaluation do
           evaluation_edit_url(evaluation)
         end
         row "Actions" do
-          if evaluation.self_eval? && !evaluation.completed?
-            link_to("Email Assessment Invite", send_invite_admin_evaluation_path(evaluation)) + " " + link_to("Reopen Assessment", reopen_evaluation_admin_evaluation_path(evaluation))
-          else
+          if evaluation.completed?
             link_to("Reopen Assessment", reopen_evaluation_admin_evaluation_path(evaluation))
+          elsif evaluation.self_eval?
+            link_to("Email Assessment Invite", send_invite_admin_evaluation_path(evaluation))
           end
         end
       end

@@ -34,7 +34,7 @@ class ReportPdf < Prawn::Document
           text("Average score for this section: #{section_mean}", size:12) unless section_mean.nil?
         end
       end
-      @block_start -= 110
+      @block_start -= 120
     end
   end
 
@@ -93,10 +93,10 @@ class ReportPdf < Prawn::Document
       else
         draw_text "Average score:", at: [ 0, LAYOUT_LINE*3 ], size: 10
       end
-      # rw_quartile = @results.rw_quartile(question.id)
-      # if rw_quartile
-      #   draw_text "Rockwood quartile: #{@results.rw_quartile(question_id)}", :at=>[ 350, LAYOUT_LINE*3 ], :size => 10
-      # end
+      rw_quartile = @results.rw_quartile(question.id)
+      if rw_quartile
+        draw_text "Rockwood quartile: #{@results.rw_quartile(question.id)}", :at=>[ 350, LAYOUT_LINE*3 ], :size => 10
+      end
     end
   end
 

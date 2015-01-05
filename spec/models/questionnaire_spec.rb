@@ -5,7 +5,7 @@ RSpec.describe Questionnaire, :type => :model do
 
   describe ".generate_from_yaml" do
     it 'creates a questionnaire' do
-      questionnaire = Questionnaire.generate_from_yaml('config/questionnaires/default.yml')
+      questionnaire = Questionnaire.generate_from_yaml('config/questionnaires/Standalone.yml')
       expect(questionnaire).to be_instance_of(Questionnaire)
     end
   end
