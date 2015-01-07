@@ -8,18 +8,32 @@ class SalesforceConnectorController < ApplicationController
     puts params
 
     hash = JSON.parse(params[:participant])
+
+    required_keys = ['first_name', 'last_name', 'email',
+                     'sf_training_id', 'sf_registration_id', 'sf_contact_id']
+
+    required_keys.each do |key|
+      unless hash.has_key? key
+        render json: "missing required key #{key}", status: 422 and return
+      end
+    end
+
     sf_training_id = hash['sf_training_id']
     training = Training.find_by(sf_training_id: sf_training_id) 
 
-    attributes = hash.extract!('first_name', 'last_name', 'email',
-                               'sf_registration_id', 'sf_contact_id')
-    participant = training.participants.create!(attributes)
+    if training
+      attributes = hash.extract!('first_name', 'last_name', 'email',
+                                 'sf_registration_id', 'sf_contact_id')
+      participant = training.participants.create!(attributes)
 
-    if participant && participant.errors.empty?
-      participant.invite
-      render json: 'success', status: 200 and return
+      if participant && participant.errors.empty?
+        participant.invite
+        render json: 'success', status: 200 and return
+      else
+        render json: 'could not create new participant', status: 422
+      end
     else
-      render json: 'something went wrong', status: 422
+      render json: 'invalid training record', status: 422
     end
 
   end
@@ -30,6 +44,16 @@ class SalesforceConnectorController < ApplicationController
 
 
     hash = JSON.parse(params[:training])
+    required_keys = ['name', 'start_date', 'end_date',
+                     'sf_training_id', 'city', 'state',
+                     'deadline', 'curriculum', 'site_name',
+                     'questionnaire_name']
+
+    required_keys.each do |key|
+      unless hash.has_key? key
+        render json: "missing required key #{key}", status: 422 and return
+      end
+    end
     questionnaire = Questionnaire.find_by(name: hash['questionnaire_name'])
     
     if questionnaire
@@ -40,10 +64,10 @@ class SalesforceConnectorController < ApplicationController
       if Training.create!(attributes)
         render json: 'success', status: 200
       else
-        render json: 'something went wrong', status: 422
+        render json: 'could not create new training', status: 422
       end
     else
-      render json: 'questionnaire name not found', status: 422
+      render json: 'invalid questionnaire name', status: 422
     end
   end
 
@@ -52,6 +76,14 @@ class SalesforceConnectorController < ApplicationController
     puts params
     
     hash = JSON.parse(params[:participant])
+    required_keys = ['sf_contact_id', 'changed_fields']
+
+    required_keys.each do |key|
+      unless hash.has_key? key
+        render json: "missing required key #{key}", status: 422 and return
+      end
+    end
+
     attributes = {}
 
     participant = Participant.find_by(sf_contact_id: hash['sf_contact_id'])
