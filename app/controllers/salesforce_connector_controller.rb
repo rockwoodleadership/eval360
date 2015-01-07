@@ -46,7 +46,7 @@ class SalesforceConnectorController < ApplicationController
     hash = JSON.parse(params[:training])
     required_keys = ['name', 'start_date', 'end_date',
                      'sf_training_id', 'deadline',
-                     'questionnaire_name']
+                     'questionnaire_name', 'status']
 
     required_keys.each do |key|
       unless hash.has_key? key
@@ -91,7 +91,7 @@ class SalesforceConnectorController < ApplicationController
       if cf == 'sf_training_id'
         attributes['training_id'] = Training.find_by(sf_training_id: hash['sf_training_id']).id
       else
-        attributes[cf] = hash.extract!(cf)
+        attributes[cf] = hash[cf]
       end
     end
 
@@ -122,7 +122,7 @@ class SalesforceConnectorController < ApplicationController
         if cf == 'questionnaire_name'
           attributes['questionnaire_id'] = Questionnaire.find_by(name: hash['questionnaire_name']).id
         else
-          attributes[cf] = hash.extract!(cf)
+          attributes[cf] = hash[cf]
         end
       end
 
@@ -139,9 +139,18 @@ class SalesforceConnectorController < ApplicationController
   private
 
   def check_api_key
-    # if params[:participant]['api_key'] != ENV['INBOUND_SALESFORCE_KEY']
-    #   render json: 'unauthorized access', status: 422
-    # end
+    if params[:participant]
+      puts params[:participant]['api_key']
+      if params[:partipant]['api_key'] != ENV['INBOUND_SALESFORCE_KEY']
+        render json: 'unauthorized access', status: 422
+      end
+    elsif params[:training]
+      puts params[:training]['api_key']
+      if params[:training]['api_key'] != ENV['INBOUND_SALESFORCE_KEY']
+        render json: 'unauthorized access', status: 422
+      end
+    end
+
   end
 
 end
