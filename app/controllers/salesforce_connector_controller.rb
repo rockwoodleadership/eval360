@@ -45,8 +45,7 @@ class SalesforceConnectorController < ApplicationController
 
     hash = JSON.parse(params[:training])
     required_keys = ['name', 'start_date', 'end_date',
-                     'sf_training_id', 'city', 'state',
-                     'deadline', 'curriculum', 'site_name',
+                     'sf_training_id', 'deadline',
                      'questionnaire_name']
 
     required_keys.each do |key|
@@ -108,30 +107,41 @@ class SalesforceConnectorController < ApplicationController
     puts params
 
     hash = JSON.parse(params[:training])
-    training = Training.find_by(sf_training_id: hash['sf_training_id'])
+    required_keys = ['sf_training_id', 'changed_fields']
 
-    attributes = {}
-    hash['changed_fields'].each do |cf|
-      if cf == 'questionnaire_name'
-        attributes['questionnaire_id'] = Questionnaire.find_by(name: hash['questionnaire_name']).id
-      else
-        attributes[cf] = hash.extract!(cf)
+    required_keys.each do |key|
+      unless hash.has_key? key
+        render json: "missing required key #{key}", status: 422 and return
       end
     end
+    training = Training.find_by(sf_training_id: hash['sf_training_id'])
 
-    if training.update!(attributes)
-      render json: 'success', status: 200
+    if training
+      attributes = {}
+      hash['changed_fields'].each do |cf|
+        if cf == 'questionnaire_name'
+          attributes['questionnaire_id'] = Questionnaire.find_by(name: hash['questionnaire_name']).id
+        else
+          attributes[cf] = hash.extract!(cf)
+        end
+      end
+
+      if training.update!(attributes)
+        render json: 'success', status: 200
+      else
+        render json: 'something went wrong', status: 422
+      end
     else
-      render json: 'something went wrong', status: 422
+      render json: 'could not find training', status: 422
     end
   end
 
   private
 
   def check_api_key
-    if params[:participant]['api_key'] != ENV['INBOUND_SALESFORCE_KEY']
-      render json: 'unauthorized access', status: 422
-    end
+    # if params[:participant]['api_key'] != ENV['INBOUND_SALESFORCE_KEY']
+    #   render json: 'unauthorized access', status: 422
+    # end
   end
 
 end
