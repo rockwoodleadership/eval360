@@ -1,12 +1,13 @@
 ActiveAdmin.register Training do
-  permit_params :name, :start_date, :end_date, :location, :questionnaire_id, :status, participants_attributes: [:id, :first_name, :last_name, :email]
+  permit_params :name, :start_date, :end_date, :city, :state, :deadline, :curriculum, :site_name, :questionnaire_id, :status, participants_attributes: [:id, :first_name, :last_name, :email]
   actions :index, :show, :new, :edit, :create, :update
   menu priority: 1
 
   filter :name
   filter :start_date
   filter :end_date
-  filter :location
+  filter :city
+  filter :state
   filter :status
 
 
@@ -15,7 +16,9 @@ ActiveAdmin.register Training do
   index do
     selectable_column
     column :name
-    column :location
+    column "Location" do |training|
+      "#{training.city}, #{training.state}"
+    end
     column "Start Date" do |training|
       training.start_date.strftime("%b %d %Y") if training.start_date
     end
@@ -31,9 +34,13 @@ ActiveAdmin.register Training do
       f.input :name
       f.input :start_date
       f.input :end_date
-      f.input :location
+      f.input :city
+      f.input :state
       f.input :status, :as => :select, :collection => ["Planned", "On hold", "In progress", "Completed", "Cancelled"]
       f.input :questionnaire
+      f.input :curriculum
+      f.input :deadline
+      f.input :site_name
     end
     f.inputs "Participants" do
       f.has_many :participants, heading: false do |participant|
@@ -57,8 +64,15 @@ ActiveAdmin.register Training do
       row "End Date" do |training|
         training.end_date.strftime("%b %d %Y") if training.end_date
       end
-      row :location
+      row "Location" do
+        "#{training.city}, #{training.state}"
+      end
       row :status
+      row "Deadline" do
+        training.deadline.strftime("%b %d %Y") if training.deadline
+      end
+      row :curriculum
+      row :site_name
       row "Assessment" do
         training.questionnaire
       end

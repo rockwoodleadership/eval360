@@ -3,10 +3,6 @@ class SalesforceConnectorController < ApplicationController
   before_filter :check_api_key
   
   def new_participant
-
-    puts "****new_participant"
-    puts params
-
     hash = JSON.parse(params[:participant])
 
     required_keys = ['first_name', 'last_name', 'email',
@@ -39,10 +35,6 @@ class SalesforceConnectorController < ApplicationController
   end
 
   def new_training
-    puts "***new_training"
-    puts params
-
-
     hash = JSON.parse(params[:training])
     required_keys = ['name', 'start_date', 'end_date',
                      'sf_training_id', 'deadline',
@@ -71,9 +63,6 @@ class SalesforceConnectorController < ApplicationController
   end
 
   def update_participant
-    puts "***update_participant"
-    puts params
-    
     hash = JSON.parse(params[:participant])
     required_keys = ['sf_contact_id', 'changed_fields']
 
@@ -103,9 +92,6 @@ class SalesforceConnectorController < ApplicationController
   end
 
   def update_training
-    puts "****update_training"
-    puts params
-
     hash = JSON.parse(params[:training])
     required_keys = ['sf_training_id', 'changed_fields']
 
@@ -140,14 +126,22 @@ class SalesforceConnectorController < ApplicationController
 
   def check_api_key
     if params[:participant]
-      puts params[:participant]['api_key']
-      if params[:partipant]['api_key'] != ENV['INBOUND_SALESFORCE_KEY']
-        render json: 'unauthorized access', status: 422
+      hash = JSON.parse(params[:participant])
+      if hash.has_key? 'api_key'
+        if hash['api_key'] != ENV['INBOUND_SALESFORCE_KEY']
+          render json: 'unauthorized access', status: 422
+        end
+      else
+        render json: 'api key missing', status: 422
       end
-    elsif params[:training]
-      puts params[:training]['api_key']
-      if params[:training]['api_key'] != ENV['INBOUND_SALESFORCE_KEY']
-        render json: 'unauthorized access', status: 422
+    else
+      hash = JSON.parse(params[:training])
+      if hash.has_key? 'api_key'
+        if hash['api_key'] != ENV['INBOUND_SALESFORCE_KEY']
+          render json: 'unauthorized access', status: 422
+        end
+      else
+        render json: 'api key missing', status: 422
       end
     end
 

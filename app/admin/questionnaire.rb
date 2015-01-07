@@ -1,5 +1,5 @@
 ActiveAdmin.register Questionnaire, as: "Assessment" do
-  permit_params :header, :self_intro_text, :intro_text, :name, sections_attributes: [:id, :header, questions_attributes: [:id, :answer_type, :description, :self_description ]]  
+  permit_params :name, sections_attributes: [:id, :header, questions_attributes: [:id, :answer_type, :description, :self_description ]]  
 
   actions :index, :show, :edit, :update
   config.filters = false
@@ -14,8 +14,6 @@ ActiveAdmin.register Questionnaire, as: "Assessment" do
   form do |f|
     f.inputs do
       f.input :name
-      f.input :intro_text
-      f.input :self_intro_text
     end
 
     f.actions
@@ -25,8 +23,6 @@ ActiveAdmin.register Questionnaire, as: "Assessment" do
   show title: :name do |questionnaire|
     attributes_table do
       row :name
-      row :self_intro_text
-      row :intro_text
     end
 
     questionnaire.sections.each do |section|
