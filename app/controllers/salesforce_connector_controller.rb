@@ -74,7 +74,7 @@ class SalesforceConnectorController < ApplicationController
 
     attributes = {}
 
-    participant = Participant.find_by(sf_contact_id: hash['sf_contact_id'])
+    participants = Participant.where(sf_contact_id: hash['sf_contact_id'])
     attributes = {}
     hash['changed_fields'].each do |cf|
       if cf == 'sf_training_id'
@@ -84,11 +84,14 @@ class SalesforceConnectorController < ApplicationController
       end
     end
 
-    if participant.update!(attributes)
-      render json: 'success', status: 200 and return
-    else
-      render json: 'something went wrong', status: 422
+    participants.each do |participant|
+      if !participant.update!(attributes)
+        render json: 'something went wrong', status: 422 and return
+      end
     end
+
+    render json: 'success', status: 200
+    
   end
 
   def update_training

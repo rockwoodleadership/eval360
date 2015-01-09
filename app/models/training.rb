@@ -6,7 +6,7 @@ class Training < ActiveRecord::Base
   validates_presence_of :questionnaire_id
 
   def self.send_self_eval_reminders
-    upcoming_trainings = Training.includes(:participants).where("deadline IN (?)", Date.today..20.days.from_now)
+    upcoming_trainings = Training.includes(:participants).where("deadline IN (?)", Date.today..14.days.from_now)
     
     upcoming_trainings.each do |training|
       training.participants.each do |participant|
@@ -16,7 +16,7 @@ class Training < ActiveRecord::Base
   end
 
   def self.send_add_peers_reminders
-    upcoming_trainings = Training.includes(:participants).where("deadline IN (?)", Date.today..20.days.from_now)
+    upcoming_trainings = Training.includes(:participants).where("deadline IN (?)", Date.today..14.days.from_now)
     
     upcoming_trainings.each do |training|
       training.participants.each do |participant|
@@ -26,7 +26,7 @@ class Training < ActiveRecord::Base
   end
 
   def self.send_remind_peers_reminders
-    upcoming_trainings = Training.includes(:participants).where("deadline IN (?)", Date.today..20.days.from_now)
+    upcoming_trainings = Training.includes(:participants).where("deadline IN (?)", Date.today..14.days.from_now)
     
     upcoming_trainings.each do |training|
       training.participants.each do |participant|

@@ -91,6 +91,7 @@ class EvaluationEmailer
     template_name = "peer-reminder-#{participant.training.questionnaire.name}"
     message = generate_message(evaluations)
     if custom_message
+      template_name = "#{template_name}-custom"
       message["global_merge_vars"] << { "name" => "CUSTOM_MESSAGE",
                                         "content" => custom_message }
     end
