@@ -5,6 +5,7 @@ module ParticipantStatus
                    "360 Assessment Completed"]
 
   def added_peer_evaluators
+    peer_assessment_sent_date = Date.today
     update_salesforce
   end
 
@@ -16,7 +17,10 @@ module ParticipantStatus
   def peer_evaluation_completed(evaluation)
     evaluation.mark_complete
     EvaluationEmailer.send_thank_you(evaluation)
-    EvaluationEmailer.send_evaluation_done(self) if evaluation_complete?
+    if evaluation_complete? && assessment_complete_date.nil?
+      EvaluationEmailer.send_evaluation_done(self)
+      assessment_complete_date = Date.today
+    end
     update_salesforce
   end
 
@@ -39,9 +43,19 @@ module ParticipantStatus
 
     client = Databasedotcom::Client.new host: "test.salesforce.com" 
     client.authenticate :username => ENV['SALESFORCE_USERNAME'], :password => ENV['SALESFORCE_PASSWORD']
+    participant_url = "http://#{Rails.application.config.action_mailer.default_url_options[:host]}" +
+                      "/admin/trainings/#{training.id}/participants/#{access_key}"
 
     client.update('Registration__c', sf_registration_id,
-                  {"ruby360_Assessment_Status__c" => status} )
+                  { "ruby360_Assessment_Status__c" => status, 
+                    "ruby360_URL__c" => participant_url,
+                    "ruby360_Peer_Complete_Number__c" => completed_peer_evaluations,
+                    "ruby360_Assessment_Sent_Date__c" => assessment_sent_date,
+                    "ruby360_Peer_Assess_Invite_Sent__c" => peer_assessment_sent_date,
+                    "ruby360_Reminder_for_Peer_Assess_Sent__c" => reminder_for_peer_assessment_sent_date,
+                    "ruby360_Self_Assessment_Reminder_Sent__c" => assessment_reminder_sent_date,
+                    "ruby360_Completed_Email_Sent__c" => assessment_complete_date    
+                  } )
   end
 
   def evaluation_complete?

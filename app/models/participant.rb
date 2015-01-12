@@ -79,10 +79,14 @@ class Participant < ActiveRecord::Base
 
   def remind
     EvaluationEmailer.self_evaluation_reminder(participant)
+    assessment_reminder_sent_date = Date.today
+    update_salesforce
   end
 
   def remind_to_add_peers
     EvaluationEmailer.add_peers_reminder(participant)
+    reminder_for_peer_assessment_sent_date = Date.today
+    update_salesforce
   end
 
   def remind_to_remind_peers
@@ -93,6 +97,8 @@ class Participant < ActiveRecord::Base
   
   def create_self_evaluation
     Evaluation.create_self_evaluation(self)
+    assessment_sent_date = Date.today
+    update_salesforce
   end
 
 end
