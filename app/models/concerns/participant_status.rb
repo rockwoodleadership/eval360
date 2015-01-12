@@ -53,7 +53,7 @@ module ParticipantStatus
                     "ruby360_Assessment_Sent_Date__c" => assessment_sent_date,
                     "ruby360_Peer_Assess_Invite_Sent__c" => peer_assessment_sent_date,
                     "ruby360_Reminder_for_Peer_Assess_Sent__c" => reminder_for_peer_assessment_sent_date,
-                    "ruby360_Self_Assessment_Reminder_Sent__c" => assessment_reminder_sent_date,
+                    "ruby360_Self_Assess_Reminder_Sent__c" => assessment_reminder_sent_date,
                     "ruby360_Completed_Email_Sent__c" => assessment_complete_date    
                   } )
   end
