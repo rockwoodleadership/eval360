@@ -79,13 +79,13 @@ class SalesforceConnectorController < ApplicationController
     attributes = {}
     hash['changed_fields'].each do |cf|
       if cf == 'sf_training_id'
+        old_training = Training.find_by(sf_training_id: hash['sf_old_training_id'])
+        participants = old_training.participants.where(sf_contact_id: hash['sf_contact_id'])
         attributes['training_id'] = Training.find_by(sf_training_id: hash['sf_training_id']).id
       else
         attributes[cf] = hash[cf]
       end
     end
-
-    #update multiple times???
 
     participants.each do |participant|
       if !participant.update!(attributes)
@@ -112,7 +112,7 @@ class SalesforceConnectorController < ApplicationController
       attributes = {}
       hash['changed_fields'].each do |cf|
         if cf == 'questionnaire_name'
-          #updating questionnaire doesn't work
+          #changed fields array is empty for changed questionnaires
           attributes['questionnaire_id'] = Questionnaire.find_by(name: hash['questionnaire_name']).id
         else
           attributes[cf] = hash[cf]

@@ -37,12 +37,12 @@ module ParticipantStatus
       status = EVAL_STATUSES.first
     end
 
-    client = Databasedotcom::Client.new host: "test.salesforce.com" 
-    client.authenticate :username => ENV['SALESFORCE_USERNAME'], :password => ENV['SALESFORCE_PASSWORD']
+    # client = Databasedotcom::Client.new host: "test.salesforce.com" 
+    # client.authenticate :username => ENV['SALESFORCE_USERNAME'], :password => ENV['SALESFORCE_PASSWORD']
 
     #todo verify class name and evaluation status field
-    client.update('Registration', sf_registration_id,
-                  {"ruby360_Assessment_Status__c" => status} )
+    # client.update('Registration', sf_registration_id,
+    #               {"ruby360_Assessment_Status__c" => status} )
   end
 
   def evaluation_complete?
