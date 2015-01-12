@@ -23,14 +23,15 @@ class EvaluationResults
   end
 
   def mean_score_for_q(question_id)
-    answers = peer_evaluations.map { |pe| pe.answers.find_by(question_id: question_id) }
-    responses =[]
-    answers.each do |a|
-      unless a.numeric_response.nil? || a.numeric_response.zero?
-       responses << a.numeric_response
+    answers = []
+    peer_evaluations.each do |pe|
+      answer = pe.answers.find_by(question_id: question_id)
+      if answer && answer.numeric_response && !answer.numeric_response.zero?
+        answers.push answer.numeric_response
       end
     end
-    responses.any? ? responses.sum.to_f/responses.length : nil
+
+    answers.any? ? answers.sum.to_f/answers.length : nil
   end
 
   def mean_score_for_s(section)
