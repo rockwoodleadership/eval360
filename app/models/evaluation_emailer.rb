@@ -28,7 +28,7 @@ class EvaluationEmailer
       message = {
         "text"=> "Evaluation Reports for #{training.name}",
         "subject"=> "Evaluation Reports for #{training.name}",
-        "from_email"=> 'registration@rockwoodleadership.org',
+        "from_email"=> 'training@rockwoodleadership.org',
         "to"=> [
           {
             "email"=> email
@@ -115,7 +115,7 @@ class EvaluationEmailer
 
   private
     def self.base_url
-      "https://#{Rails.application.config.action_mailer.default_url_options[:host]}"
+      "http://#{Rails.application.config.action_mailer.default_url_options[:host]}"
     end
     def self.send_template(template_name, message)
       results = mandrill.messages.send_template(template_name, [], message)
