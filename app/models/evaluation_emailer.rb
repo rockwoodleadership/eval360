@@ -75,6 +75,7 @@ class EvaluationEmailer
     training = participant.training
     template_name = "reminder-to-remind-#{training.questionnaire.name}"
     message = generate_participant_message(participant)
+    message["subject"] = "Rockwood: 360 Leadership Assessment Reminder"
     send_template(template_name, message)
   end
 
@@ -101,12 +102,14 @@ class EvaluationEmailer
   def self.send_thank_you(evaluation)
     template_name = "peer-thanks-#{evaluation.questionnaire.name}"
     message = generate_message([evaluation])
+    message["subject"] = "Rockwood: Thank You"
     send_template(template_name, message)
   end
 
   def self.send_evaluation_done(participant)
     template_name = "eval-done-#{participant.training.questionnaire.name}"
     message = generate_participant_message(participant)
+    message["subject"] = "Rockwood: 360 Leadership Assessment Complete"
     send_template(template_name, message)
   end
 
@@ -143,6 +146,7 @@ class EvaluationEmailer
                                      "content" => "#{base_url}/participants/#{participant.access_key}/peer_decline"}]}
       end
       message = {
+        "subject" => "#{participant.first_name} #{participant.last_name}'s Leadership Assessment",
         "to" => to_array,
         "merge" => true,
         "global_merge_vars" => [{ "name" => "firstname",
@@ -154,7 +158,7 @@ class EvaluationEmailer
                                 { "name" => "ruby360_Assessment_Deadline_c",
                                   "content" => participant.training.formatted_deadline }],
         "merge_vars" => merge_vars,
-        "from_email" => "registration@rockwoodleadership.org",
+        "from_email" => "training@rockwoodleadership.org",
         "from_name" => "Rockwood Leadership Institute" 
       }
       
@@ -162,9 +166,8 @@ class EvaluationEmailer
 
     def self.generate_participant_message(participant)
       training = participant.training
-      subject = "Welcome to Rockwood's #{training.name} training, #{training.formatted_date}, #{training.city} #{training.state}"
       message = {
-        "subject" => subject,
+        "subject" => "Rockwood: 360 Leadership Assessment" ,
         "global_merge_vars" => [{ "name" => "firstname",
                                   "content" => participant.first_name },
                                 { "name" => "lastname",
@@ -187,7 +190,7 @@ class EvaluationEmailer
         "to" => [{ "email" => participant.email, 
                    "name" => "#{participant.first_name} #{participant.last_name}",
                    "type" => "to" }],
-        "from_email" => "registration@rockwoodleadership.org",
+        "from_email" => "training@rockwoodleadership.org",
         "from_name" => "Rockwood Leadership Institute" 
         
       }

@@ -20,6 +20,7 @@ class SalesforceConnectorController < ApplicationController
     if training
       attributes = hash.extract!('first_name', 'last_name', 'email',
                                  'sf_registration_id', 'sf_contact_id')
+      
       participant = training.participants.create!(attributes)
 
       if participant && participant.errors.empty?
@@ -84,6 +85,8 @@ class SalesforceConnectorController < ApplicationController
       end
     end
 
+    #update multiple times???
+
     participants.each do |participant|
       if !participant.update!(attributes)
         render json: 'something went wrong', status: 422 and return
@@ -109,6 +112,7 @@ class SalesforceConnectorController < ApplicationController
       attributes = {}
       hash['changed_fields'].each do |cf|
         if cf == 'questionnaire_name'
+          #updating questionnaire doesn't work
           attributes['questionnaire_id'] = Questionnaire.find_by(name: hash['questionnaire_name']).id
         else
           attributes[cf] = hash[cf]
