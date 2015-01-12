@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe ParticipantsController, :type => :controller do
   before(:each) do
     @participant = create(:participant)
+    allow(@participant).to receive(:update_salesforce)
   end
   describe "GET invitations" do
     context 'when participant is found' do

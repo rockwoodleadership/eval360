@@ -2,6 +2,9 @@ require 'rails_helper'
 
 RSpec.describe EvaluationsController, :type => :controller do
 
+  before(:each) do
+    allow_any_instance_of(ParticipantStatus).to receive(:update_salesforce)
+  end
   describe "GET edit" do
     
     context 'when access_key is found' do
