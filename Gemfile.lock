@@ -60,6 +60,9 @@ GEM
       httparty (>= 0.6, < 1.0)
       multi_json (~> 1.0)
     builder (3.2.2)
+    bullet (4.14.0)
+      activesupport (>= 3.0.0)
+      uniform_notifier (>= 1.6.0)
     celluloid (0.16.0)
       timers (~> 4.0.0)
     cocoon (1.2.6)
@@ -294,6 +297,7 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    uniform_notifier (1.6.2)
     warden (1.2.3)
       rack (>= 1.0)
     webmock (1.19.0)
@@ -308,6 +312,7 @@ DEPENDENCIES
   active_skin
   activeadmin!
   bugsnag
+  bullet
   cocoon
   codeclimate-test-reporter
   coffee-rails (~> 4.0.0)

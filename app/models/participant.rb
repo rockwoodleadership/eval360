@@ -34,7 +34,7 @@ class Participant < ActiveRecord::Base
 
   def peer_evaluations
     pes = []
-    evaluations.where("evaluator_id != ?", self.evaluator.id ).each do |pe|
+    evaluations.includes(:evaluator).where("evaluator_id != ?", self.evaluator.id ).each do |pe|
       pes << pe unless pe.evaluator.declined?
     end
     pes

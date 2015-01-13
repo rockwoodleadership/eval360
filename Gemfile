@@ -35,6 +35,7 @@ group :development do
   gem 'guard-rspec', require: false
   gem "spring"
   gem "spring-commands-rspec"
+  gem "bullet"
 end
 
 group :development, :test do

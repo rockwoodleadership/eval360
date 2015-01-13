@@ -38,7 +38,7 @@ Rails.application.routes.draw do
   end
   
 
-  root to: redirect('/admin') 
+  root to: redirect('http://rockwoodleadership.org') 
   get 'thank_you' => 'pages#thank_you'
   get 'peer_decline' => 'pages#peer_decline'
 
