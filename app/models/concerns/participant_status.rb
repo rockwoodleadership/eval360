@@ -42,7 +42,7 @@ module ParticipantStatus
       status = EVAL_STATUSES.first
     end
 
-    client = Databasedotcom::Client.new host: "test.salesforce.com" 
+    client = Databasedotcom::Client.new 
     client.authenticate :username => ENV['SALESFORCE_USERNAME'], :password => ENV['SALESFORCE_PASSWORD']
     participant_url = "http://#{Rails.application.config.action_mailer.default_url_options[:host]}" +
                       "/admin/trainings/#{training.id}/participants/#{access_key}"
