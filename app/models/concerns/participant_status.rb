@@ -5,7 +5,8 @@ module ParticipantStatus
                    "360 Assessment Completed"]
 
   def added_peer_evaluators
-    peer_assessment_sent_date = Date.today
+    self.peer_assessment_sent_date = Date.today
+    self.save
     update_salesforce
   end
 
@@ -19,7 +20,8 @@ module ParticipantStatus
     EvaluationEmailer.send_thank_you(evaluation)
     if evaluation_complete? && assessment_complete_date.nil?
       EvaluationEmailer.send_evaluation_done(self)
-      assessment_complete_date = Date.today
+      self.assessment_complete_date = Date.today
+      self.save
     end
     update_salesforce
   end

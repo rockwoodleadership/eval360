@@ -20,14 +20,20 @@ class SalesforceConnectorController < ApplicationController
     if training
       attributes = hash.extract!('first_name', 'last_name', 'email',
                                  'sf_registration_id', 'sf_contact_id')
+      existing = Participant.where(sf_contact_id: attributes['sf_contact_id'],
+                                   sf_registration_id: attributes['sf_registration_id'])
       
-      participant = training.participants.create!(attributes)
+      unless existing.any?
+        participant = training.participants.create!(attributes)
 
-      if participant && participant.errors.empty?
-        participant.invite
-        render json: 'success', status: 200 and return
+        if participant && participant.errors.empty?
+          participant.invite
+          render json: 'success', status: 200 and return
+        else
+          render json: 'could not create new participant', status: 422
+        end
       else
-        render json: 'could not create new participant', status: 422
+        render json: 'participant already exists', status: 422
       end
     else
       render json: 'invalid training record', status: 422
