@@ -58,6 +58,7 @@ module ParticipantStatus
                     "ruby360_Completed_Email_Sent__c" => assessment_complete_date    
                   } )
   end
+  handle_asynchronously :update_salesforce
 
   def evaluation_complete?
     self_evaluation.completed? && (completed_peer_evaluations > 9)
