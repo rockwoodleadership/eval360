@@ -28,14 +28,13 @@ module ParticipantStatus
 
   def update_salesforce
     
-
     if evaluation_complete?
       status = EVAL_STATUSES.last
     elsif self_evaluation.completed?
-      if completed_peer_evaluations < 10 
-        status = EVAL_STATUSES[2]
-      elsif peer_evaluators.empty?
+      if peer_evaluators.empty?
         status = EVAL_STATUSES[1]
+      else
+        status = EVAL_STATUSES[2]
       end
     else
       status = EVAL_STATUSES.first
