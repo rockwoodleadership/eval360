@@ -49,32 +49,10 @@ class EvaluationEmailer
     handle_asynchronously :send_pdf_reports
   end
 
-  def self.self_evaluation_reminder(participant)
-    training = participant.training
-    template_name = "self-reminder-#{training.questionnaire.name}"
-    message = generate_participant_message(participant)
-    send_template(template_name, message)
-  end
-
-  def self.self_evaluation_invite(participant)
-    training = participant.training
-    template_name = "self-invite-#{training.questionnaire.name}"
-    message = generate_participant_message(participant)
-    send_template(template_name, message) 
-  end
-
-
-  def self.add_peers_reminder(participant)
-    training = participant.training
-    template_name = "add-peer-#{training.questionnaire.name}"
-    message = generate_participant_message(participant)
-    send_template(template_name, message)
-  end
-
   def self.remind_peers_reminder(participant)
     training = participant.training
     template_name = "reminder-to-remind-#{training.questionnaire.name}"
-    message = generate_participant_message(participant)
+    message = participant_message(participant)
     message["subject"] = "Rockwood: 360 Leadership Assessment Reminder"
     send_template(template_name, message)
   end
@@ -108,15 +86,21 @@ class EvaluationEmailer
 
   def self.send_evaluation_done(participant)
     template_name = "eval-done-#{participant.training.questionnaire.name}"
-    message = generate_participant_message(participant)
+    message = participant_message(participant)
     message["subject"] = "Rockwood: 360 Leadership Assessment Complete"
     send_template(template_name, message)
+  end
+
+  def self.send_to_participant(template_name, participant)
+      message = participant_message(participant)
+      send_template(template_name, message)
   end
 
   private
     def self.base_url
       "http://#{Rails.application.config.action_mailer.default_url_options[:host]}"
     end
+
     def self.send_template(template_name, message)
       results = mandrill.messages.send_template(template_name, [], message)
       sent_count = 0
@@ -164,7 +148,7 @@ class EvaluationEmailer
       
     end
 
-    def self.generate_participant_message(participant)
+    def self.participant_message(participant)
       training = participant.training
       message = {
         "subject" => "Rockwood: 360 Leadership Assessment" ,

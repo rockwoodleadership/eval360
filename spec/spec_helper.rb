@@ -1,5 +1,6 @@
 require 'codeclimate-test-reporter'
 CodeClimate::TestReporter.start
+Delayed::Worker.delay_jobs = false
 
 require 'webmock/rspec'
 WebMock.disable_net_connect!(:allow => "codeclimate.com")

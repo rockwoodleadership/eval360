@@ -110,7 +110,7 @@ RSpec.describe Participant, :type => :model do
   describe "#invite" do
     it 'sends invite to participant' do
       participant = build(:participant)
-      expect(EvaluationEmailer).to receive(:self_evaluation_invite)
+      expect(EvaluationEmailer).to receive(:send_to_participant)
       participant.invite
     end
   end
@@ -118,7 +118,7 @@ RSpec.describe Participant, :type => :model do
   describe "#remind" do
     it 'sends reminder for self evaluation' do
       participant = build(:participant)
-      expect(EvaluationEmailer).to receive(:self_evaluation_reminder)
+      expect(EvaluationEmailer).to receive(:send_to_participant)
       participant.remind
     end
   end
@@ -126,7 +126,7 @@ RSpec.describe Participant, :type => :model do
   describe "#remind_to_add_peers" do
     it 'sends reminder to add peers' do
       participant = build(:participant)
-      expect(EvaluationEmailer).to receive(:add_peers_reminder)
+      expect(EvaluationEmailer).to receive(:send_to_participant)
       participant.remind_to_add_peers
     end
   end

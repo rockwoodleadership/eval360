@@ -74,18 +74,21 @@ class Participant < ActiveRecord::Base
   end
 
   def invite
-    EvaluationEmailer.self_evaluation_invite(participant)
+    email_type = "self-invite-#{training.questionnaire.name}"
+    EvaluationEmailer.send_to_participant(email_type, self)
   end
 
   def remind
-    EvaluationEmailer.self_evaluation_reminder(participant)
+    email_type = "self-reminder-#{training.questionnaire.name}"
+    EvaluationEmailer.send_to_participant(email_type, self)
     self.assessment_reminder_sent_date = Date.today
     self.save
     update_salesforce
   end
 
   def remind_to_add_peers
-    EvaluationEmailer.add_peers_reminder(participant)
+    email_type = "add-peer-#{training.questionnaire.name}"
+    EvaluationEmailer.send_to_participant(email_type, self)
     self.reminder_for_peer_assessment_sent_date = Date.today
     self.save
     update_salesforce
