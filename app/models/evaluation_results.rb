@@ -122,7 +122,7 @@ class EvaluationResults
         mean_score: mean_score_for_q(q.id),
         description: q.self_description
       }
-      results.push(info) if info['mean_score']
+      results.push(info) if info[:mean_score]
     end
     results.sort! { |a,b| b[:mean_score] <=> a[:mean_score] }
   end
