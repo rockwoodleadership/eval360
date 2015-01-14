@@ -8,36 +8,30 @@ class SalesforceConnectorController < ApplicationController
     required_keys = ['first_name', 'last_name', 'email',
                      'sf_training_id', 'sf_registration_id', 'sf_contact_id']
 
-    required_keys.each do |key|
-      unless hash.has_key? key
-        render json: "missing required key #{key}", status: 422 and return
-      end
-    end
-
+    check_for_keys required_keys, hash
+    
     sf_training_id = hash['sf_training_id']
     training = Training.find_by(sf_training_id: sf_training_id) 
 
-    if training
-      attributes = hash.extract!('first_name', 'last_name', 'email',
-                                 'sf_registration_id', 'sf_contact_id')
-      existing = Participant.where(sf_contact_id: attributes['sf_contact_id'],
-                                   sf_registration_id: attributes['sf_registration_id'])
-      
-      unless existing.any?
-        participant = training.participants.create!(attributes)
+    render json: 'invalid training record',
+      status: 422 and return if training.nil?
 
-        if participant && participant.errors.empty?
-          participant.invite
-          render json: 'success', status: 200 and return
-        else
-          render json: 'could not create new participant', status: 422
-        end
-      else
-        render json: 'participant already exists', status: 422
-      end
+    attributes = hash.extract!('first_name', 'last_name', 'email',
+                               'sf_registration_id', 'sf_contact_id')
+    existing = Participant.where(sf_contact_id: attributes['sf_contact_id'],
+                                 sf_registration_id: attributes['sf_registration_id'])
+    render json: 'participant already exists',
+      status: 422 and return if existing.any?
+    
+    participant = training.participants.create!(attributes)
+
+    if participant && participant.errors.empty?
+      participant.invite
+      render json: 'success', status: 200 and return
     else
-      render json: 'invalid training record', status: 422
+      render json: 'could not create new participant', status: 422
     end
+    
 
   end
 
@@ -47,11 +41,7 @@ class SalesforceConnectorController < ApplicationController
                      'sf_training_id', 'deadline',
                      'questionnaire_name', 'status']
 
-    required_keys.each do |key|
-      unless hash.has_key? key
-        render json: "missing required key #{key}", status: 422 and return
-      end
-    end
+    check_for_keys required_keys, hash 
     questionnaire = Questionnaire.find_by(name: hash['questionnaire_name'])
     
     if questionnaire
@@ -73,11 +63,7 @@ class SalesforceConnectorController < ApplicationController
     hash = JSON.parse(params[:participant])
     required_keys = ['sf_contact_id', 'changed_fields']
 
-    required_keys.each do |key|
-      unless hash.has_key? key
-        render json: "missing required key #{key}", status: 422 and return
-      end
-    end
+    check_for_keys required_keys, hash 
 
     attributes = {}
 
@@ -107,57 +93,51 @@ class SalesforceConnectorController < ApplicationController
     hash = JSON.parse(params[:training])
     required_keys = ['sf_training_id', 'changed_fields']
 
-    required_keys.each do |key|
-      unless hash.has_key? key
-        render json: "missing required key #{key}", status: 422 and return
-      end
-    end
+    check_for_keys required_keys, hash
+
     training = Training.find_by(sf_training_id: hash['sf_training_id'])
 
-    if training
-      attributes = {}
-      hash['changed_fields'].each do |cf|
-        if cf == 'questionnaire_name'
-          #changed fields array is empty for changed questionnaires
-          attributes['questionnaire_id'] = Questionnaire.find_by(name: hash['questionnaire_name']).id
-        else
-          attributes[cf] = hash[cf]
-        end
-      end
+    render json: 'could not find training',
+      status: 422 and return if training.nil?
 
-      if training.update!(attributes)
-        render json: 'success', status: 200
+    attributes = {}
+    hash['changed_fields'].each do |cf|
+      if cf == 'questionnaire_name'
+        attributes['questionnaire_id'] = Questionnaire.find_by(name: hash['questionnaire_name']).id
       else
-        render json: 'something went wrong', status: 422
+        attributes[cf] = hash[cf]
       end
-    else
-      render json: 'could not find training', status: 422
     end
+
+    if training.update!(attributes)
+      render json: 'success', status: 200
+    else
+      render json: 'something went wrong', status: 422
+    end
+    
   end
 
   private
 
-  def check_api_key
-    if params[:participant]
-      hash = JSON.parse(params[:participant])
-      if hash.has_key? 'api_key'
-        if hash['api_key'] != ENV['INBOUND_SALESFORCE_KEY']
-          render json: 'unauthorized access', status: 422
-        end
-      else
-        render json: 'api key missing', status: 422
-      end
-    else
-      hash = JSON.parse(params[:training])
-      if hash.has_key? 'api_key'
-        if hash['api_key'] != ENV['INBOUND_SALESFORCE_KEY']
-          render json: 'unauthorized access', status: 422
-        end
-      else
-        render json: 'api key missing', status: 422
+  def check_for_keys required_keys, hash
+    required_keys.each do |key|
+      if !hash.has_key?(key) || hash[key].blank?
+        render json: "missing required key #{key}", status: 422 and return
       end
     end
+  end
 
+  def check_api_key
+    hash = params.has_key?(:participant) ?
+      JSON.parse(params[:participant]) :
+      JSON.parse(params[:training])
+
+    if hash.has_key? 'api_key'
+      render json: 'unauthorized access',
+        status: 422 if hash['api_key'] != ENV['INBOUND_SALESFORCE_KEY']
+    else
+      render json: 'api key missing', status: 422
+    end
   end
 
 end
