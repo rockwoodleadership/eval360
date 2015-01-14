@@ -17,6 +17,7 @@ describe EvaluationEmailer do
 
     after do
       EvaluationEmailer.send_pdf_reports(@training.id, "example.com")
+      FileUtils.rm("test")
     end
 
     it 'creates a pdf for each training participant' do
