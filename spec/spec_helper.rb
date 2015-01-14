@@ -1,4 +1,5 @@
 require 'codeclimate-test-reporter'
+require 'delayed_job'
 CodeClimate::TestReporter.start
 Delayed::Worker.delay_jobs = false
 
