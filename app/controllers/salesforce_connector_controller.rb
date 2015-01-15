@@ -72,6 +72,10 @@ class SalesforceConnectorController < ApplicationController
     hash['changed_fields'].each do |cf|
       if cf == 'sf_training_id'
         old_training = Training.find_by(sf_training_id: hash['sf_old_training_id'])
+        if old_training.nil?
+          render json: "could not find salesforce training id #{hash['sf_old_training_id']}",
+            status: 422 and return
+        end
         participants = old_training.participants.where(sf_contact_id: hash['sf_contact_id'])
         attributes['training_id'] = Training.find_by(sf_training_id: hash['sf_training_id']).id
       else
