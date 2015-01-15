@@ -21,7 +21,7 @@ class SalesforceConnectorController < ApplicationController
     existing = Participant.where(sf_contact_id: attributes['sf_contact_id'],
                                  sf_registration_id: attributes['sf_registration_id'])
     render json: 'participant already exists',
-      status: 422 and return if existing.any?
+      status: 200 and return if existing.any?
     
     participant = training.participants.create!(attributes)
 
