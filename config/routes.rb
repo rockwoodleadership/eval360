@@ -3,12 +3,12 @@ Rails.application.routes.draw do
   resources :evaluations do
     get :edit
     post :update
+    get :peer_decline
   end  
 
   resources :participants do
     post :update
     get :evaluation_report, on: :member, defaults: { format: 'pdf' }
-    post :peer_decline, on: :member
   end
 
   post '/trainings/:id/email_reports', to: 'trainings#email_reports'

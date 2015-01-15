@@ -105,4 +105,30 @@ RSpec.describe EvaluationsController, :type => :controller do
       end
     end
   end
+
+  describe "GET peer_decline" do
+    context 'when evaluation is found' do
+      before do
+        @evaluation = create(:evaluation)
+        get :peer_decline, evaluation_id: @evaluation.access_key
+      end
+      it 'sets evaluators status to declined' do
+        @evaluation.reload
+        expect(@evaluation.evaluator.declined).to eq true
+      end
+
+      it 'redirects to peer_decline page' do
+        expect(response).to redirect_to('/peer_decline')
+      end
+    end
+
+
+    context 'when evaluation not found' do
+      it 'redirects to root' do
+        get :peer_decline, evaluation_id: "notfound"
+        expect(response).to redirect_to(root_url)
+      end
+    end
+
+  end
 end

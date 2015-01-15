@@ -46,6 +46,17 @@ class EvaluationsController < ApplicationController
     end
 
   end
+
+  def peer_decline
+    evaluation = Evaluation.find_by_access_key(params[:evaluation_id])
+
+    if evaluation
+      evaluation.evaluator.decline
+      redirect_to peer_decline_path and return
+    end
+
+    redirect_to :root
+  end
   
   private
     def evaluation_params

@@ -127,7 +127,7 @@ class EvaluationEmailer
                         "vars" =>  [{"name" => "EVAL_URL",
                                      "content" => "#{base_url}/evaluations/#{ev.access_key}/edit"},
                                     {"name" => "DECLINE_URL",
-                                     "content" => "#{base_url}/participants/#{participant.access_key}/peer_decline"}]}
+                                     "content" => "#{base_url}/evaluations/#{ev.access_key}/peer_decline"}]}
       end
       message = {
         "subject" => "#{participant.first_name} #{participant.last_name}'s Leadership Assessment",
