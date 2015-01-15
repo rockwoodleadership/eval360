@@ -44,6 +44,14 @@ RSpec.describe EvaluationsController, :type => :controller do
           end
         end
       end
+
+      context 'when evaluator has declined' do
+        it 'returns a page not found error' do
+          allow(@evaluation).to receive_message_chain(:evaluator, :declined?) { true }
+          get :edit, evaluation_id: @evaluation.access_key
+          expect(response.status).to eq  404
+        end 
+      end
     end
   end
 
