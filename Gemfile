@@ -24,6 +24,7 @@ gem 'prawn'
 gem 'delayed_job_active_record'
 gem 'rubyzip'
 gem 'databasedotcom'
+gem 'newrelic_rpm'
 
 group :production do
   gem 'unicorn'
