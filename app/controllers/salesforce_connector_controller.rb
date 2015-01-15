@@ -8,7 +8,7 @@ class SalesforceConnectorController < ApplicationController
     required_keys = ['first_name', 'last_name', 'email',
                      'sf_training_id', 'sf_registration_id', 'sf_contact_id']
 
-    check_for_keys required_keys, hash
+    check_for_keys(required_keys, hash); return if performed?
     
     sf_training_id = hash['sf_training_id']
     training = Training.find_by(sf_training_id: sf_training_id) 
@@ -23,7 +23,7 @@ class SalesforceConnectorController < ApplicationController
     render json: 'participant already exists',
       status: 200 and return if existing.any?
     
-    participant = training.participants.create!(attributes)
+    participant = training.participants.create(attributes)
 
     if participant && participant.errors.empty?
       participant.invite
@@ -41,7 +41,7 @@ class SalesforceConnectorController < ApplicationController
                      'sf_training_id', 'deadline',
                      'questionnaire_name', 'status']
 
-    check_for_keys required_keys, hash 
+    check_for_keys(required_keys, hash); return if performed? 
     questionnaire = Questionnaire.find_by(name: hash['questionnaire_name'])
     
     if questionnaire
@@ -63,7 +63,7 @@ class SalesforceConnectorController < ApplicationController
     hash = JSON.parse(params[:participant])
     required_keys = ['sf_contact_id', 'changed_fields']
 
-    check_for_keys required_keys, hash 
+    check_for_keys(required_keys, hash); return if performed? 
 
     attributes = {}
 
@@ -93,7 +93,7 @@ class SalesforceConnectorController < ApplicationController
     hash = JSON.parse(params[:training])
     required_keys = ['sf_training_id', 'changed_fields']
 
-    check_for_keys required_keys, hash
+    check_for_keys(required_keys, hash); return if performed?
 
     training = Training.find_by(sf_training_id: hash['sf_training_id'])
 

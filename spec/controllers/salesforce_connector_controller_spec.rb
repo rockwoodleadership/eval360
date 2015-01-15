@@ -9,33 +9,22 @@ RSpec.describe SalesforceConnectorController, :type => :controller do
 
       before(:each) do
         email = "email#{Time.now}@example.com"
-        @participant_param = JSON.generate({ First_Name__c: 'Doris', Last_Name__c: 'Day', Email__c: email })
-        @attributes = { :first_name=>"Doris", :last_name=>"Day", :email=> email }
-        @participant = create(:participant)
-        allow_any_instance_of(Evaluation).to receive(:build_questions).and_return([])
-        allow(EvaluationEmailer).to receive(:send_invite_for_self_eval).and_return('sent')
-      end 
-      
-      xit "creates a new participant" do
-        expect(Participant).to receive(:create!).with(@attributes)
-        post :new_participant, :participant => @participant_param
+        @training = create(:training, sf_training_id: '123')
+        allow(Training).to receive(:find_by) { @training }
+        @participant_params = JSON.generate({ first_name: 'Doris', last_name: 'Day', email: email,
+                                             sf_training_id: '123', sf_registration_id: '345', sf_contact_id: '678',
+                                             api_key: ENV['INBOUND_SALESFORCE_KEY'] })
       end 
 
-      xit "creates a self evaluation" do
-        allow(Participant).to receive(:create!).and_return(@participant)
-        expect(Evaluation).to receive(:create_self_evaluation).with(@participant)
-        post :new_participant, :participant => @participant_param
-      end
-
-      xit "sends self evaluation" do
-        allow(Participant).to receive(:create!).and_return(@participant)
-        expect(EvaluationEmailer).to receive(:send_invite_for_self_eval).with(@participant)
-        post :new_participant, :participant => @participant_param
+      after do
+        post :new_participant, :participant => @participant_params
       end
       
-      xit "returns status code 200" do
-        allow(Participant).to receive(:create!).and_return(@participant)
-        post :new_participant, :participant => @participant_param
+      it "creates a new participant" do
+        expect(@training).to receive_message_chain(:participants, :create)
+      end 
+
+      it "returns status code 200" do
         expect(response.status).to eq 200
       end
 
@@ -43,12 +32,132 @@ RSpec.describe SalesforceConnectorController, :type => :controller do
 
     context 'with invalid parameters' do
 
-      xit "returns status code 422" do
-        post :new_participant
+      it "returns status code 422" do
+        participant_params = JSON.generate({ first_name: 'Doris', last_name: 'Day',
+                                             sf_training_id: '123', sf_registration_id: '345', sf_contact_id: '678'
+                                             })
+        post :new_participant, :participant => participant_params
         expect(response.status).to eq 422
       end
 
     end
 
   end
+
+  describe "POST new_training" do
+
+    context 'with valid parameters' do
+
+      before(:each) do
+
+        t_name = "Training#{Time.now}"
+        q_name = create(:questionnaire).name
+        @training_params = JSON.generate({ name: t_name, start_date: "12/2/2015", end_date: "12/3/2015",
+                                           sf_training_id: '123', deadline: "9/2/2015", questionnaire_name: q_name,
+                                           status: 'Planned', api_key: ENV['INBOUND_SALESFORCE_KEY'] })
+      end 
+
+      after do
+        post :new_training, :training => @training_params
+      end
+      
+      it "creates a new training" do
+        expect(Training).to receive(:create!)
+      end 
+
+      it "returns status code 200" do
+        expect(response.status).to eq 200
+      end
+
+    end
+
+    context 'with invalid parameters' do
+
+      it "returns status code 422" do
+        training_params = JSON.generate({ start_date: "12/2/2015", end_date: "12/3/2015",
+                                           sf_training_id: '123', deadline: "9/2/2015",
+                                           status: 'Planned', api_key: ENV['INBOUND_SALESFORCE_KEY'] })
+        post :new_training, :training => training_params
+        expect(response.status).to eq 422
+      end
+
+    end
+
+  end
+
+  describe "POST update_particpant" do
+
+    context 'with valid parameters' do
+
+      before(:each) do
+        @participant = create(:participant, last_name: "Day", sf_contact_id: '123')
+        allow(Participant).to receive(:find_by) { @participant }
+        @participant_params = JSON.generate({ sf_contact_id: '123', last_name: "Night", changed_fields: [ 'last_name' ] ,
+                                             api_key: ENV['INBOUND_SALESFORCE_KEY'] })
+        post :update_participant, :participant => @participant_params
+      end 
+
+      
+      it "updates the participant" do
+        @participant.reload
+        expect(@participant.last_name).to eq "Night" 
+      end 
+
+      it "returns status code 200" do
+        expect(response.status).to eq 200
+      end
+
+    end
+
+    context 'with invalid parameters' do
+
+      it "returns status code 422" do
+        participant_params = JSON.generate({ sf_contact_id: '123', last_name: "Night", 
+                                             api_key: ENV['INBOUND_SALESFORCE_KEY'] })
+        post :update_participant, :participant => participant_params
+        expect(response.status).to eq 422
+      end
+
+    end
+
+  end
+
+  describe "POST update_training" do
+
+    context 'with valid parameters' do
+
+      before(:each) do
+        @training= create(:training, sf_training_id: '123', city: "Philadelphia")
+        allow(Training).to receive(:find_by) { @training }
+        @training_params= JSON.generate({ sf_training_id: '123', city: "Miami", changed_fields: [ 'city' ] ,
+                                             api_key: ENV['INBOUND_SALESFORCE_KEY'] })
+        post :update_training, :training => @training_params
+      end 
+
+      
+      it "updates the training" do
+        @training.reload
+        expect(@training.city).to eq "Miami" 
+      end 
+
+      it "returns status code 200" do
+        expect(response.status).to eq 200
+      end
+
+    end
+
+    context 'with invalid parameters' do
+
+      it "returns status code 422" do
+        training_params = JSON.generate({ city: "Miami", 
+                                             api_key: ENV['INBOUND_SALESFORCE_KEY'] })
+        post :update_training, :training => training_params 
+        expect(response.status).to eq 422
+      end
+
+    end
+
+  end
+
+
 end
