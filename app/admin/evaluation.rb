@@ -38,7 +38,6 @@ ActiveAdmin.register Evaluation do
     redirect_to :back
   end
 
-  
   index do 
     selectable_column
     column "Evaluator" do |evaluation|
@@ -76,8 +75,6 @@ ActiveAdmin.register Evaluation do
         row "Actions" do
           if evaluation.completed?
             link_to("Reopen Assessment", reopen_evaluation_admin_evaluation_path(evaluation))
-          elsif evaluation.self_eval?
-            link_to("Email Assessment Invite", send_invite_admin_evaluation_path(evaluation))
           end
         end
       end
