@@ -8,10 +8,13 @@
       br
       | Auto-save is on. Your responses are being saved and you may return to this page at any time to complete the evaluation.
     p.intro-text
-      | Please provide your response to the statements below using the sliding scale (Not Applicable, 1=Almost Never, 10=Almost Always). Your written responses to the final open-ended questions would also be very much appreciated, and are important to the assessement process. 
-      | NOTE: If you skip a question, or leave a question blank, the default response will be "Not Applicable."
+      | Please take time to think about the following questions. You can save your work and return to it later by clicking the save button at the bottom of the survey.
     p
-      | Please take time to think about the following questions. You can save your work and return at a later time by clicking the button below.
+      - unless self_eval
+        | Your feedback will be confidential, as your answers will be mixed in with all the other responses.
+        br
+        | Thank you for taking the time to complete this survey.
+        
   = semantic_form_for @evaluation do |f|
     = f.inputs :for => :answers do |answer, i|
       - question = answer.object.question
@@ -22,10 +25,10 @@
       - label = self_eval ? answer.object.question.self_description : answer.object.question.description
       - if answer.object.question.answer_type == 'numeric'
         = answer.input :numeric_response, :as => :radio, 
-          :label => label, :collection => [["n/a",0],1,2,3,4,5,6,7,8,9,10] 
+          :label => "#{i}. #{label}", :collection => [["n/a",0],1,2,3,4,5,6,7,8,9,10] 
         
       - else
-        = answer.input :text_response, :label => label, :input_html => { rows: 10 }
+        = answer.input :text_response, :label => "#{i}. #{label}", :input_html => { rows: 10 }
     
     = f.actions do
       = f.action :submit, :label => "Submit", :button_html => { :class => "btn btn-primary btn-lg" }

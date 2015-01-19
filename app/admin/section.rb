@@ -3,6 +3,7 @@ ActiveAdmin.register Section do
   belongs_to :questionnaire
   navigation_menu :default
   menu false
+  config.breadcrumb = false
 
   config.filters = false
 
@@ -21,11 +22,11 @@ ActiveAdmin.register Section do
   end
 
   show  do |section|
-    panel "Section Details" do
-      div do
-        section.header
-      end
-    end 
+    attributes_table do
+      row :questionnaire
+      row :header
+    end
+     
     panel "Questions" do
       table_for section.questions do
         column "Question Text" do |question|

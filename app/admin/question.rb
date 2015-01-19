@@ -8,6 +8,8 @@ ActiveAdmin.register Question do
   navigation_menu :default
   menu false
 
+  config.breadcrumb = false 
+
   index do
     column "Question Text" do |question|
       question.description

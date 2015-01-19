@@ -26,7 +26,7 @@ class ParticipantsController < ApplicationController
       evaluations = Evaluation.create_peer_evaluations(evaluators, @participant)
       sent_count = EvaluationEmailer.send_peer_invites(evaluations)
       @participant.added_peer_evaluators
-      flash[:notice] = "#{sent_count} invitation(s) sent"
+      flash[:notice] = "Thank you. Your invitation(s) have been sent"
     else
       if flash[:errors].empty?
         flash[:errors] << "Must have 1 or more valid emails"
@@ -37,7 +37,7 @@ class ParticipantsController < ApplicationController
 
   def send_reminders
     sent_count = EvaluationEmailer.send_peer_reminders(@participant, params[:message])
-    flash[:notice] = "#{sent_count} peer reminder(s) have been sent"
+    flash[:notice] = "Thank you. Your peer reminder(s) have been sent"
     render json: "success", status: 200 
   end
 

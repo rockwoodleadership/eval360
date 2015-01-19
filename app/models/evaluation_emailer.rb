@@ -169,7 +169,7 @@ class EvaluationEmailer
                                 { "name" => "end_date__c",
                                   "content" => training.formatted_end_date },
                                 { "name" => "ruby360_peer_complete_number",
-                                  "content" => participant.total_peer_evaluations }],
+                                  "content" => participant.completed_peer_evaluations }],
         "merge" => true,
         "to" => [{ "email" => participant.email, 
                    "name" => "#{participant.first_name} #{participant.last_name}",

@@ -24,7 +24,7 @@ ActiveAdmin.register Questionnaire, as: "Assessment" do
     attributes_table do
       row :name
     end
-
+    i = 0
     questionnaire.sections.each do |section|
       
       panel section.header do
@@ -33,7 +33,7 @@ ActiveAdmin.register Questionnaire, as: "Assessment" do
         end
         table_for section.questions do
           column "Question Text" do |question|
-            question.description
+            "#{(i=i+1).to_s}. #{question.description}"
           end 
           column "Question Type" do |question|
             question.answer_type

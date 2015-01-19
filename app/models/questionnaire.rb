@@ -1,6 +1,6 @@
 require 'yaml'
 class Questionnaire < ActiveRecord::Base
-  has_many :sections, -> { order "created_at ASC" }, dependent: :destroy, inverse_of: :questionnaire
+  has_many :sections, -> { includes(:questions).order("created_at ASC") }, dependent: :destroy, inverse_of: :questionnaire
   validates_uniqueness_of :name
   accepts_nested_attributes_for :sections
 
