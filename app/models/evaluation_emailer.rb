@@ -11,10 +11,10 @@ class EvaluationEmailer
       FileUtils.mkdir_p(dir) unless File.directory?(dir)
       folder = "#{Rails.root}/tmp/pdfs"
       input_filenames = []
-      participants.each do |p|
+      participants.each_with_index do |p,i|
         if p.self_evaluation.completed?
           pdf = ReportPdf.new(p)
-          pdf.render_file "#{Rails.root}/tmp/pdfs/#{p.full_name}.pdf"
+          pdf.render_file "#{Rails.root}/tmp/pdfs/#{i}-#{p.full_name}.pdf"
           input_filenames << "#{p.full_name}.pdf"
         end
       end
