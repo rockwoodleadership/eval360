@@ -75,10 +75,13 @@ ActiveAdmin.register Participant do
         if participant.self_evaluation
           links =  link_to("View Self Assessment", admin_training_participant_evaluation_path(training, participant, participant.self_evaluation))
           if participant.self_evaluation.completed?
-            links += link_to("Download Assessment Report", evaluation_report_participant_path(participant)) 
             if (participant.completed_peer_evaluations < 10 && participant.peer_evaluators.count > 0)
+              links += link_to("Download Assessment Report", evaluation_report_participant_path(participant))
               links += link_to("Email Add Peers Reminder", add_peers_admin_training_participant_path(training, participant))
+            else
+              links += link_to("Download Assessment Report", evaluation_report_participant_path(participant))
             end
+
           else
             links += link_to("Email Assessment Reminder", remind_admin_training_participant_path(training, participant))
           end
