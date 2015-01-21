@@ -4,8 +4,8 @@
 ##Rockwood 360 Eval Software
 
 ###Requirements
-- Ruby 2.1.2
-- Rails 4.1.6
+- Ruby 2.2.0
+- Rails 4.1.9
 - Postgresql 9.3
 
 ####Setup
