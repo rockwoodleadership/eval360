@@ -1,6 +1,6 @@
 require 'evaluation_emailer'
 class ParticipantsController < ApplicationController
-  before_filter { @participant = Participant.find_by_access_key(params[:id]) }
+  before_action :find_participant, except: [:evaluation_report]
 
   def invitations
     10.times { @participant.evaluators.build }
@@ -43,12 +43,19 @@ class ParticipantsController < ApplicationController
 
 
   def evaluation_report
+    @participant = Participant.find_for_report(params[:id])
     respond_to do |format|
       format.pdf do
         pdf = ReportPdf.new(@participant)
         send_data pdf.render, filename: "#{@participant.full_name}.pdf", type: 'application/pdf'
       end
     end
+  end
+
+  private
+
+  def find_participant
+    @participant = Participant.find_by_access_key(params[:id])
   end
 
   

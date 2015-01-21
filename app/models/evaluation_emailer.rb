@@ -5,7 +5,9 @@ class EvaluationEmailer
 
   class << self
     def send_pdf_reports(training_id, email)
-      training = Training.find(training_id)
+      training = Training.includes(participants: [{evaluations: [{questions: [ :section, :answers ]},
+                                                                :evaluator]},
+                                                                {training: [:questionnaire]}] ).find(training_id)
       participants = training.participants
       dir = File.dirname("#{Rails.root}/tmp/pdfs/test")
       FileUtils.mkdir_p(dir) unless File.directory?(dir)
@@ -15,7 +17,7 @@ class EvaluationEmailer
         if p.self_evaluation.completed?
           pdf = ReportPdf.new(p)
           pdf.render_file "#{Rails.root}/tmp/pdfs/#{i}-#{p.full_name}.pdf"
-          input_filenames << "#{p.full_name}.pdf"
+          input_filenames << "#{i}-#{p.full_name}.pdf"
         end
       end
       zipfile_name = "#{Rails.root}/tmp/pdfs/#{training_id}.zip"
@@ -43,7 +45,7 @@ class EvaluationEmailer
         ]
         
       }
-      mandrill.messages.send(message)
+      mandrill.messages.send(message, true)
       FileUtils.rm_rf(dir)
     end
     handle_asynchronously :send_pdf_reports
@@ -102,7 +104,7 @@ class EvaluationEmailer
     end
 
     def self.send_template(template_name, message)
-      results = mandrill.messages.send_template(template_name, [], message)
+      results = mandrill.messages.send_template(template_name, [], message, true)
       sent_count = 0
       results.each do |result|
         if result['status'] == 'sent'

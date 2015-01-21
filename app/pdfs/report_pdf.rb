@@ -13,8 +13,10 @@ class ReportPdf < Prawn::Document
     @participant = participant
     @questions = participant.self_evaluation.questions
     @results = EvaluationResults.new(participant)
+    @mean_scores = []
     print_header
     print_questions 
+    @mean_scores.sort! { |a,b| b[:mean_score] <=> a[:mean_score] }
     print_top_bottom_results
   end
 
@@ -80,24 +82,33 @@ class ReportPdf < Prawn::Document
   end
 
   def print_numeric_answers(question)
+    question_num = @questions.index(question)+1
     bounding_box [0, @block_start + 50], width: PAGE_WIDTH do
-       text "\n\n#{@questions.index(question)+1}. #{question.self_description}", :style=>:bold
+       text "\n\n#{question_num}. #{question.self_description}", :style=>:bold
     end
     bounding_box [ 0, @block_start - 100 ], width: PAGE_WIDTH do
       draw_endpoints
-      draw_histogram @results.histogram_for_q(question.id)
+      answers = @results.numeric_answers_for_q(question.id)
+      draw_histogram @results.histogram_for_q(answers)
       draw_text "Self Score: %0.1f" % @results.self_score_for_q(question.id), at: [ 0, LAYOUT_LINE*2 ], size: 10
-      mean_score = @results.mean_score_for_q(question.id)
+      mean_score = @results.mean_score_for_q(answers)
       if mean_score
+        info = {
+          position: question_num,
+          mean_score: mean_score,
+          description: question.self_description
+        }
+        @mean_scores.push(info)
         draw_text "Average score: %0.1f" % mean_score, at: [ 0, LAYOUT_LINE*3 ], size: 10
       else
         draw_text "Average score:", at: [ 0, LAYOUT_LINE*3 ], size: 10
       end
-      rw_quartile = @results.rw_quartile(question.id)
+      rw_quartile = @results.rw_quartile(question.id, mean_score)
       if rw_quartile
-        draw_text "Rockwood quartile: #{@results.rw_quartile(question.id)}", :at=>[ 350, LAYOUT_LINE*3 ], :size => 10
+        draw_text "Rockwood quartile: #{rw_quartile}", :at=>[ 350, LAYOUT_LINE*3 ], :size => 10
       end
     end
+
   end
 
   def print_text_answers(question)
@@ -112,22 +123,22 @@ class ReportPdf < Prawn::Document
 
   def print_top_8
     text "\nTop 8 Scores:", style: :bold, size: 14
-    print_q_summary @results.get_top_8
+    print_q_summary @mean_scores.first(8) 
   end
 
   def print_bottom_8
     text "\nBottom 8 Scores:", :style=>:bold, :size => 14
-    print_q_summary @results.get_bottom_8
+    print_q_summary @mean_scores.last(8).reverse
   end
 
   def print_top_4
     text "\nTop 4 Scores:", style: :bold, size: 14
-    print_q_summary @results.get_top_4
+    print_q_summary @mean_scores.first(4)
   end
 
   def print_bottom_4
     text "\nBottom 4 Scores:", :style=>:bold, :size => 14
-    print_q_summary @results.get_bottom_4
+    print_q_summary @mean_scores.last(4).reverse
   end
 
   def print_q_summary(scores)

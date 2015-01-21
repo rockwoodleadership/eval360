@@ -15,7 +15,7 @@ class Participant < ActiveRecord::Base
   after_create :create_self_evaluation
 
   def self_evaluation
-    evaluations.where(evaluator_id: self.evaluator.id).first
+    evaluations.find_by(evaluator_id: self.evaluator.id)
   end
 
   def peer_evaluation_status
@@ -96,6 +96,12 @@ class Participant < ActiveRecord::Base
 
   def remind_to_remind_peers
     EvaluationEmailer.remind_peers_reminder(participant)
+  end
+
+  def self.find_for_report(access_key)
+    Participant.includes(training: [:questionnaire],
+               evaluations: [{questions: [ :section, :answers ]}, :evaluator]).
+               find_by(access_key: access_key)
   end
 
   private
