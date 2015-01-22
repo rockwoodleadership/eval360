@@ -34,13 +34,14 @@ class Answer < ActiveRecord::Base
   end
 
   def self.peer_assessment_scores(question_id, participant_id)
-    owner_scores = {}
-    answers = Answer.joins(:evaluation).where('evaluations.participant_id != ?', participant_id)
-    answers.where(question_id: question_id).non_zero.completed.peers.each do |answer|
-      participant_id = answer.evaluation.participant_id
-      owner_scores[participant_id] = [] if !owner_scores[participant_id]
-      owner_scores[participant_id].push answer.numeric_response
-    end
-    owner_scores.map {|k,v| v.sum.to_f/v.length }
+    owner_scores = Answer.joins(:evaluation, :question).where(:evaluations => {self_eval: false,
+                                                     completed:true},
+                                                     :questions => {answer_type: 'numeric', id: question_id}).
+                                                     where.not(:evaluations => { participant_id: participant_id }).
+                                                     where.not(numeric_response: 0).
+                                                     where.not(numeric_response: nil).
+                                                     group('evaluations.participant_id').
+                                                     average(:numeric_response)
+    owner_scores.map {|k,v| v.to_f }
   end
 end

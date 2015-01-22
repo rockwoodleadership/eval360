@@ -5,8 +5,7 @@ class EvaluationResults
   end
 
   def histogram_for_q(answers)
-    histogram = []
-    0.upto(10) { histogram.push(0) }
+    histogram = Array.new(11) {|i| 0}
     answers.each do |a|
       histogram[a] += 1 unless a.nil? || a.zero?
     end
@@ -22,19 +21,23 @@ class EvaluationResults
   end
 
   def numeric_answers_for_q(question_id)
-    answers_for_q = peer_evaluations.flat_map { |pe| pe.answers.where(question_id: question_id) }
-    answers = answers_for_q.keep_if { |a| !a.numeric_response.nil? && !a.numeric_response.zero? }
-    answers.map! {|a| a.numeric_response}
+    Answer.joins(:evaluation, :question).where(:evaluations => {self_eval: false,
+                                                     participant_id: @participant.id,
+                                                     completed:true},
+                                               :questions => {id: question_id, answer_type: 'numeric'}).
+                                                     where.not(numeric_response: 0).
+                                                     where.not(numeric_response: nil).
+                                                     pluck(:numeric_response)
   end
 
   def mean_score_for_s(section)
-    scores = []
-    section.questions.each do |question|
-      answers = numeric_answers_for_q(question.id)
-      mean = mean_score_for_q(answers)
-      scores <<  mean if mean
-    end
-    scores.any? ? scores.sum.to_f/scores.length : nil
+    Answer.joins(:evaluation, :question).where(:evaluations => {self_eval: false,
+                                                     participant_id: @participant.id,
+                                                     completed:true},
+                                    :questions => {section_id: section.id, answer_type: 'numeric'}).
+                                                     where.not(numeric_response: 0).
+                                                     where.not(numeric_response: nil).
+                                                     calculate(:average, :numeric_response).to_f.round(2)
   end
 
   def quartile_rank( score, all_scores )
@@ -65,9 +68,13 @@ class EvaluationResults
   end
 
   def text_answers_for_q(question_id)
-    answers_for_q = peer_evaluations.flat_map { |pe| pe.answers.where(question_id: question_id) }
-    answers = answers_for_q.keep_if { |a| !a.text_response.nil? && !a.text_response.blank? }
-    answers.map {|a| a.text_response }
+    Answer.joins(:evaluation, :question).where(:evaluations => {self_eval: false,
+                                                     participant_id: @participant.id,
+                                                     completed:true},
+                                    :questions => {id: question_id, answer_type: 'text'}).
+                                                     where.not(text_response: "").
+                                                     where.not(text_response: nil).
+                                                     pluck(:text_response)
   end
 
   def self_answer_for_q(question_id)

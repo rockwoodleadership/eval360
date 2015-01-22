@@ -28,8 +28,8 @@ class EvaluationEmailer
       end
 
       message = {
-        "text"=> "Evaluation Reports for #{training.name}",
-        "subject"=> "Evaluation Reports for #{training.name}",
+        "text"=> "Assessment Reports for #{training.name}",
+        "subject"=> "Assessment Reports for #{training.name}",
         "from_email"=> 'training@rockwoodleadership.org',
         "to"=> [
           {
