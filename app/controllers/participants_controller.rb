@@ -1,6 +1,6 @@
 require 'evaluation_emailer'
 class ParticipantsController < ApplicationController
-  before_action :find_participant, except: [:evaluation_report]
+  before_action :find_participant
 
   def invitations
     10.times { @participant.evaluators.build }
@@ -43,7 +43,6 @@ class ParticipantsController < ApplicationController
 
 
   def evaluation_report
-    @participant = Participant.find_for_report(params[:id])
     respond_to do |format|
       format.pdf do
         pdf = ReportPdf.new(@participant)

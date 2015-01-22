@@ -98,12 +98,6 @@ class Participant < ActiveRecord::Base
     EvaluationEmailer.remind_peers_reminder(participant)
   end
 
-  def self.find_for_report(access_key)
-    Participant.includes(training: [:questionnaire],
-               evaluations: [{questions: [ :section, :answers ]}, :evaluator]).
-               find_by(access_key: access_key)
-  end
-
   private
   
   def create_self_evaluation

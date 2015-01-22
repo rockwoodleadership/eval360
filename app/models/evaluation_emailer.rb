@@ -5,9 +5,7 @@ class EvaluationEmailer
 
   class << self
     def send_pdf_reports(training_id, email)
-      training = Training.includes(participants: [{evaluations: [{questions: [ :section, :answers ]},
-                                                                :evaluator]},
-                                                                {training: [:questionnaire]}] ).find(training_id)
+      training = Training.includes(:participants).find(training_id)
       participants = training.participants
       dir = File.dirname("#{Rails.root}/tmp/pdfs/test")
       FileUtils.mkdir_p(dir) unless File.directory?(dir)
