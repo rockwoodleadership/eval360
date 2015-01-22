@@ -30,7 +30,7 @@ class ReportPdf < Prawn::Document
     unless section.header.blank? || section.header.nil?
       bounding_box [0, @block_start+5], width: PAGE_WIDTH do
         text "#{section.header}", style: :bold, size: 14
-        for_individual_program = (@participant.training.questionnaire.name == 'yearlongindividual') ? true : false
+        for_individual_program = (@participant.training.questionnaire.name == 'YearlongIndividual') ? true : false
         if for_individual_program
           section_mean = @results.mean_score_for_s(section)
           text("Average score for this section: #{section_mean}", size:12) unless section_mean.nil?
@@ -72,7 +72,7 @@ class ReportPdf < Prawn::Document
   def print_top_bottom_results
     program_name = @participant.training.questionnaire.name
     start_new_page
-    if (program_name == 'yearlongindividual' || program_name == 'yearlongperformance')
+    if (program_name == 'YearlongIndividual' || program_name == 'YearlongPerformance')
       print_top_8
       print_bottom_8
     else

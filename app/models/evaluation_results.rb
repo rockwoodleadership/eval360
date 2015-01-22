@@ -63,7 +63,7 @@ class EvaluationResults
       @legacy_values = LegacyMeanScores.mean_scores question.legacy_tag
       rw_dataset +=  @legacy_values if @legacy_values
     end
-    return 0 if rw_dataset.empty? 
+    return 0 if rw_dataset.empty? || eval_mean.nil? 
     quartile_rank eval_mean, rw_dataset
   end
 
