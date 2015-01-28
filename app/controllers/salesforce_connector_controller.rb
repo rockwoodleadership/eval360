@@ -69,6 +69,8 @@ class SalesforceConnectorController < ApplicationController
 
     participants = Participant.where(sf_contact_id: hash['sf_contact_id'])
     attributes = {}
+    approved_fields = ['first_name', 'last_name', 'email',
+                               'sf_registration_id', 'sf_contact_id']
     hash['changed_fields'].each do |cf|
       if cf == 'sf_training_id'
         old_training = Training.find_by(sf_training_id: hash['sf_old_training_id'])
@@ -78,10 +80,10 @@ class SalesforceConnectorController < ApplicationController
         end
         participants = old_training.participants.where(sf_contact_id: hash['sf_contact_id'])
         attributes['training_id'] = Training.find_by(sf_training_id: hash['sf_training_id']).id
-      elsif cf != 'sf_organization_id'
-        #this should be fixed in salesforce
-        #salesforce should not send an update for change in organization
+      elsif approved_fields.include? cf 
         attributes[cf] = hash[cf]
+      else
+        render json: "#{cf} is not an acceptable changed field", status: 200 and return
       end
     end
 
