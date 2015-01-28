@@ -78,7 +78,9 @@ class SalesforceConnectorController < ApplicationController
         end
         participants = old_training.participants.where(sf_contact_id: hash['sf_contact_id'])
         attributes['training_id'] = Training.find_by(sf_training_id: hash['sf_training_id']).id
-      else
+      elsif cf != 'sf_organization_id'
+        #this should be fixed in salesforce
+        #salesforce should not send an update for change in organization
         attributes[cf] = hash[cf]
       end
     end
