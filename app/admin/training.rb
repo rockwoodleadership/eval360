@@ -12,9 +12,9 @@ ActiveAdmin.register Training do
 
 
   config.sort_order = "start_date_desc"
+  config.clear_action_items!
 
   index do
-    selectable_column
     column :name
     column "Location" do |training|
       "#{training.city}, #{training.state}"
@@ -26,10 +26,18 @@ ActiveAdmin.register Training do
       training.end_date.strftime("%b %d %Y") if training.end_date
     end
     column :status
-    actions 
+    column "Actions" do |training|
+      link_to "View", admin_training_path(training)
+    end 
+    div do
+      link_to "create new training", new_admin_training_path, class: "small-new"
+    end
   end 
 
-  form do |f|
+  form(:html => { :multipart => true}) do |f|
+    f.inputs "WARNING" do
+      f.template.render partial: "admin/warning"
+    end 
     f.inputs "Training Details" do
       f.input :name
       f.input :start_date
@@ -93,9 +101,13 @@ ActiveAdmin.register Training do
           participant.peer_evaluation_status
         end
         column "Actions" do |participant|
-          link_to("View", admin_training_participant_path(training, participant)) + " " + link_to("Edit", edit_admin_training_participant_path(training, participant))
+          link_to("View", admin_training_participant_path(training, participant)) 
         end
       end
+      
+    end
+    div do
+      link_to "edit", edit_admin_training_path(training)
     end
 
   end

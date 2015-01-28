@@ -23,6 +23,7 @@ RSpec.describe Training, :type => :model do
     describe ".send_add_peer_reminders" do
       it 'reminds participants to remind peers' do
         expect(@participant).to receive(:remind_to_add_peers)
+        allow(@participant).to receive_message_chain(:self_evaluation, :completed?) { true }
         Training.send_add_peers_reminders
       end
     end

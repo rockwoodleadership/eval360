@@ -8,6 +8,7 @@ ActiveAdmin.register Participant do
   menu false 
   config.filters = false
   config.sort_order = "first_name_asc"
+  config.clear_action_items!
 
   controller do
     defaults finder: :find_by_access_key
@@ -32,6 +33,9 @@ ActiveAdmin.register Participant do
   end
 
   form do |f|
+    f.inputs "WARNING" do
+      f.template.render partial: "admin/warning"
+    end
     f.inputs do
       f.input :first_name
       f.input :last_name
@@ -118,6 +122,9 @@ ActiveAdmin.register Participant do
 
     end
     active_admin_comments
+    div do
+      link_to "edit", edit_admin_training_participant_path(training, participant)
+    end
   end 
 
 end

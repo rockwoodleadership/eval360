@@ -13,7 +13,9 @@ class Training < ActiveRecord::Base
 
   def self.send_add_peers_reminders
     email_block do |participant|
-      participant.remind_to_add_peers if participant.total_peer_evaluations.zero?
+      if participant.self_evaluation.completed? && participant.total_peer_evaluations.zero?
+        participant.remind_to_add_peers
+      end 
     end
   end
 
