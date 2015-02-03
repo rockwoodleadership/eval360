@@ -1,6 +1,6 @@
 ActiveAdmin.register Training do
   permit_params :name, :start_date, :end_date, :city, :state, :deadline, :curriculum, :site_name, :questionnaire_id, :status, participants_attributes: [:id, :first_name, :last_name, :email]
-  actions :index, :show, :new, :edit, :create, :update
+  actions :index, :show, :new, :edit, :create, :update, :destroy
   menu priority: 1
 
   filter :name
@@ -108,6 +108,9 @@ ActiveAdmin.register Training do
     end
     div do
       link_to "edit", edit_admin_training_path(training)
+    end
+    div do
+      link_to("delete", admin_training_path(training), data: { confirm: "WARNING: Are you sure you want to delete this training?" }, method: :delete)
     end
 
   end

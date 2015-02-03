@@ -1,5 +1,5 @@
 class Training < ActiveRecord::Base
-  has_many :participants, -> { order "first_name ASC" }, inverse_of: :training 
+  has_many :participants, -> { order "first_name ASC" }, inverse_of: :training, dependent: :destroy 
   accepts_nested_attributes_for :participants
   belongs_to :questionnaire
 

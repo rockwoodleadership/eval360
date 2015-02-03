@@ -1,5 +1,3 @@
-[![Code Climate](https://codeclimate.com/github/rockwoodleadership/eval360/badges/gpa.svg)](https://codeclimate.com/github/rockwoodleadership/eval360)
-[![Test Coverage](https://codeclimate.com/github/rockwoodleadership/eval360/badges/coverage.svg)](https://codeclimate.com/github/rockwoodleadership/eval360)
 [![Build Status](https://travis-ci.org/rockwoodleadership/eval360.svg?branch=master)](https://travis-ci.org/rockwoodleadership/eval360)
 ##Rockwood 360 Eval Software
 

@@ -1,7 +1,7 @@
 ActiveAdmin.register Participant do
   permit_params :training_id, :first_name, :last_name, :email
 
-  actions :index, :show, :edit, :new, :create, :update 
+  actions :index, :show, :edit, :new, :create, :update, :destroy 
 
   belongs_to :training
   navigation_menu :default
@@ -117,13 +117,19 @@ ActiveAdmin.register Participant do
           column "Declined Reviewer" do |evaluator|
             evaluator.email
           end
+          column "Actions" do |evaluator|
+            link_to "Reinstate", edit_admin_evaluator_path(evaluator)
+          end
         end
       end
 
     end
     active_admin_comments
     div do
-      link_to "edit", edit_admin_training_participant_path(training, participant)
+      link_to("edit", edit_admin_training_participant_path(training, participant))
+    end
+    div do
+      link_to("delete", admin_training_participant_path(participant.training, participant), data: { confirm: "WARNING: Are you sure you want to delete this participant?" }, method: :delete)
     end
   end 
 
