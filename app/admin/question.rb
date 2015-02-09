@@ -34,7 +34,6 @@ ActiveAdmin.register Question do
       f.input :answer_type, :as => :select, :collection => ["numeric", "text"]
       f.input :description
       f.input :self_description
-      f.input :legacy_tag
     end
     f.actions
   end

@@ -107,10 +107,13 @@ ActiveAdmin.register Training do
       
     end
     div do
-      link_to "edit", edit_admin_training_path(training)
+      link_to "Download CSV", admin_training_participants_path(training, format: :csv)
     end
     div do
-      link_to("delete", admin_training_path(training), data: { confirm: "WARNING: Are you sure you want to delete this training?" }, method: :delete)
+      link_to "Edit Training", edit_admin_training_path(training)
+    end
+    div do
+      link_to("Delete Training", admin_training_path(training), data: { confirm: "WARNING: Are you sure you want to delete this training?" }, method: :delete)
     end
 
   end

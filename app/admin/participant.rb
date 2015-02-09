@@ -32,6 +32,23 @@ ActiveAdmin.register Participant do
     redirect_to :back
   end
 
+  csv do
+    column :first_name
+    column :last_name
+    column :email
+    column "Self Assessment Complete" do |participant|
+      if participant.self_evaluation
+        participant.self_evaluation.completed? ? "Yes" : "No"
+      end
+    end
+    column "Peer Assessment Status" do |participant|
+      participant.peer_evaluation_status
+    end
+    column "Participant URL" do |participant|
+      evaluation_edit_url(participant.self_evaluation) if participant.self_evaluation 
+    end
+  end
+
   form do |f|
     f.inputs "WARNING" do
       f.template.render partial: "admin/warning"
@@ -126,10 +143,10 @@ ActiveAdmin.register Participant do
     end
     active_admin_comments
     div do
-      link_to("edit", edit_admin_training_participant_path(training, participant))
+      link_to("Edit Participant", edit_admin_training_participant_path(training, participant))
     end
     div do
-      link_to("delete", admin_training_participant_path(participant.training, participant), data: { confirm: "WARNING: Are you sure you want to delete this participant?" }, method: :delete)
+      link_to("Delete Participant", admin_training_participant_path(participant.training, participant), data: { confirm: "WARNING: Are you sure you want to delete this participant?" }, method: :delete)
     end
   end 
 

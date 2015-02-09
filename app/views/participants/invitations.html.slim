@@ -36,9 +36,8 @@
       .links
           = link_to_add_association 'add another recipient', f, :evaluators
     = f.actions do
-      = f.action :submit, :label => "Invite Peers", :button_html => { :class => "btn btn-primary btn-lg", method: "invite_peers" }
+      = f.action :submit, :label => "Invite Peers", :button_html => { :class => "btn btn-primary btn-lg", method: "invite_peers"}
 
 =javascript_include_tag "invitations"
 javascript:
   var participant_id = "#{@participant.access_key}";
-
