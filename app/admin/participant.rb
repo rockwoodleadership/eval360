@@ -12,6 +12,13 @@ ActiveAdmin.register Participant do
 
   controller do
     defaults finder: :find_by_access_key
+
+    def update
+      participant = Participant.find_by(access_key: params[:id])
+      participant.update(permitted_params[:participant]) 
+      flash[:notice] = "Participant has been updated"
+      redirect_to admin_training_participant_path(participant.training, participant)
+    end
   end
 
   member_action :remind, method: :get do
@@ -57,6 +64,7 @@ ActiveAdmin.register Participant do
       f.input :first_name
       f.input :last_name
       f.input :email
+      f.input :training
     end
     f.actions
   end
