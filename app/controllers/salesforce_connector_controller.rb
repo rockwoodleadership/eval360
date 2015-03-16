@@ -136,6 +136,7 @@ class SalesforceConnectorController < ApplicationController
   end
 
   def check_api_key
+    puts params
     hash = params.has_key?(:participant) ?
       JSON.parse(params[:participant]) :
       JSON.parse(params[:training])
