@@ -52,6 +52,14 @@ RSpec.describe EvaluationsController, :type => :controller do
           expect(response.status).to eq  404
         end 
       end
+
+      context 'when training date has passed' do
+        it 'returns a page not found error' do
+          allow(@evaluation).to receive_message_chain(:participant, :training, :end_date) { Date.today - 1.day }
+          get :edit, evaluation_id: @evaluation.access_key
+          expect(response.status).to eq  404
+        end
+      end
     end
   end
 

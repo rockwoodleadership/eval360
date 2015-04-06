@@ -93,4 +93,24 @@ RSpec.describe Evaluation, :type => :model do
     end
   end
 
+  describe "#not_accessible?" do
+    it 'returns true if evaluator has declined' do
+      evaluator = build(:evaluator, declined: true) 
+      evaluation = build(:evaluation, evaluator: evaluator)
+      expect(evaluation.not_accessible?).to eq true
+    end
+
+    it 'returns true if training date has passed' do
+      training = build(:training, end_date: Date.today - 1.day )
+      participant = build(:participant, training: training)
+      evaluation = build(:evaluation, participant: participant)
+      expect(evaluation.not_accessible?).to eq true 
+    end
+
+    it 'returns false if evaluator is active and training is upcoming' do
+      evaluation = build(:evaluation)
+      expect(evaluation.not_accessible?).to eq false
+    end
+  end
+
 end

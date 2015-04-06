@@ -45,6 +45,13 @@ class Evaluation < ActiveRecord::Base
     self.save
   end
 
+  def not_accessible?
+    if self.evaluator.declined? or Date.today > participant.training.end_date
+      return true
+    end
+    return false
+  end
+
   private
   
     def build_questions

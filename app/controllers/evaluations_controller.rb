@@ -2,7 +2,7 @@ class EvaluationsController < ApplicationController
 
   def edit
     @evaluation = Evaluation.find_by_access_key(params[:evaluation_id])
-    render plain: "404 Not Found", status: 404 and return if @evaluation.nil? || @evaluation.evaluator.declined?
+    render plain: "404 Not Found", status: 404 and return if @evaluation.nil? || @evaluation.not_accessible?
     completed_self_eval = @evaluation.completed? && @evaluation.self_eval?
     completed_peer_eval = @evaluation.completed? && !@evaluation.self_eval?
     
