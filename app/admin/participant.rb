@@ -31,9 +31,9 @@ ActiveAdmin.register Participant do
     redirect_to :back 
   end
 
-  member_action :add_peers, method: :get do
+  member_action :remind_peers, method: :get do
     participant = Participant.find_by_access_key(params[:id])
-    participant.remind_to_add_peers
+    participant.remind_to_remind_peers
     flash[:notice] = "Reminder sent"
     
     redirect_to :back
@@ -106,7 +106,7 @@ ActiveAdmin.register Participant do
           if participant.self_evaluation.completed?
             if (participant.completed_peer_evaluations < 10 && participant.peer_evaluators.count >= 0)
               links += link_to("Download Assessment Report", evaluation_report_participant_path(participant))
-              links += link_to("Email Add Peers Reminder", add_peers_admin_training_participant_path(training, participant))
+              links += link_to("Send Remind Peers Reminder", remind_peers_admin_training_participant_path(training, participant))
             else
               links += link_to("Download Assessment Report", evaluation_report_participant_path(participant))
             end
