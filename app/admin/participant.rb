@@ -39,6 +39,13 @@ ActiveAdmin.register Participant do
     redirect_to :back
   end
 
+  member_action :download_evaluators, method: :get do
+    participant = Participant.find_by_access_key(params[:id])
+    send_data participant.reviewers_to_csv,
+      filename: "reviewers_for_#{participant.full_name.downcase.tr(' ','_')}"
+
+  end
+
   csv do
     column :first_name
     column :last_name
@@ -146,6 +153,9 @@ ActiveAdmin.register Participant do
             link_to "Reinstate", edit_admin_evaluator_path(evaluator)
           end
         end
+      end
+      div do
+        link_to("Download as CSV", download_evaluators_admin_training_participant_path(training, participant, format: 'csv'))
       end
 
     end

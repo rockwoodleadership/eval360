@@ -52,6 +52,21 @@ class Participant < ActiveRecord::Base
     evs
   end
 
+  def reviewers_to_csv
+    CSV.generate do |csv|
+      headers = ['Email Address', 'Assessment Status', 'Assessment URL']
+      csv << headers
+      peer_evaluations.each do |peer_assessment|
+        row = []
+        row << peer_assessment.evaluator.email
+        pa_status = peer_assessment.completed? ? 'Complete' : 'Incomplete'
+        row << pa_status
+        row << "https://#{Rails.application.config.action_mailer.default_url_options[:host]}/evaluations/#{peer_assessment.access_key}/edit" 
+        csv << row
+      end
+    end
+  end
+
   def invited_peers
     evaluators.where.not(id: self.evaluator.id)
   end
