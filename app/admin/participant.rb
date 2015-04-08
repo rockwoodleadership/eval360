@@ -42,7 +42,7 @@ ActiveAdmin.register Participant do
   member_action :download_evaluators, method: :get do
     participant = Participant.find_by_access_key(params[:id])
     send_data participant.reviewers_to_csv,
-      filename: "reviewers_for_#{participant.full_name.downcase.tr(' ','_')}"
+      filename: "reviewers_for_#{participant.full_name.downcase.tr(' ','_')}.csv"
 
   end
 
@@ -154,12 +154,13 @@ ActiveAdmin.register Participant do
           end
         end
       end
-      div do
-        link_to("Download as CSV", download_evaluators_admin_training_participant_path(training, participant, format: 'csv'))
-      end
+      
 
     end
     active_admin_comments
+    div do
+      link_to("Download Peer Assessment Status as CSV", download_evaluators_admin_training_participant_path(training, participant, format: 'csv'))
+    end
     div do
       link_to("Edit Participant", edit_admin_training_participant_path(training, participant))
     end
