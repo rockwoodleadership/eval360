@@ -21,10 +21,6 @@ describe 'participants/invitations.html.slim' do
       expect(rendered).to include @participant.invited_peers.first.email
     end
 
-    it 'displays declined peers' do
-      expect(rendered).to include "#{@participant.declined_peers.first.email} {declined}"
-    end
-
     it 'displays button to remind peers' do
       expect(rendered).to include "Remind Peers"
     end

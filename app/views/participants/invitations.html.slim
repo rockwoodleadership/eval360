@@ -17,9 +17,6 @@
         | You have already sent evaluation requests to the following addresses:
       ul.previously_invited.text
         - @participant.invited_peers.each do |ev|
-          - if ev.declined?
-            li= "#{ev.email} {declined}"
-          - else
             li= ev.email
       button.btn.btn-warning data-toggle="modal" data-target="#reminder-modal"
         | Remind Peers
