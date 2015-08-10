@@ -42,6 +42,13 @@ class SalesforceConnectorController < ApplicationController
                      'questionnaire_name', 'status']
 
     check_for_keys(required_keys, hash); return if performed? 
+    
+    if hash['questionnaire_name'] == 'StandaloneCustom'
+      questionnaire_name = 'Standalone'
+    else
+      questionnaire_name = hash['questionnaire_name']
+    end
+
     questionnaire = Questionnaire.find_by(name: hash['questionnaire_name'])
     
     if questionnaire
@@ -49,6 +56,7 @@ class SalesforceConnectorController < ApplicationController
                                  'end_date', 'status', 'city', 'state',
                                  'deadline', 'site_name', 'curriculum')
       attributes['questionnaire_id'] = questionnaire.id
+      atrributes['no_invite'] = true if hash['questionnaire_name'] == 'StandaloneCustom'
       if Training.create!(attributes)
         render json: 'success', status: 200
       else
