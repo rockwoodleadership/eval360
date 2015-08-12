@@ -56,7 +56,7 @@ class SalesforceConnectorController < ApplicationController
                                  'end_date', 'status', 'city', 'state',
                                  'deadline', 'site_name', 'curriculum')
       attributes['questionnaire_id'] = questionnaire.id
-      atrributes['no_invite'] = true if hash['questionnaire_name'] == 'StandaloneCustom'
+      attributes['no_invite'] = true if hash['questionnaire_name'] == 'StandaloneCustom'
       if Training.create!(attributes)
         render json: 'success', status: 200
       else
