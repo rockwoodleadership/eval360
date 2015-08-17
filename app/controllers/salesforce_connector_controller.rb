@@ -49,7 +49,7 @@ class SalesforceConnectorController < ApplicationController
       questionnaire_name = hash['questionnaire_name']
     end
 
-    questionnaire = Questionnaire.find_by(name: hash['questionnaire_name'])
+    questionnaire = Questionnaire.find_by(name: questionnaire_name)
     
     if questionnaire
       attributes = hash.extract!('sf_training_id', 'name', 'start_date',
