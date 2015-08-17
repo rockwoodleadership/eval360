@@ -1,6 +1,7 @@
 class Section < ActiveRecord::Base
   has_many :questions, -> { order "created_at ASC" }, dependent: :destroy
-  belongs_to :questionnaire, inverse_of: :sections
+  has_many :questionnaire_templates
+  has_many :questionnaires, through: :questionnaire_templates
   accepts_nested_attributes_for :questions
 
 

@@ -1,6 +1,5 @@
 ActiveAdmin.register Section do
-  permit_params :questionnaire_id, :header
-  belongs_to :questionnaire
+  permit_params :header
   navigation_menu :default
   menu false
   config.breadcrumb = false
@@ -23,7 +22,6 @@ ActiveAdmin.register Section do
 
   show  do |section|
     attributes_table do
-      row :questionnaire
       row :header
     end
      
