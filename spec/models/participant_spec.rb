@@ -113,6 +113,15 @@ RSpec.describe Participant, :type => :model do
       expect(EvaluationEmailer).to receive(:send_to_participant)
       participant.invite
     end
+
+    context 'training no invite is true' do
+      it 'does not send invite to participant' do
+        training = build(:training, no_invite: true)
+        participant = build(:participant, training: training)
+        expect(EvaluationEmailer).to_not receive(:send_to_participant)
+        participant.invite
+      end
+    end
   end
 
   describe "#remind" do

@@ -71,6 +71,28 @@ RSpec.describe SalesforceConnectorController, :type => :controller do
 
     end
 
+    context 'with questionnaire type StandaloneCustom' do 
+      before(:each) do
+
+        t_name = "Training#{Time.now}"
+        create(:questionnaire, name: 'Standalone')
+        @training_params = JSON.generate({ name: t_name, start_date: "12/2/2015", end_date: "12/3/2015",
+                                           sf_training_id: '123', deadline: "9/2/2015",
+                                           questionnaire_name: 'StandaloneCustom',
+                                           status: 'Planned', api_key: ENV['INBOUND_SALESFORCE_KEY'] })
+      end
+      after do
+        post :new_training, :training => @training_params
+      end
+      it 'creates a new training' do
+        expect(Training).to receive(:create!)
+      end
+
+      it 'returns status code 200' do
+        expect(response.status).to eq 200
+      end
+    end
+
     context 'with invalid parameters' do
 
       it "returns status code 422" do

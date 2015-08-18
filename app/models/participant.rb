@@ -89,8 +89,10 @@ class Participant < ActiveRecord::Base
   end
 
   def invite
-    email_type = "self-invite-#{training.questionnaire.name}"
-    EvaluationEmailer.send_to_participant(email_type, self)
+    unless training.no_invite? 
+      email_type = "self-invite-#{training.questionnaire.name}"
+      EvaluationEmailer.send_to_participant(email_type, self)
+    end
   end
 
   def remind
