@@ -1,6 +1,6 @@
 desc "Create Questionnaire From Another"
 task :create_rbf_questionnaire => :environment do
-  base_questionnaire = Questionnaire.where(name: 'standalone').includes(sections: :questions).first
+  base_questionnaire = Questionnaire.where(name: 'Standalone').includes(sections: :questions).first
   if base_questionnaire
     new_questionnaire = Questionnaire.create!(name: '360StandaloneRBF')
     base_questionnaire.sections.each do |section|
