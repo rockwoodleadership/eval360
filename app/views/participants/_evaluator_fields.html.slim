@@ -1,4 +1,6 @@
 .nested-fields
   = f.inputs do
     = f.input :email, required: false
+    .invalid-email-text.hide
+      | Please enter a valid email address
     

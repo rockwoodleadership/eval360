@@ -20,3 +20,37 @@ $("#send-reminder-btn").on('click', function() {
     window.location.reload();
   }, "html");
 });
+
+function validateEmail(input) {
+  if (!input.checkValidity()){
+    $(input).addClass('invalid-email');
+    $(input).closest('.email').next('.invalid-email-text').removeClass('hide');
+    return false;
+  } else {
+    $(input).removeClass('invalid-email');
+    $(input).closest('.email').next('.invalid-email-text').addClass('hide');
+    return true;
+  }
+}
+
+
+$("input[type='email']").on('change', function(e) {
+  validateEmail(e.target);
+});
+
+$('form').on('submit', function(e) {
+  var invalidCount = 0;
+  $("input[type='email']").each( function(){
+    if (!validateEmail(this)) {
+      invalidCount++;
+    }
+
+  });
+  if (invalidCount > 0)
+    e.preventDefault();
+});
+
+
+
+
+
