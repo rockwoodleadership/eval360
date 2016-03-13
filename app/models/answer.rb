@@ -28,7 +28,7 @@ class Answer < ActiveRecord::Base
 
 
   def set_default_values
-    self.numeric_response = 0 
+    self.numeric_response = nil 
     self.text_response = "" 
     self.save
   end

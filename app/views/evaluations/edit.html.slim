@@ -22,13 +22,19 @@
       - section_ids.push(section.id)
       - label = self_eval ? answer.object.question.self_description : answer.object.question.description
       - if answer.object.question.answer_type == 'numeric'
-        = answer.input :numeric_response, :as => :radio, 
-          :label => "#{i}. #{label}", :collection => [["n/a",0],1,2,3,4,5,6,7,8,9,10] 
+        - if answer.object.numeric_response.nil?
+          = answer.input :numeric_response, :as => :radio, 
+            :label => "#{i}. #{label}", :collection => [["n/a",0],1,2,3,4,5,6,7,8,9,10],
+            :input_html => { checked: false }, :wrapper_html => { class: "#{'error' if flash[:unanswered]}" }
+        - else
+          = answer.input :numeric_response, :as => :radio, 
+            :label => "#{i}. #{label}", :collection => [["n/a",0],1,2,3,4,5,6,7,8,9,10]
+          
         
       - else
         = answer.input :text_response, :label => "#{i}. #{label}", :input_html => { rows: 10 }
     
     = f.actions do
-      = f.action :submit, :label => "Submit", :button_html => { :class => "btn btn-primary btn-lg" }
+      = f.action :submit, :label => "Submit", :button_html => { :class => "btn btn-primary btn-lg submit-btn" }
       = f.action :submit, :label => "Save For Later", :button_html => { :class => "btn btn-default btn-lg" }
       
