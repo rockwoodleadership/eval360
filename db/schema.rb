@@ -11,13 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
 ActiveRecord::Schema.define(version: 20150817014641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "active_admin_comments", force: true do |t|
+  create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
     t.text     "body"
     t.string   "resource_id",   null: false
@@ -32,7 +31,7 @@ ActiveRecord::Schema.define(version: 20150817014641) do
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
-  create_table "admin_users", force: true do |t|
+  create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
@@ -50,7 +49,7 @@ ActiveRecord::Schema.define(version: 20150817014641) do
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
-  create_table "answers", force: true do |t|
+  create_table "answers", force: :cascade do |t|
     t.integer  "question_id"
     t.integer  "evaluation_id"
     t.datetime "created_at"
@@ -59,7 +58,7 @@ ActiveRecord::Schema.define(version: 20150817014641) do
     t.text     "text_response"
   end
 
-  create_table "delayed_jobs", force: true do |t|
+  create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
     t.integer  "attempts",   default: 0, null: false
     t.text     "handler",                null: false
@@ -75,19 +74,19 @@ ActiveRecord::Schema.define(version: 20150817014641) do
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
-  create_table "evaluations", force: true do |t|
+  create_table "evaluations", force: :cascade do |t|
     t.integer  "participant_id"
     t.string   "access_key"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "completed"
     t.integer  "evaluator_id"
+    t.boolean  "completed"
     t.boolean  "self_eval",      default: false
   end
 
   add_index "evaluations", ["access_key"], name: "index_evaluations_on_access_key", using: :btree
 
-  create_table "evaluators", force: true do |t|
+  create_table "evaluators", force: :cascade do |t|
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -96,17 +95,17 @@ ActiveRecord::Schema.define(version: 20150817014641) do
     t.boolean  "declined",     default: false
   end
 
-  create_table "legacy_mean_scores", force: true do |t|
+  create_table "legacy_mean_scores", force: :cascade do |t|
     t.string   "key"
     t.float    "value"
+    t.string   "questionnaire_tag"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "questionnaire_tag"
   end
 
   add_index "legacy_mean_scores", ["key"], name: "index_legacy_mean_scores_on_key", using: :btree
 
-  create_table "participants", force: true do |t|
+  create_table "participants", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
     t.string   "evaluation_url"
@@ -125,20 +124,20 @@ ActiveRecord::Schema.define(version: 20150817014641) do
 
   add_index "participants", ["access_key"], name: "index_participants_on_access_key", using: :btree
 
-  create_table "questionnaire_templates", force: true do |t|
+  create_table "questionnaire_templates", force: :cascade do |t|
     t.integer  "questionnaire_id"
     t.integer  "section_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "questionnaires", force: true do |t|
+  create_table "questionnaires", force: :cascade do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
   end
 
-  create_table "questions", force: true do |t|
+  create_table "questions", force: :cascade do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "answer_type"
@@ -148,13 +147,13 @@ ActiveRecord::Schema.define(version: 20150817014641) do
     t.string   "legacy_tag"
   end
 
-  create_table "sections", force: true do |t|
+  create_table "sections", force: :cascade do |t|
     t.text     "header"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "trainings", force: true do |t|
+  create_table "trainings", force: :cascade do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"

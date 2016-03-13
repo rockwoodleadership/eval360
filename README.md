@@ -2,9 +2,9 @@
 ##Rockwood 360 Eval Software
 
 ###Requirements
-- Ruby 2.2.0
-- Rails 4.1.9
-- Postgresql 9.3
+- Ruby 2.3.0
+- Rails 4.2.6
+- Postgresql 9.4
 
 ####Setup
 1 Fork the repo [https://help.github.com/articles/fork-a-repo/](https://help.github.com/articles/fork-a-repo/)  
