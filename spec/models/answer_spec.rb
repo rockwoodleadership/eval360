@@ -45,8 +45,8 @@ RSpec.describe Answer, :type => :model do
       @answer.text_response = "great"
       @answer.set_default_values
     end
-    it 'sets numeric_response to 0' do
-      expect(@answer.numeric_response).to eq 0
+    it 'sets numeric_response to nil' do
+      expect(@answer.numeric_response).to eq nil
     end
 
     it 'sets text_response blank' do
