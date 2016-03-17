@@ -31,6 +31,16 @@ class EvaluationsController < ApplicationController
                             !evaluation.self_eval?)
     saving = (params[:commit] == "Save For Later")
     
+    unless saving
+
+      if evaluation.answers.joins(:question).where(questions: { answer_type: "numeric" },
+                                                   numeric_response: nil).any?
+        flash[:error] = ["Please respond to every question"]
+        flash[:unanswered] = true
+        redirect_to :back  and return
+      end
+    end
+
     if submitting_self_eval 
       participant.completed_self_eval
       redirect_to invitations_path participant

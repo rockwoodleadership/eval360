@@ -57,7 +57,7 @@ class Evaluation < ActiveRecord::Base
     def build_questions
       questions = participant.training.questionnaire.questions
       questions.each do |question|
-        answers.create(numeric_response: 0, text_response: "", question: question)
+        answers.create(numeric_response: nil, text_response: "", question: question)
       end
     end
 

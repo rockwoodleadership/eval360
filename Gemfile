@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-ruby '2.2.0'
-gem 'rails', '4.1.9'
+ruby '2.3.0'
+gem 'rails', '4.2.6'
 gem 'pg'
 gem 'sass-rails', '5.0.0.beta1'
 gem 'uglifier', '>= 1.3.0'
@@ -23,7 +23,7 @@ gem 'bugsnag'
 gem 'prawn'
 gem 'delayed_job_active_record'
 gem 'rubyzip'
-gem 'databasedotcom'
+gem 'restforce'
 
 group :production do
   gem 'unicorn'
