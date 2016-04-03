@@ -42,21 +42,20 @@ module ParticipantStatus
       status = EVAL_STATUSES.first
     end
 
-    client = Databasedotcom::Client.new 
-    client.authenticate :username => ENV['SALESFORCE_USERNAME'], :password => ENV['SALESFORCE_PASSWORD']
+    client = Restforce.new 
     participant_url = "http://#{Rails.application.config.action_mailer.default_url_options[:host]}" +
                       "/admin/trainings/#{training.id}/participants/#{access_key}"
 
-    client.update('Registration__c', sf_registration_id,
-                  { "ruby360_Assessment_Status__c" => status, 
-                    "ruby360_URL__c" => participant_url,
-                    "ruby360_Peer_Complete_Number__c" => completed_peer_evaluations,
-                    "ruby360_Assessment_Sent_Date__c" => assessment_sent_date,
-                    "ruby360_Peer_Assess_Invite_Sent__c" => peer_assessment_sent_date,
-                    "ruby360_Reminder_for_Peer_Assess_Sent__c" => reminder_for_peer_assessment_sent_date,
-                    "ruby360_Self_Assess_Reminder_Sent__c" => assessment_reminder_sent_date,
-                    "ruby360_Completed_Email_Sent__c" => assessment_complete_date    
-                  } )
+    client.update('Registration__c', Id: sf_registration_id,
+                    ruby360_Assessment_Status__c: status, 
+                    ruby360_URL__c: participant_url,
+                    ruby360_Peer_Complete_Number__c: completed_peer_evaluations,
+                    ruby360_Assessment_Sent_Date__c: assessment_sent_date,
+                    ruby360_Peer_Assess_Invite_Sent__c: peer_assessment_sent_date,
+                    ruby360_Reminder_for_Peer_Assess_Sent__c: reminder_for_peer_assessment_sent_date,
+                    ruby360_Self_Assess_Reminder_Sent__c: assessment_reminder_sent_date,
+                    ruby360_Completed_Email_Sent__c: assessment_complete_date    
+                  )
   end
   handle_asynchronously :update_salesforce
 

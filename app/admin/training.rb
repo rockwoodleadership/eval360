@@ -36,7 +36,7 @@ ActiveAdmin.register Training do
 
   form(:html => { :multipart => true}) do |f|
     f.inputs "WARNING" do
-      f.template.render partial: "admin/warning"
+      f.render partial: "admin/warning"
     end 
     f.inputs "Training Details" do
       f.input :name
