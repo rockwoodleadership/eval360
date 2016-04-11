@@ -54,7 +54,7 @@ class Training < ActiveRecord::Base
   private
 
   def self.email_block
-    upcoming_trainings = Training.includes(:participants).where("deadline IN (?)", Date.today..14.days.from_now)
+    upcoming_trainings = Training.includes(:participants).where("deadline IN (?)", Date.today..21.days.from_now)
     upcoming_trainings.each do |training|
       training.participants.each do |participant|
         yield(participant)
