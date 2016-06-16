@@ -1,5 +1,5 @@
 ActiveAdmin.register Participant do
-  permit_params :training_id, :first_name, :last_name, :email
+  permit_params :training_id, :first_name, :last_name, :email, :do_not_remind
 
   actions :index, :show, :edit, :new, :create, :update, :destroy 
 
@@ -64,16 +64,15 @@ ActiveAdmin.register Participant do
   end
 
   form do |f|
-    f.inputs "WARNING" do
-      f.template.render partial: "admin/warning"
+    template.render partial: "admin/warning"
+    inputs do
+      input :do_not_remind
+      input :first_name
+      input :last_name
+      input :email
+      input :training
     end
-    f.inputs do
-      f.input :first_name
-      f.input :last_name
-      f.input :email
-      f.input :training
-    end
-    f.actions
+    actions
   end
 
   index do
@@ -106,6 +105,9 @@ ActiveAdmin.register Participant do
       end
       row "self assessment url" do
         evaluation_edit_url(participant.self_evaluation) if participant.self_evaluation
+      end
+      row "Remind" do 
+        participant.do_not_remind? ? "Does not receive reminders" : "Receives reminders" 
       end
       row "actions" do
         if participant.self_evaluation

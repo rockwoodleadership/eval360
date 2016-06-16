@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150817014641) do
+ActiveRecord::Schema.define(version: 20160616163000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -120,6 +120,7 @@ ActiveRecord::Schema.define(version: 20150817014641) do
     t.date     "reminder_for_peer_assessment_sent_date"
     t.date     "assessment_reminder_sent_date"
     t.date     "assessment_complete_date"
+    t.boolean  "do_not_remind",                          default: false
   end
 
   add_index "participants", ["access_key"], name: "index_participants_on_access_key", using: :btree
