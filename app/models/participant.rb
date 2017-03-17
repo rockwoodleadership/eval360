@@ -18,10 +18,6 @@ class Participant < ActiveRecord::Base
     evaluations.find_by(evaluator_id: self.evaluator.id)
   end
 
-  def peer_evaluation_status
-    "#{completed_peer_evaluations} of #{total_peer_evaluations}"
-  end
-
   def completed_peer_evaluations
     count = 0
     peer_evaluations.each { |pe| count += 1 if pe.completed? && !pe.evaluator.declined? }
