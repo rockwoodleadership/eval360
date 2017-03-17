@@ -24,10 +24,17 @@ RSpec.describe Participant, :type => :model do
     end
   end
 
+  describe "#peer_evaluation_status" do
+    it 'returns the status of peer evaluations as formatted text' do
+      participant = create(:participant)
+      expect(participant.peer_evaluation_status).to eq "#{participant.completed_peer_evaluations} of #{participant.total_peer_evaluations}" 
+    end
+  end
+
   describe "#completed_peer_evaluations" do
     it 'returns the number of completed peer evaluations' do
       participant = create(:participant)
-      create(:evaluation, participant_id: participant.id, completed: true)
+      evaluation = create(:evaluation, participant_id: participant.id, completed: true)
       expect(participant.completed_peer_evaluations).to eq 1
     end
   end
