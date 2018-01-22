@@ -28,14 +28,14 @@
     .row
       .text-response
         - report.top_4_scores.each do |score|
-          = "##{score[:position]}. #{sprintf("%0.1f", score[:mean_score])} #{score[:description]}"
+          = "##{score[:position]}. #{'%0.1f' % score[:mean_score]} #{score[:description]}"
           br
   .row
     h3 Bottom 4 Scores:
     .row
       .text-response
         - report.bottom_4_scores.each do |score|
-          = "##{score[:position]}. #{sprintf("%0.1f", score[:mean_score])} #{score[:description]}"
+          = "##{score[:position]}. #{'%0.1f' % score[:mean_score]} #{score[:description]}"
           br
 
 

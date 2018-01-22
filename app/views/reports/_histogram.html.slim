@@ -15,7 +15,7 @@
   .scores.row
     .col-sm-5.col-xs-5
       br
-      = "Average score: #{report.mean_score_for_q(q.id)}"
+      = "Average score: #{'%0.1f' % report.mean_score_for_q(q.id)}"
       br
       = "Self Score: #{report.self_score_for_q(q.id)}"
       br

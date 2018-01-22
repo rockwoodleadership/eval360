@@ -19,7 +19,7 @@ class Report
   def mean_score_for_q(question_id)
     mean_score = results.mean_score_for_q(answers(question_id))
     save_mean_scores(mean_score, question_id)
-    sprintf("%0.1f", mean_score) if mean_score
+    mean_score
   end
 
   def rw_quartile(question_id)

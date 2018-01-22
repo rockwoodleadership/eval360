@@ -47,7 +47,7 @@
 
     describe '#mean_score_for_q' do
       it 'returns the average score for the given question' do
-        avg = sprintf("%0.1f",(numeric_answer_1 + numeric_answer_2).to_f/2)
+        avg = (numeric_answer_1 + numeric_answer_2).to_f/2
         expect(subject.mean_score_for_q(question.id)).to eq avg
       end
     end
