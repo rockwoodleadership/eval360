@@ -1,0 +1,9 @@
+.text-response
+  p
+    - report.text_answers_for_q(q.id).each do |t|
+      = "-#{t}" unless t.nil?
+      br
+  p
+    b You answered:
+    br
+    = "#{report.self_answer_for_q(q.id)}"

@@ -1,0 +1,44 @@
+- training_name = @report.training_name
+- participant_full_name = @report.participant_full_name
+- sections = @report.sections
+- report = @report
+
+.container
+  .row
+    p
+      h3 = training_name
+  .row
+    p
+      | Evaluation for: 
+      = participant_full_name
+  - sections.each do |section|
+    .row
+      = section.header
+    - section.questions.each_with_index do |q, i|
+      .row
+        p
+          h4 = "#{i + 1}. #{q.self_description}"
+        .row
+          - if q.numeric?
+            = render partial: 'histogram', locals: {report: report, q: q}
+          - else
+            = render partial: 'text_answer', locals: {report: report, q: q}
+  .row
+    h3 Top 4 Scores:
+    .row
+      .text-response
+        - report.top_4_scores.each do |score|
+          = "##{score[:position]}. #{sprintf("%0.1f", score[:mean_score])} #{score[:description]}"
+          br
+  .row
+    h3 Bottom 4 Scores:
+    .row
+      .text-response
+        - report.bottom_4_scores.each do |score|
+          = "##{score[:position]}. #{sprintf("%0.1f", score[:mean_score])} #{score[:description]}"
+          br
+
+
+
+
+

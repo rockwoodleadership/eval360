@@ -6,9 +6,10 @@ Rails.application.routes.draw do
     get :peer_decline
   end  
 
-  resources :participants do
+  resources :participants, path: '' do
     post :update
     get :evaluation_report, on: :member, defaults: { format: 'pdf' }
+    resource :report, only: :show
   end
 
   post '/trainings/:id/email_reports', to: 'trainings#email_reports'

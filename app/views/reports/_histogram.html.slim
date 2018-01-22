@@ -1,0 +1,25 @@
+.histogram
+  .labels.row
+    .col-sm-5.col-xs-5
+      = "Almost Never"
+    .col-sm-5.col-xs-5.text-right
+      = "Almost Always"
+  .row
+    - report.histogram(q.id)[1..10].each do |x|
+      .col-sm-1.col-xs-1
+        b = "{#{x}}" if x.nonzero?
+  .row
+    - (1..10).each do |n|
+      .col-sm-1.col-xs-1
+        = n if n.nonzero?
+  .scores.row
+    .col-sm-5.col-xs-5
+      br
+      = "Average score: #{report.mean_score_for_q(q.id)}"
+      br
+      = "Self Score: #{report.self_score_for_q(q.id)}"
+      br
+    .col-sm-5.col-xs-5.text-right
+      br
+      = "Rockwood quartile: #{report.rw_quartile(q.id)}"
+      br

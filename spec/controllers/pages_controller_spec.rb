@@ -19,7 +19,7 @@ RSpec.describe PagesController, :type => :controller do
       expect(response).to be_success
     end
 
-    it "renders thank you template" do
+    it "renders peer decline template" do
       expect(response).to render_template('peer_decline')
     end
   end

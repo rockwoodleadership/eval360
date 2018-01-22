@@ -169,6 +169,8 @@ ActiveAdmin.register Participant do
     div do
       link_to("Delete Participant", admin_training_participant_path(participant.training, participant), data: { confirm: "WARNING: Are you sure you want to delete this participant?" }, method: :delete)
     end
-  end 
-
+    div do
+      link_to("View Assessment Report", participant_report_path(participant), target: :blank)
+    end
+  end
 end

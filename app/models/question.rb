@@ -14,6 +14,10 @@ class Question < ActiveRecord::Base
                     legacy_tag: parsed_yaml.last["legacy_tag"])
   end
 
+  def numeric?
+    answer_type == "numeric"
+  end
+
   private
 
   def answer_type_value
