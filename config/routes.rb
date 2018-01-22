@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     get :peer_decline
   end  
 
-  resources :participants, path: '' do
+  resources :participants do
     post :update
     get :evaluation_report, on: :member, defaults: { format: 'pdf' }
     resource :report, only: :show
