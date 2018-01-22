@@ -27,7 +27,7 @@
   end
 
   context 'when there are 2 peer evaluators' do
-    let(:participant) { FactoryGirl.create(:participant) }
+    let(:self_evaluation) { FactoryGirl.create(:evaluation, participant: participant, completed: true, self_eval: true) }
     let(:evaluation_1) { FactoryGirl.create(:evaluation, participant: participant, completed: true) }
     let(:evaluation_2) { FactoryGirl.create(:evaluation, participant: participant, completed: true) }
     let(:numeric_answer_1) { rand(1..5) }
@@ -35,6 +35,10 @@
     let(:answer_1) { FactoryGirl.create(:answer, evaluation: evaluation_1, numeric_response: numeric_answer_1) }
     let(:question) { answer_1.question }
     let!(:answer_2) { FactoryGirl.create(:answer, evaluation: evaluation_2, numeric_response: numeric_answer_2, question: question) }
+
+    before do
+      participant.self_evaluation.questions << question
+    end
 
 
     describe '#histogram' do

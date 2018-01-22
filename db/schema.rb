@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160616163000) do
+ActiveRecord::Schema.define(version: 20180122102313) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,8 @@ ActiveRecord::Schema.define(version: 20160616163000) do
     t.integer  "numeric_response"
     t.text     "text_response"
   end
+
+  add_index "answers", ["question_id", "evaluation_id"], name: "index_answers_on_question_id_and_evaluation_id", using: :btree
 
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false

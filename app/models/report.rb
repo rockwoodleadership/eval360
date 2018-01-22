@@ -8,6 +8,16 @@ class Report
 
   def initialize(participant)
     @participant = participant
+    questions = Question.joins(:answers).
+      where(answers: {evaluation_id: participant.self_evaluation.id})
+    @peer_numeric_responses = Answer.joins(:evaluation, :question).
+      where(:evaluations => { self_eval: false,
+                             participant_id: participant.id,
+                             completed: true },
+            :questions => { id: questions.pluck(:id),
+                           answer_type: 'numeric' }).
+      where.not(numeric_response: 0).
+      where.not(numeric_response: nil)
     @results = EvaluationResults.new(participant)
     @mean_scores = []
   end
@@ -49,7 +59,7 @@ class Report
   private
 
   def answers(question_id)
-    results.numeric_answers_for_q(question_id)
+    @peer_numeric_responses.where(question_id: question_id).pluck(:numeric_response)
   end
 
   def mean_scores
