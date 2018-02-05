@@ -81,7 +81,7 @@ ActiveAdmin.register Evaluation do
     end
 
     panel "Assessment Responses" do
-      evaluation.answers.each_with_index do |answer, i|
+      evaluation.answers.includes(:question).each_with_index do |answer, i|
         if evaluation.self_eval?
           h5 "#{i+1}. #{answer.question.self_description}"
         else

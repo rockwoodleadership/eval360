@@ -1,3 +1,7 @@
+- frequency = @histogram.frequency
+- mean = @histogram.mean
+- self_score = @histogram.self_score
+- rw_quartile = @histogram.rw_quartile
 .histogram
   .labels.row
     .col-sm-5.col-xs-5
@@ -5,7 +9,7 @@
     .col-sm-5.col-xs-5.text-right
       = "Almost Always"
   .row
-    - report.histogram(q.id)[1..10].each do |x|
+    - frequency[1..10].each do |x|
       .col-sm-1.col-xs-1
         b = "{#{x}}" if x.nonzero?
   .row
@@ -15,11 +19,11 @@
   .scores.row
     .col-sm-5.col-xs-5
       br
-      = "Average score: #{'%0.1f' % report.mean_score_for_q(q.id)}"
+      = "Average score: #{'%0.1f' % mean}"
       br
-      = "Self Score: #{report.self_score_for_q(q.id)}"
+      = "Self Score: #{self_score}"
       br
     .col-sm-5.col-xs-5.text-right
       br
-      = "Rockwood quartile: #{report.rw_quartile(q.id)}"
+      = "Rockwood quartile: #{rw_quartile}"
       br

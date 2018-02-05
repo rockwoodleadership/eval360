@@ -25,6 +25,7 @@ gem 'delayed_job_active_record'
 gem 'rubyzip'
 gem 'restforce'
 gem 'newrelic_rpm'
+gem 'render_async'
 
 group :production do
   gem 'unicorn'
@@ -32,14 +33,15 @@ group :production do
 end
 
 group :development do
+  gem 'rack-mini-profiler'
   gem 'thin'
   gem 'guard-rspec', require: false
   gem "spring"
   gem "spring-commands-rspec"
-  gem "bullet"
 end
 
 group :development, :test do
+  gem "bullet"
   gem 'dotenv-rails'
   gem 'pry'
   gem 'rspec-rails', '~> 3.1.0'

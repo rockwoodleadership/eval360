@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
   get ':id/invitations', to: 'participants#invitations', as: :invitations
   post ':id/send_reminders', to: 'participants#send_reminders', as: :send_reminders
+  get :histogram, :controller => :reports
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)

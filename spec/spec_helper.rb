@@ -8,6 +8,8 @@ WebMock.disable_net_connect!(:allow => "codeclimate.com")
 
 require 'factory_girl'
 require 'database_cleaner'
+require 'active_record'
+require 'bullet'
 
 RSpec.configure do |config|
 
@@ -37,6 +39,17 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
 
   config.alias_example_to :expect_it
+
+  if Bullet.enable?
+    config.before(:each) do
+      Bullet.start_request
+    end
+
+    config.after(:each) do
+      Bullet.perform_out_of_channel_notifications if Bullet.notification?
+      Bullet.end_request
+    end
+  end
 end
 
 RSpec::Core::MemoizedHelpers.module_eval do

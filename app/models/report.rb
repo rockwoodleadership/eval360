@@ -2,14 +2,13 @@ class Report
   attr_reader :participant
   attr_reader :results
   delegate :full_name, to: :participant, prefix: true
-  delegate :self_score_for_q, to: :results
+  delegate :access_key, to: :participant, prefix: true
   delegate :text_answers_for_q, to: :results
   delegate :self_answer_for_q, to: :results
 
   def initialize(participant)
     @participant = participant
-    questions = Question.joins(:answers).
-      where(answers: {evaluation_id: participant.self_evaluation.id})
+    questions
     @peer_numeric_responses = Answer.joins(:evaluation, :question).
       where(:evaluations => { self_eval: false,
                              participant_id: participant.id,
@@ -18,30 +17,13 @@ class Report
                            answer_type: 'numeric' }).
       where.not(numeric_response: 0).
       where.not(numeric_response: nil)
+    mean_scores
     @results = EvaluationResults.new(participant)
-    @mean_scores = []
   end
 
-  def histogram(question_id)
-    results.histogram_for_q(answers(question_id))
-  end
-
-  def mean_score_for_q(question_id)
-    mean_score = results.mean_score_for_q(answers(question_id))
-    save_mean_scores(mean_score, question_id)
-    mean_score
-  end
-
-  def rw_quartile(question_id)
-    avg = mean_score_for_q(question_id)
-    results.rw_quartile(question_id, avg)
-  end
-
-  def sections
-    evaluation_id = participant.self_evaluation.id
-    Section.joins("INNER JOIN questions ON questions.section_id = sections.id").
-      merge( Question.joins("INNER JOIN answers ON questions.id = answers.question_id WHERE answers.evaluation_id = #{evaluation_id}") ).
-      uniq
+  def questions
+    @questions ||= Question.joins(:answers).
+      where(answers: {evaluation_id: participant.self_evaluation.id})
   end
 
   def training_name
@@ -49,11 +31,11 @@ class Report
   end
 
   def top_4_scores
-    mean_scores.first(4)
+    @mean_scores.first(4)
   end
 
   def bottom_4_scores
-    mean_scores.last(4).reverse
+    @mean_scores.last(4).reverse
   end
 
   private
@@ -63,17 +45,20 @@ class Report
   end
 
   def mean_scores
-    calculate_mean_scores if @mean_scores.empty?
+    @mean_scores = []
+    questions.each do |q|
+      q_answers = answers(q.id)
+      if q_answers.any?
+        mean_score = mean_score(q_answers)
+      end
+      save_mean_scores(mean_score, q.id)
+    end
     @mean_scores.sort! { |a,b| b[:mean_score] <=> a[:mean_score] }
     @mean_scores = @mean_scores.uniq
   end
 
-  def calculate_mean_scores
-    if @mean_scores.empty?
-      participant.self_evaluation.questions.each do |q|
-        mean_score_for_q(q.id)
-      end
-    end
+  def mean_score(answers)
+    answers.sum.to_f/answers.length
   end
 
   def save_mean_scores(mean_score, question_id)

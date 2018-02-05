@@ -1,7 +1,8 @@
 - training_name = @report.training_name
 - participant_full_name = @report.participant_full_name
-- sections = @report.sections
+- questions = @report.questions
 - report = @report
+- participant_access_key = @report.participant_access_key
 
 .container
   .row
@@ -11,18 +12,15 @@
     p
       | Evaluation for: 
       = participant_full_name
-  - sections.each do |section|
+  - questions.each_with_index do |q, i|
     .row
-      = section.header
-    - section.questions.each_with_index do |q, i|
+      p
+        h4 = "#{i + 1}. #{q.self_description}"
       .row
-        p
-          h4 = "#{i + 1}. #{q.self_description}"
-        .row
-          - if q.numeric?
-            = render partial: 'histogram', locals: {report: report, q: q}
-          - else
-            = render partial: 'text_answer', locals: {report: report, q: q}
+        - if q.numeric?
+          = render_async histogram_path(participant_id: participant_access_key, question_id: q.id)
+        - else
+          = render partial: 'text_answer', locals: {report: report, q: q}
   .row
     h3 Top 4 Scores:
     .row
