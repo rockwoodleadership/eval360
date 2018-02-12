@@ -339,6 +339,8 @@ GEM
     turbolinks-source (5.1.0)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
+    uglifier (4.1.6)
+      execjs (>= 0.3.0, < 3)
     unicorn (5.4.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
@@ -392,6 +394,7 @@ DEPENDENCIES
   spring-commands-rspec
   thin
   turbolinks
+  uglifier
   unicorn
   webmock
 
