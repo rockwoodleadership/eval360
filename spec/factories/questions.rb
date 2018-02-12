@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :question do
     answer_type "numeric"
     description "Please rate your friend 1-4"

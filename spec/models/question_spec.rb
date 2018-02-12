@@ -16,12 +16,12 @@ RSpec.describe Question, :type => :model do
 
   describe "#numeric?" do
     it "returns true if answer type is numeric" do
-      question = FactoryGirl.create(:question)
+      question = FactoryBot.create(:question)
       expect(question.numeric?).to be true
     end
 
     it "returns false if answer type is text" do
-      question = FactoryGirl.create(:text_question)
+      question = FactoryBot.create(:text_question)
       expect(question.numeric?).to be false
     end
 

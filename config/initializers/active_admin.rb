@@ -170,6 +170,7 @@ ActiveAdmin.setup do |config|
   #   config.register_javascript 'my_javascript.js'
   config.clear_stylesheets!
   config.register_stylesheet 'admin/active_admin.css'
+  config.register_stylesheet '//fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700&subset=latin,latin-ext'
 
   config.clear_javascripts!
   config.register_javascript 'admin/active_admin.js' 

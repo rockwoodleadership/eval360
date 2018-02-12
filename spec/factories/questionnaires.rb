@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :questionnaire do
     sequence(:name) { |n| "Questionnaire#{n}" }
     factory :questionnaire_with_questions do

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :questionnaire_template do
   end
 end

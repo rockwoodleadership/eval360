@@ -1,20 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe Histogram, :type => :model do
-  let(:participant) { FactoryGirl.create(:participant) }
-  let(:peer_evaluation_1) { FactoryGirl.create(:evaluation,
+  let(:participant) { FactoryBot.create(:participant) }
+  let(:peer_evaluation_1) { FactoryBot.create(:evaluation,
                                                 participant: participant,
                                                 completed: true) }
-  let(:peer_evaluation_2) { FactoryGirl.create(:evaluation,
+  let(:peer_evaluation_2) { FactoryBot.create(:evaluation,
                                                 participant: participant,
                                                 completed: true) }
-  let(:question) { FactoryGirl.create(:question) }
+  let(:question) { FactoryBot.create(:question) }
   let(:numeric_answer_1) { rand(1..5) }
   let(:numeric_answer_2) { rand(6..10) }
-  let!(:answer_1) { FactoryGirl.create(:answer, evaluation: peer_evaluation_1,
+  let!(:answer_1) { FactoryBot.create(:answer, evaluation: peer_evaluation_1,
                                        numeric_response: numeric_answer_1,
                                        question: question) }
-  let!(:answer_2) { FactoryGirl.create(:answer, evaluation: peer_evaluation_2,
+  let!(:answer_2) { FactoryBot.create(:answer, evaluation: peer_evaluation_2,
                                        numeric_response: numeric_answer_2,
                                        question: question) }
 
@@ -36,7 +36,7 @@ RSpec.describe Histogram, :type => :model do
   describe '#self_score' do
     it 'returns the self score for the given question' do 
       self_score = rand(1..10)
-      FactoryGirl.create(:answer, evaluation: participant.self_evaluation, numeric_response: self_score, question: question)
+      FactoryBot.create(:answer, evaluation: participant.self_evaluation, numeric_response: self_score, question: question)
       expect(subject.self_score).to eq self_score
     end
   end

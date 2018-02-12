@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :training do
     name "Art of Leadership"
     questionnaire

@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :section do
     header "This is a section"
     factory :section_with_questions do

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ReportsController, :type => :controller do
   
-  let(:participant) { FactoryGirl.create(:participant) }
+  let(:participant) { FactoryBot.create(:participant) }
   let(:access_key) {  participant.access_key }
 
   describe "GET show" do
@@ -23,7 +23,7 @@ RSpec.describe ReportsController, :type => :controller do
   end
 
   describe "GET histogram" do
-    let(:question) { FactoryGirl.create(:question) }
+    let(:question) { FactoryBot.create(:question) }
 
     it 'creates a new histogram' do
       expect(Histogram).to receive(:new).with(participant, question)

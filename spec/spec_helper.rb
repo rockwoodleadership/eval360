@@ -1,12 +1,13 @@
-require 'codeclimate-test-reporter'
+require 'simplecov'
+SimpleCov.start 'rails'
+
 require 'delayed_job'
-CodeClimate::TestReporter.start
 Delayed::Worker.delay_jobs = false
 
 require 'webmock/rspec'
 WebMock.disable_net_connect!(:allow => "codeclimate.com")
 
-require 'factory_girl'
+require 'factory_bot'
 require 'database_cleaner'
 require 'active_record'
 require 'bullet'
@@ -36,7 +37,7 @@ RSpec.configure do |config|
     end
   end
 
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
 
   config.alias_example_to :expect_it
 
