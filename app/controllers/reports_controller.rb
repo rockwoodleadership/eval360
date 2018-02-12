@@ -2,7 +2,12 @@ class ReportsController < ApplicationController
   layout 'report'
 
   def show
-    @report = Report.new(participant)
+    if participant.training.questionnaire.name == Rails.configuration.x.loi
+      @report = LOIReport.new(participant)
+      render 'loi_report'
+    else
+      @report = Report.new(participant)
+    end
   end
 
   def histogram

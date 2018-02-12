@@ -20,6 +20,22 @@ RSpec.describe ReportsController, :type => :controller do
       get :show, participant_id: access_key
       expect(response).to render_template('show')
     end
+
+    context 'when training is Yearlong Individual' do
+      let(:questionnaire) { FactoryBot.create(:questionnaire, name: 'YearlongIndividual') }
+      let(:training) { FactoryBot.create(:training, questionnaire: questionnaire) }
+      let(:participant) { FactoryBot.create(:participant, training: training) }
+
+      it 'renders loi report page' do
+        get :show, participant_id: access_key
+        expect(response).to render_template('loi_report')
+      end
+
+      it 'creates a LOI report' do
+        expect(LOIReport).to receive(:new).with(participant)
+        get :show, participant_id: access_key
+      end
+    end
   end
 
   describe "GET histogram" do

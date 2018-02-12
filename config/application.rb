@@ -42,5 +42,7 @@ module Eval360
       end)
     end
 
+    config.x.loi = "YearlongIndividual"
+
   end
 end

@@ -1,0 +1,46 @@
+- report = @report
+- training_name = report.training_name
+- participant_full_name = report.participant_full_name
+- sections = report.sections
+- participant_access_key = report.participant_access_key
+
+.container
+  .row
+    p
+      h3 = training_name
+  .row
+    p
+      | Evaluation for: 
+      = participant_full_name
+  - question_counter = 1
+  - sections.each do |s|
+    .row
+      p
+        h4 = s.header
+    .row
+      p
+        = "Average score for this section: #{report.average_section_score(s)}"
+    - s.questions.each do |q|
+      .row
+        p
+          h4 = "#{question_counter}. #{q.self_description}"
+        .row
+          - if q.numeric?
+            = render_async histogram_path(participant_id: participant_access_key, question_id: q.id)
+          - else
+            = render partial: 'text_answer', locals: {report: report, q: q}
+      - question_counter = question_counter + 1
+  .row
+    h3 Top 8 Scores:
+    .row
+      .text-response
+        - report.top_8_scores.each do |score|
+          = "##{score[:position]}. #{'%0.1f' % score[:mean_score]} #{score[:description]}"
+          br
+  .row
+    h3 Bottom 8 Scores:
+    .row
+      .text-response
+        - report.bottom_8_scores.each do |score|
+          = "##{score[:position]}. #{'%0.1f' % score[:mean_score]} #{score[:description]}"
+          br
