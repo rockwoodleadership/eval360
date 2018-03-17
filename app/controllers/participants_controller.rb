@@ -17,7 +17,7 @@ class ParticipantsController < ApplicationController
     email_hash = params[:participant]['evaluators_attributes']
     existing_emails = @participant.invited_peers.map {|e| e.email}
     emails = [] 
-    email_hash.each_value do |attr|
+    email_hash.each_pair do |key, attr|
       if attr['email'] == @participant.email
         flash[:error] << "Can not add self #{attr['email']} as peer evaluator"
       elsif (existing_emails.include? attr['email']) || (emails.include? attr['email'])
@@ -38,7 +38,7 @@ class ParticipantsController < ApplicationController
         flash[:error] << "Must have 1 or more valid emails"
       end
     end
-    flash[:emails] = email_hash.map {|k,v| v['email']} if flash[:error].any?
+    flash[:emails] = email_hash.each_pair {|k,v| v['email']} if flash[:error].any?
     redirect_to invitations_path(@participant)
   end
 

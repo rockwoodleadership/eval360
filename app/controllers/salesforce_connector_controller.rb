@@ -1,6 +1,6 @@
 class SalesforceConnectorController < ApplicationController
   protect_from_forgery with: :null_session
-  before_filter :check_api_key
+  before_action :check_api_key
   
   def new_participant
     hash = JSON.parse(params[:participant])

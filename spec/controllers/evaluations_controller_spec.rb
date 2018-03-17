@@ -14,13 +14,13 @@ RSpec.describe EvaluationsController, :type => :controller do
       
 
       it "returns http success" do
-        get :edit, evaluation_id: @evaluation.access_key
+        get :edit, params: { evaluation_id: @evaluation.access_key }
         expect(response).to be_success
       end
 
       context 'when evaluation has not been completed' do
         it 'renders edit template' do
-          get :edit, evaluation_id: @evaluation.access_key
+           get :edit, params: { evaluation_id: @evaluation.access_key }
           expect(response).to render_template(:edit)
         end
       end
@@ -32,14 +32,14 @@ RSpec.describe EvaluationsController, :type => :controller do
         context 'when evaluation is a self eval' do
           it 'redirects to invitations path' do
             allow(@evaluation).to receive(:self_eval?) { true }
-            get :edit, evaluation_id: @evaluation.access_key
+             get :edit, params: { evaluation_id: @evaluation.access_key }
             expect(response).to redirect_to(invitations_path(@evaluation.participant))
           end
         end
 
         context 'when evaluation is a peer evaluation' do
           it 'redirects to thank you page' do
-            get :edit, evaluation_id: @evaluation.access_key
+             get :edit, params: { evaluation_id: @evaluation.access_key }
             expect(response).to redirect_to(thank_you_path)
           end
         end
@@ -48,14 +48,14 @@ RSpec.describe EvaluationsController, :type => :controller do
       context 'when evaluator has declined' do
         it 'returns a page not found error' do
           allow(@evaluation).to receive_message_chain(:evaluator, :declined?) { true }
-          expect{get :edit, evaluation_id: @evaluation.access_key}.to raise_error(ActionController::RoutingError, "Not Found")
+          expect{ get :edit, params: { evaluation_id: @evaluation.access_key }}.to raise_error(ActionController::RoutingError, "Not Found")
         end 
       end
 
       context 'when training date has passed' do
         it 'returns a page not found error' do
           allow(@evaluation).to receive_message_chain(:participant, :training, :end_date) { Date.today - 1.day }
-          expect {get :edit, evaluation_id: @evaluation.access_key}.to raise_error(ActionController::RoutingError, "Not Found")
+          expect { get :edit, params: { evaluation_id: @evaluation.access_key }}.to raise_error(ActionController::RoutingError, "Not Found")
         end
       end
     end
@@ -74,7 +74,7 @@ RSpec.describe EvaluationsController, :type => :controller do
       end
 
       it 'updates evaluation' do
-        post :update, id: @evaluation.access_key, commit: "Submit", evaluation: @evaluation_attributes
+        post :update, params: { id: @evaluation.access_key, commit: "Submit", evaluation: @evaluation_attributes }
         @evaluation.reload
         expect(@evaluation.answers.first.numeric_response).to eq 10
       end
@@ -82,7 +82,7 @@ RSpec.describe EvaluationsController, :type => :controller do
         
         context "when self evaluation" do
           before(:each) do
-            post :update, id: @evaluation.access_key, commit: "Submit", evaluation: @evaluation_attributes
+            post :update, params: { id: @evaluation.access_key, commit: "Submit", evaluation: @evaluation_attributes }
           end 
           
           it 'completes evaluation' do
@@ -98,7 +98,7 @@ RSpec.describe EvaluationsController, :type => :controller do
         context "when peer evaluation" do
           before(:each) do
             allow(@evaluation).to receive(:self_eval?) { false }
-            post :update, id: @evaluation.access_key, commit: "Submit", evaluation: @evaluation_attributes
+            post :update, params: { id: @evaluation.access_key, commit: "Submit", evaluation: @evaluation_attributes }
           end
           it 'redirects to thank you page' do
             expect(response).to redirect_to(thank_you_path)
@@ -107,7 +107,7 @@ RSpec.describe EvaluationsController, :type => :controller do
       end
       context "when commit type is Save For Later" do
         before(:each) do
-          post :update, id: @evaluation.access_key, commit: "Save For Later", evaluation: @evaluation_attributes
+          post :update, params: { id: @evaluation.access_key, commit: "Save For Later", evaluation: @evaluation_attributes }
         end
         
         it 'redirects to evaluation edit page' do
@@ -124,7 +124,7 @@ RSpec.describe EvaluationsController, :type => :controller do
     context 'when evaluation is found' do
       before do
         @evaluation = create(:evaluation)
-        get :peer_decline, evaluation_id: @evaluation.access_key
+        get :peer_decline, params: { evaluation_id: @evaluation.access_key }
       end
       it 'sets evaluators status to declined' do
         @evaluation.reload
@@ -139,7 +139,7 @@ RSpec.describe EvaluationsController, :type => :controller do
 
     context 'when evaluation not found' do
       it 'redirects to root' do
-        get :peer_decline, evaluation_id: "notfound"
+        get :peer_decline, params: { evaluation_id: "notfound" }
         expect(response).to redirect_to(root_url)
       end
     end

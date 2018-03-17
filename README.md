@@ -3,7 +3,7 @@
 
 ### Requirements
 - Ruby 2.5.0
-- Rails 4.2.8
+- Rails 5.1.5
 - Postgresql 9.4
 
 #### Setup

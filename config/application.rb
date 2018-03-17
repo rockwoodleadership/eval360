@@ -1,18 +1,14 @@
-require File.expand_path('../boot', __FILE__)
+require_relative 'boot'
 
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
-#  http://www.wegtam.net/article/ruby-rails-and-activeadmin-assets-heroku
-Bundler.require(:default, :assets, Rails.env)
-
-
-
 
 module Eval360
   class Application < Rails::Application
+    config.load_defaults 5.1
 
     config.generators do |g|
       g.view_specs false
@@ -28,21 +24,8 @@ module Eval360
 
     config.serve_static_files = true
 
-    initializer 'setup_asset_pipeline', :group => :all  do |app|
-      # We don't want the default of everything that isn't js or css, because it pulls too many things in
-      app.config.assets.precompile.shift
-
-      # Explicitly register the extensions we are interested in compiling
-      app.config.assets.precompile.push(Proc.new do |path|
-        File.extname(path).in? [
-          '.html', '.erb', '.haml',                 # Templates
-          '.png',  '.gif', '.jpg', '.jpeg',         # Images
-          '.eot',  '.otf', '.svc', '.woff', '.ttf', # Fonts
-        ]
-      end)
-    end
+    config.active_record.belongs_to_required_by_default = false
 
     config.x.loi = "YearlongIndividual"
-
   end
 end

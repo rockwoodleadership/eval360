@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 ruby '2.5.0'
-gem 'rails', '4.2.8'
+gem 'rails', '5.1.5'
 gem 'pg', '~>0.21.0'
 gem 'jquery-rails'
 gem 'coffee-rails'
@@ -53,6 +53,7 @@ group :test do
   gem 'simplecov', require: false, group: :test
   gem 'webmock'
   gem 'database_cleaner'
+  gem 'rails-controller-testing'
 end
 
 
