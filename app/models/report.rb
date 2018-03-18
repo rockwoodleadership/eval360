@@ -22,8 +22,11 @@ class Report
   end
 
   def questions
-    @questions ||= Question.joins(:answers).
-      where(answers: {evaluation_id: participant.self_evaluation.id})
+    @questions ||= Question.
+      joins(:answers).
+      includes(:section).
+      where(answers: {evaluation_id: participant.self_evaluation.id}).
+      order(created_at: :asc)
   end
 
   def training_name
