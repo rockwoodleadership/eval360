@@ -103,10 +103,6 @@ class ReportPdf < Prawn::Document
       else
         draw_text "Average score:", at: [ 0, LAYOUT_LINE*3 ], size: 10
       end
-      rw_quartile = @results.rw_quartile(question.id, mean_score)
-      if rw_quartile
-        draw_text "Rockwood quartile: #{rw_quartile}", :at=>[ 350, LAYOUT_LINE*3 ], :size => 10
-      end
     end
 
   end
