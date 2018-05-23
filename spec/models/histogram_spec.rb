@@ -40,4 +40,26 @@ RSpec.describe Histogram, :type => :model do
       expect(subject.self_score).to eq self_score
     end
   end
+
+  describe '#loi' do
+    context 'training type is yearlong' do
+      let(:questionnaire) { FactoryBot.create(:questionnaire, name: 'YearlongIndividual') }
+      let(:training) { FactoryBot.create(:training, questionnaire: questionnaire) }
+      let(:participant) { FactoryBot.create(:participant, training: training) }
+
+      it 'returns true if training is yearlong indiviual' do
+        expect(subject.loi?).to eq true
+      end
+    end
+
+    context 'training type is not yearlong' do
+      let(:questionnaire) { FactoryBot.create(:questionnaire, name: 'Not YearlongIndividual') }
+      let(:training) { FactoryBot.create(:training, questionnaire: questionnaire) }
+      let(:participant) { FactoryBot.create(:participant, training: training) }
+
+      it 'returns true if training is yearlong indiviual' do
+        expect(subject.loi?).to eq false
+      end
+    end
+  end
 end

@@ -23,6 +23,20 @@ class Histogram
       numeric_response
   end
 
+  def rw_quartile
+    rw_dataset = Answer.peer_assessment_scores(@question.id, @participant.id) 
+    if @question.legacy_tag
+      legacy_values = LegacyMeanScores.mean_scores @question.legacy_tag
+      rw_dataset +=  legacy_values if legacy_values
+    end
+    return 0 if rw_dataset.empty? || mean.nil? 
+    quartile_rank mean, rw_dataset
+  end
+
+  def loi?
+    @participant.training.questionnaire.name == Rails.configuration.x.loi
+  end
+
   private
 
   def answers

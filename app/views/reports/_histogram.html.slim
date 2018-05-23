@@ -1,6 +1,7 @@
 - frequency = @histogram.frequency
 - mean = @histogram.mean
 - self_score = @histogram.self_score
+- rw_quartile = @histogram.rw_quartile
 .histogram
   .labels.row
     .col-sm-5.col-xs-5
@@ -22,4 +23,8 @@
       br
       = "Self Score: #{self_score}"
       br
-    
+    - if !@histogram.loi?
+      .col-sm-5.col-xs-5.text-right
+        br
+        = "Rockwood quartile: #{rw_quartile}"
+        br
