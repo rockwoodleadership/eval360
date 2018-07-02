@@ -51,7 +51,7 @@ class ParticipantsController < ApplicationController
 
   def evaluation_report
     if @participant.nil?
-      redirect_to :back, notice: "Unable to find that participant" and return
+      redirect_back(fallback_location: root_path, notice: "Unable to find that participant") and return
     end
     respond_to do |format|
       format.pdf do

@@ -73,6 +73,16 @@ RSpec.describe EvaluationsController, :type => :controller do
         
       end
 
+      context "when all questions haven't been answered" do
+        it 'redirects back to previous page' do
+          @evaluation_attributes["answers_attributes"] = {"0" => {"numeric_response" => nil, "id" => @evaluation.answers.first.id}}
+          request.env["HTTP_REFERER"] = "where_i_came_from"
+          post :update, params: { id: @evaluation.access_key, commit: "Submit", evaluation: @evaluation_attributes }
+          expect(response).to redirect_to("where_i_came_from")
+        end
+
+      end
+
       it 'updates evaluation' do
         post :update, params: { id: @evaluation.access_key, commit: "Submit", evaluation: @evaluation_attributes }
         @evaluation.reload
