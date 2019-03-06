@@ -28,7 +28,7 @@ class EvaluationEmailer
       message = {
         "text"=> "Assessment Reports for #{training.name}",
         "subject"=> "Assessment Reports for #{training.name}",
-        "from_email"=> 'training@rockwoodleadership.org',
+        "from_email"=> '360@rockwoodleadership.org',
         "to"=> [
           {
             "email"=> email
@@ -142,7 +142,7 @@ class EvaluationEmailer
                                 { "name" => "ruby360_Assessment_Deadline_c",
                                   "content" => participant.training.formatted_deadline }],
         "merge_vars" => merge_vars,
-        "from_email" => "training@rockwoodleadership.org",
+        "from_email" => "360@rockwoodleadership.org",
         "from_name" => "Rockwood Leadership Institute" 
       }
       
@@ -178,7 +178,7 @@ class EvaluationEmailer
         "to" => [{ "email" => participant.email, 
                    "name" => "#{participant.first_name} #{participant.last_name}",
                    "type" => "to" }],
-        "from_email" => "training@rockwoodleadership.org",
+        "from_email" => "360@rockwoodleadership.org",
         "from_name" => "Rockwood Leadership Institute" 
         
       }
