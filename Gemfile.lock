@@ -373,6 +373,7 @@ DEPENDENCIES
   activeadmin!
   bugsnag
   bullet
+  bundler-audit
   cocoon
   coffee-rails
   database_cleaner
