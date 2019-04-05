@@ -23,7 +23,6 @@ gem 'rubyzip'
 gem 'restforce'
 gem 'newrelic_rpm'
 gem 'render_async'
-gem 'bundler-audit'
 
 group :production do
   gem 'unicorn'
