@@ -74,6 +74,9 @@ GEM
     bullet (5.7.3)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.11.0)
+    bundler-audit (0.6.1)
+      bundler (>= 1.2.0, < 3)
+      thor (~> 0.18)
     cocoon (1.2.11)
     coderay (1.1.2)
     coffee-rails (4.2.2)
@@ -120,7 +123,7 @@ GEM
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.12.2)
       faraday (>= 0.7.4, < 1.0)
-    ffi (1.9.23)
+    ffi (1.9.25)
     formatador (0.2.5)
     formtastic (3.1.5)
       actionpack (>= 3.2.13)
@@ -255,8 +258,6 @@ GEM
     rb-fsevent (0.10.2)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
-    render_async (1.2.0)
-      bundler (~> 1.8)
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)
@@ -370,6 +371,7 @@ DEPENDENCIES
   activeadmin!
   bugsnag
   bullet
+  bundler-audit
   cocoon
   coffee-rails
   database_cleaner
@@ -392,7 +394,6 @@ DEPENDENCIES
   rails-controller-testing
   rails_serve_static_assets
   rake
-  render_async
   restforce
   rspec-rails (~> 3.7)
   rubyzip
@@ -413,4 +414,4 @@ RUBY VERSION
    ruby 2.5.0p0
 
 BUNDLED WITH
-   1.16.1
+   2.0.1
