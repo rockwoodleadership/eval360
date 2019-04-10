@@ -19,6 +19,7 @@ ActiveAdmin.register Participant do
       flash[:notice] = "Participant has been updated"
       redirect_to admin_training_participant_path(participant.training, participant)
     end
+
   end
 
   member_action :remind, method: :get do
