@@ -1,6 +1,10 @@
 ActiveAdmin.register Question do
   permit_params :section_id, :answer_type, :description, :self_description
 
+  actions :index, :show, :edit, :update
+  #:new, :create, :destroy not
+  #working on adding these
+
   controller do
     nested_belongs_to :questionnaire, :section
   end

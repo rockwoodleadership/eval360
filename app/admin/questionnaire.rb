@@ -2,6 +2,8 @@ ActiveAdmin.register Questionnaire, as: "Assessment" do
   permit_params :name, sections_attributes: [:id, :header, questions_attributes: [:id, :answer_type, :description, :self_description ]]  
 
   actions :index, :show, :edit, :update
+  #:new, :create, :destroy
+  #working on adding this
   config.filters = false
   index do
     selectable_column
@@ -39,7 +41,9 @@ ActiveAdmin.register Questionnaire, as: "Assessment" do
             question.answer_type
           end
           column "Actions" do |question|
-            link_to("View", admin_questionnaire_section_question_path(questionnaire,section, question)) + "   " + link_to("Edit", edit_admin_questionnaire_section_question_path(questionnaire, section, question)) 
+            link_to("View", admin_questionnaire_section_question_path(questionnaire,section, question)) + "   " + link_to("Edit", edit_admin_questionnaire_section_question_path(questionnaire, section, question))  
+            #+ "   " + link_to("Delete", admin_questionnaire_section_question_path(questionnaire, section, question))
+            #working on adding this 
           end
         end
       end
