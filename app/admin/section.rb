@@ -7,6 +7,8 @@ ActiveAdmin.register Section do
   config.filters = false
 
   actions :index, :show, :edit, :update
+  # :new, :create, :destroy
+  #working on adding this
 
   form do |f|
     f.inputs do
@@ -34,7 +36,9 @@ ActiveAdmin.register Section do
           question.answer_type
         end
         column "Actions" do |question|
-          link_to("View", admin_questionnaire_section_question_path(section.questionnaire, section, question)) + "   " + link_to("Edit", edit_admin_questionnaire_section_question_path(section.questionnaire, section, question)) 
+          link_to("View", admin_questionnaire_section_question_path(section.questionnaire, section, question)) + "   " + link_to("Edit", edit_admin_questionnaire_section_question_path(section.questionnaire, section, question))
+          #  + "   " + link_to("Delete", admin_questionnaire_section_question_path(questionnaire, section, question))
+          #working on adding this
         end
       end
     end

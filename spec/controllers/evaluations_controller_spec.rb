@@ -54,7 +54,7 @@ RSpec.describe EvaluationsController, :type => :controller do
 
       context 'when training date has passed' do
         it 'returns a page not found error' do
-          allow(@evaluation).to receive_message_chain(:participant, :training, :end_date) { Date.today - 1.day }
+          allow(@evaluation).to receive_message_chain(:participant, :training, :end_date) { Date.current - 1.day }
           expect { get :edit, params: { evaluation_id: @evaluation.access_key }}.to raise_error(ActionController::RoutingError, "Not Found")
         end
       end

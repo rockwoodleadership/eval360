@@ -7,7 +7,7 @@ RSpec.describe Training, :type => :model do
   
   describe "reminders" do
     before(:each) do
-      training = create(:training, start_date: Date.today + 10.days)
+      training = create(:training, start_date: Date.current + 10.days)
       @participant = create(:participant_with_self_eval, training_id: training.id )
       @participant2 = create(:participant_with_self_eval, training_id: training.id, do_not_remind: true )
       allow(Training).to receive_message_chain(:includes, :where) { [training] }
