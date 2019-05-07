@@ -22,10 +22,9 @@ gem 'delayed_job_active_record'
 gem 'rubyzip'
 gem 'restforce'
 gem 'newrelic_rpm'
-#gem 'render_async'
+gem 'render_async'
 gem 'bundle-audit'
-#gem 'bundler', '~> 1.8'
-#gem "rails-html-sanitizer", ">= 1.0.4"
+gem "rails-html-sanitizer", ">= 1.0.4"
 
 group :production do
   gem 'unicorn'
