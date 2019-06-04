@@ -26,6 +26,7 @@ gem 'render_async'
 gem 'bundle-audit'
 gem "rails-html-sanitizer", ">= 1.0.4"
 
+
 group :production do
   gem 'unicorn'
   gem 'rails_serve_static_assets'
@@ -37,6 +38,7 @@ group :development do
   gem 'guard-rspec', require: false
   gem "spring"
   gem "spring-commands-rspec"
+  gem "byebug"
 end
 
 group :development, :test do
