@@ -44,6 +44,7 @@ class EvaluationsController < ApplicationController
 
     if submitting_self_eval 
       participant.completed_self_eval
+      flash[:notice] = "Thank you for completing your self-survey."
       redirect_to invitations_path participant
     end
     
