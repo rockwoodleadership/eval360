@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/activeadmin/activeadmin.git
+  remote: https://github.com/activeadmin/activeadmin.git
   revision: ee49d3d2d13c3c871a2ce3fe62e29bbc35b5f697
   specs:
     activeadmin (2.0.0.alpha)
@@ -133,7 +133,7 @@ GEM
     formtastic-bootstrap (3.1.1)
       formtastic (>= 3.0)
     formtastic_i18n (0.6.0)
-    globalid (0.4.2)
+    globalid (0.4.1)
       activesupport (>= 4.2.0)
     guard (2.14.2)
       formatador (>= 0.2.4)
@@ -213,6 +213,9 @@ GEM
     prawn (2.2.2)
       pdf-core (~> 0.7.0)
       ttfunk (~> 1.5)
+    prawn-emoji (3.0.0)
+      prawn (~> 2.2.0)
+      unicode-emoji (~> 2.1.0)
     pry (0.11.3)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
@@ -353,6 +356,7 @@ GEM
       thread_safe (~> 0.1)
     uglifier (4.1.6)
       execjs (>= 0.3.0, < 3)
+    unicode-emoji (2.1.0)
     unicorn (5.4.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
@@ -393,6 +397,7 @@ DEPENDENCIES
   newrelic_rpm
   pg (~> 0.21.0)
   prawn
+  prawn-emoji
   pry
   rack-mini-profiler
   rails (= 5.1.5)
