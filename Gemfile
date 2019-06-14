@@ -25,6 +25,7 @@ gem 'newrelic_rpm'
 gem 'render_async'
 gem 'bundle-audit'
 gem "rails-html-sanitizer", ">= 1.0.4"
+gem 'prawn-emoji', require: false
 
 
 group :production do
@@ -47,6 +48,7 @@ group :development, :test do
   gem 'pry'
   gem 'rspec-rails', '~> 3.7'
   gem "factory_bot_rails"
+  #gem 'restforce_mock'
 end
 
 group :test do
