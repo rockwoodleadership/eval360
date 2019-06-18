@@ -5,3 +5,9 @@
 .text-response {
   margin: 0 0 35px 35px;
 }
+
+@font-face {
+  font-family: 'DejaVuSans',
+  src: url('/assets/fonts/DejaVuSans.ttf');
+
+}

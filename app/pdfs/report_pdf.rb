@@ -1,4 +1,5 @@
 class ReportPdf < Prawn::Document
+
   TOP_OF_PAGE = 775
   BOTTOM_OF_PAGE = 100
   BLOCK_HEIGHT = 130
@@ -111,14 +112,27 @@ class ReportPdf < Prawn::Document
 
   end
 
+  
   def print_text_answers(question)
-    text "\n\n#{@questions.index(question)+1}. #{question.self_description}", :style=>:bold
+  
+    font_families.update(
+        'DejaVuSans' => { :normal => 'app/assets/fonts/DejaVuSans.ttf', 
+                          :bold => 'app/assets/fonts/DejaVuSans-Bold.ttf'},
+        )
+
+    font('DejaVuSans') do
+  
+      text "\n\n#{@questions.index(question)+1}. #{question.self_description}", :style=>:bold
+    
     text_answers = @results.text_answers_for_q(question.id)
     text_answers.each do |answer|
       text "- " + answer + "\n\n" unless answer.nil?
     end
     text "\n\nYou Answered:\n\n", style: :bold
     text @results.self_answer_for_q(question.id)
+
+  end
+
   end
 
   def print_top_8
@@ -163,3 +177,4 @@ class ReportPdf < Prawn::Document
   end
 
 end
+
