@@ -1,5 +1,5 @@
 class ReportsController < ApplicationController
-  layout 'report'
+  layout 'report' 
 
   def show
     if participant.training.questionnaire.name == Rails.configuration.x.loi
