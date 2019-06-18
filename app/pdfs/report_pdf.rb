@@ -117,7 +117,7 @@ class ReportPdf < Prawn::Document
   
     font_families.update(
         'DejaVuSans' => { :normal => 'app/assets/fonts/DejaVuSans.ttf', 
-                          :bold => 'app/assets/fonts/DejaVuSans-Bold.ttf'},
+                          :bold => 'app/assets/fonts/DejaVuSans-Bold.ttf'}
         )
 
     font('DejaVuSans') do
