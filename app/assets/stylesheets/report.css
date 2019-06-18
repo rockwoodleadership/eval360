@@ -7,7 +7,7 @@
 }
 
 @font-face {
-  font-family: 'DejaVuSans',
-  src: url('app/assets/fonts/DejaVuSans.ttf');
+  font-family: 'DejaVuSans';
+  src: url('app/assets/fonts/DejaVuSans.ttf')
 
 }
