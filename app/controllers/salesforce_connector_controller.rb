@@ -5,6 +5,9 @@ class SalesforceConnectorController < ApplicationController
   def new_participant
     hash = JSON.parse(params[:participant])
 
+    skip_before_action :verify_authenticity_token
+  #Adding this because of "Unprocessable Entitymissing required key preferred_name"
+  
     required_keys = ['preferred_name', 'last_name', 'email',
                      'sf_training_id', 'sf_registration_id', 'sf_contact_id']
 
