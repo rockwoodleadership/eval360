@@ -1,5 +1,5 @@
 ActiveAdmin.register Participant do
-  permit_params :training_id, :first_name, :last_name, :email, :do_not_remind, :Preferred_Name
+  permit_params :training_id, :first_name, :last_name, :email, :do_not_remind
 
   actions :index, :show, :edit, :new, :create, :update, :destroy 
 
