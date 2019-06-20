@@ -8,7 +8,7 @@ class SalesforceConnectorController < ApplicationController
     #skip_before_action :verify_authenticity_token
   #Adding this because of "Unprocessable Entitymissing required key preferred_name"
 
-    required_keys = ['last_name', 'email',
+    required_keys = ['Preferred_Name', 'last_name', 'email',
                      'sf_training_id', 'sf_registration_id', 'sf_contact_id']
 
     #removing 'first_name' from required keys in line 8, replacing with 'preferred_name'
@@ -26,7 +26,7 @@ class SalesforceConnectorController < ApplicationController
                                'sf_registration_id', 'sf_contact_id')
   
     #remove 'first_name' from hash extraction in above line (19) and replace with  code below
-    attributes['first_name'] = hash.extract!('preferred_name') 
+    attributes['first_name'] = hash.extract!('Preferred_Name') 
     #if the preferred name is given, (which it will be b/c if it's not given then Form Assembly
     #pushed preferred name to first name), set the attribute of first name equal to the extracted 
     #value of preferred name. 
@@ -91,7 +91,7 @@ class SalesforceConnectorController < ApplicationController
 
     participants = Participant.where(sf_contact_id: hash['sf_contact_id'])
     attributes = {}
-    approved_fields = ['preferred_name', 'last_name', 'email',
+    approved_fields = ['Preferred_Name', 'last_name', 'email',
                                'sf_registration_id', 'sf_contact_id']
     #removing 'first_name' from approved fields in line 90 and replacing with 'preferred_name'
 

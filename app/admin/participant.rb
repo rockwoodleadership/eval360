@@ -1,5 +1,5 @@
 ActiveAdmin.register Participant do
-  permit_params :training_id, :first_name, :last_name, :email, :do_not_remind
+  permit_params :training_id, :first_name, :last_name, :email, :do_not_remind, :Preferred_Name
 
   actions :index, :show, :edit, :new, :create, :update, :destroy 
 
@@ -79,6 +79,7 @@ ActiveAdmin.register Participant do
       input :last_name
       input :email
       input :training
+      #, :as => :select, :collection => Training.all.map{|b| [b.name,b.id]}
     end
     actions
   end
