@@ -59,9 +59,9 @@ RSpec.describe Participant, :type => :model do
 
   
   describe "#full_name" do
-    it 'returns first and last name as a string' do
+    it 'returns first name, last name, and preferred name as a string' do
       participant = build(:participant)
-      expect(participant.full_name).to eq "#{participant.first_name} #{participant.last_name}"
+      expect(participant.full_name).to eq "#{participant.first_name} (#{participant.preferred_name}) #{participant.last_name}"
     end
   end
 

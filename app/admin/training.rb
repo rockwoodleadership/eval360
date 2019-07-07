@@ -1,5 +1,5 @@
 ActiveAdmin.register Training do
-  permit_params :name, :start_date, :end_date, :city, :state, :deadline, :curriculum, :site_name, :questionnaire_id, :status, participants_attributes: [:id, :first_name, :last_name, :email]
+  permit_params :name, :start_date, :end_date, :city, :state, :deadline, :curriculum, :site_name, :questionnaire_id, :status, participants_attributes: [:id, :first_name, :last_name, :preferred_name, :email]
   actions :index, :show, :new, :edit, :create, :update, :destroy
   menu priority: 1
 
@@ -54,6 +54,7 @@ ActiveAdmin.register Training do
       f.has_many :participants, heading: false do |participant|
         participant.inputs do
           participant.input :first_name
+          participant.input :preferred_name
           participant.input :last_name
           participant.input :email
         end
