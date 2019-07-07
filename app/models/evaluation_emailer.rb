@@ -130,13 +130,15 @@ class EvaluationEmailer
                                      "content" => "#{base_url}/evaluations/#{ev.access_key}/peer_decline"}]}
       end
       message = {
-        "subject" => "#{participant.first_name} #{participant.last_name}'s Leadership Assessment",
+        "subject" => "#{participant.first_name} (#{participant.preferred_name}) #{participant.last_name}'s Leadership Assessment",
         "to" => to_array,
         "merge" => true,
         "global_merge_vars" => [{ "name" => "firstname",
                                   "content" => participant.first_name },
                                 { "name" => "lastname",
                                   "content" => participant.last_name },
+                                { "name" => "preferred_name__c",
+                                  "content" => participant.preferred_name },
                                 { "name" => "email",
                                   "content" => participant.email },
                                 { "name" => "ruby360_Assessment_Deadline_c",
@@ -156,6 +158,8 @@ class EvaluationEmailer
                                   "content" => participant.first_name },
                                 { "name" => "lastname",
                                   "content" =>  participant.last_name },
+                                { "name" => "preferred_name__c",
+                                  "content" => participant.preferred_name },
                                 { "name" => "ruby360_url__c",
                                   "content" =>  "#{base_url}/evaluations/#{participant.self_evaluation.access_key}/edit" },
                                 { "name" => "ruby360_Assessment_Deadline_c",
@@ -176,7 +180,7 @@ class EvaluationEmailer
                                   "content" => training.state }],
         "merge" => true,
         "to" => [{ "email" => participant.email, 
-                   "name" => "#{participant.first_name} #{participant.last_name}",
+                   "name" => "#{participant.first_name} (#{participant.preferred_name}) #{participant.last_name}",
                    "type" => "to" }],
         "from_email" => "360@rockwoodleadership.org",
         "from_name" => "Rockwood Leadership Institute" 

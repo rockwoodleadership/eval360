@@ -5,13 +5,8 @@ class SalesforceConnectorController < ApplicationController
   def new_participant
     hash = JSON.parse(params[:participant])
 
-    #skip_before_action :verify_authenticity_token
-  #Adding this because of "Unprocessable Entitymissing required key preferred_name"
-
-    required_keys = ['first_name', 'last_name', 'email',
+    required_keys = ['first_name', 'last_name', 'preferred_name', 'email',
                      'sf_training_id', 'sf_registration_id', 'sf_contact_id']
-
-    #3) replacing back with first_name
 
     check_for_keys(required_keys, hash); return if performed?
     
@@ -21,7 +16,7 @@ class SalesforceConnectorController < ApplicationController
     render json: 'invalid training record',
       status: 422 and return if training.nil?
 
-    attributes = hash.extract!('first_name', 'last_name', 'email',
+    attributes = hash.extract!('first_name', 'last_name', 'preferred_name', 'email',
                                'sf_registration_id', 'sf_contact_id')
   
    
@@ -90,7 +85,7 @@ class SalesforceConnectorController < ApplicationController
 
     participants = Participant.where(sf_contact_id: hash['sf_contact_id'])
     attributes = {}
-    approved_fields = ['first_name', 'last_name', 'email',
+    approved_fields = ['first_name', 'last_name', 'preferred_name', 'email',
                                'sf_registration_id', 'sf_contact_id']
     
 

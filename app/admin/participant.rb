@@ -1,5 +1,5 @@
 ActiveAdmin.register Participant do
-  permit_params :training_id, :first_name, :last_name, :email, :do_not_remind
+  permit_params :training_id, :first_name, :last_name, :email, :do_not_remind, :preferred_name
 
   actions :index, :show, :edit, :new, :create, :update, :destroy 
 
@@ -56,6 +56,7 @@ ActiveAdmin.register Participant do
 
   csv do
     column :first_name
+    column :preferred_name
     column :last_name
     column :email
     column "Self Assessment Complete" do |participant|
@@ -76,6 +77,7 @@ ActiveAdmin.register Participant do
     inputs do
       input :do_not_remind
       input :first_name
+      input :preferred_name
       input :last_name
       input :email
       input :training

@@ -71,9 +71,9 @@ RSpec.describe Evaluation, :type => :model do
     end
 
     context "for peer evaluations" do
-      it 'returns first and last name of participant' do
+      it 'returns first name, last name, and preferred name of participant' do
         evaluation = build(:evaluation)
-        expect(evaluation.title).to eq "Peer Evaluation for #{evaluation.participant.first_name} #{evaluation.participant.last_name}"
+        expect(evaluation.title).to eq "Peer Evaluation for #{evaluation.participant.first_name} (#{evaluation.participant.preferred_name} #{evaluation.participant.last_name}"
       end
     end
   end
