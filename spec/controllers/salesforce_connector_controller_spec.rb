@@ -33,7 +33,7 @@ RSpec.describe SalesforceConnectorController, :type => :controller do
     context 'with invalid parameters' do
 
       it "returns status code 422" do
-        participant_params = JSON.generate({ first_name: 'Doris', last_name: 'Day', preferred_name: 'Dory'
+        participant_params = JSON.generate({ first_name: 'Doris', last_name: 'Day', preferred_name: 'Dory',
                                              sf_training_id: '123', sf_registration_id: '345', sf_contact_id: '678'
                                              })
         post :new_participant, params: { :participant => participant_params }
