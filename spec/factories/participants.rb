@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :participant do
     first_name "Sean"
     last_name "Combs"
-    preferred_name "Seany-Soo"
+    preferred_name "SeanBean"
     training
     email "participant#{Time.now}@example.com"
 
