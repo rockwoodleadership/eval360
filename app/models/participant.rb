@@ -40,8 +40,14 @@ class Participant < ActiveRecord::Base
     pes
   end
 
-  def full_name
+ def full_name
+   begin #try to do the thing I want to do
     "#{first_name} (#{preferred_name}) #{last_name}".titleize
+      #raise 'No preferred_name' 
+   rescue
+    "#{first_name} #{last_name}".titleize
+    #ensure, I can add something here if I wanted something to execute 
+   end
   end
 
   def peer_evaluators
