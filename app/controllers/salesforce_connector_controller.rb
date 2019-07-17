@@ -5,7 +5,7 @@ class SalesforceConnectorController < ApplicationController
   def new_participant
     hash = JSON.parse(params[:participant])
 
-    required_keys = ['first_name', 'last_name', 'preferred_name', 'email',
+    required_keys = ['first_name', 'last_name', 'email',
                      'sf_training_id', 'sf_registration_id', 'sf_contact_id']
 
     check_for_keys(required_keys, hash); return if performed?
