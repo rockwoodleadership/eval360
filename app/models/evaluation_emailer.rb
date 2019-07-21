@@ -184,7 +184,11 @@ class EvaluationEmailer
                                   "content" => training.state }],
         "merge" => true,
         "to" => [{ "email" => participant.email, 
-                   "name" => "#{participant.first_name} (#{participant.preferred_name}) #{participant.last_name}",
+                  if participant.preferred_name != nil
+                   "name" => "#{participant.preferred_name} #{participant.last_name}",
+                  else 
+                    "name" => "#{participant.first_name} #{participant.last_name}",
+                  end
                    "type" => "to" }],
         "from_email" => "360@rockwoodleadership.org",
         "from_name" => "Rockwood Leadership Institute" 
