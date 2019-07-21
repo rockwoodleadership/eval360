@@ -45,6 +45,7 @@ class Participant < ActiveRecord::Base
     "#{first_name} (#{preferred_name}) #{last_name}".titleize
       #raise 'No preferred_name' 
    rescue
+     preferred_name == first_name
     "#{first_name} #{last_name}".titleize
     #ensure, I can add something here if I wanted something to execute 
    end
