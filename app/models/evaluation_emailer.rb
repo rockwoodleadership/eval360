@@ -131,9 +131,9 @@ class EvaluationEmailer
       end
       message = {
        if participant.preferred_name != nil 
-        "subject" => "#{participant.preferred_name} #{participant.last_name}'s Leadership Assessment",
+        "subject" => "#{participant.preferred_name} #{participant.last_name}'s Leadership Assessment"
       else 
-        "subject" => "#{participant.first_name} #{participant.last_name}'s Leadership Assessment",
+        "subject" => "#{participant.first_name} #{participant.last_name}'s Leadership Assessment"
       end
         "to" => to_array,
         "merge" => true,
@@ -185,9 +185,9 @@ class EvaluationEmailer
         "merge" => true,
         "to" => [{ "email" => participant.email, 
                   if participant.preferred_name != nil
-                   "name" => "#{participant.preferred_name} #{participant.last_name}",
+                   "name" => "#{participant.preferred_name} #{participant.last_name}"
                   else 
-                    "name" => "#{participant.first_name} #{participant.last_name}",
+                    "name" => "#{participant.first_name} #{participant.last_name}"
                   end
                    "type" => "to" }],
         "from_email" => "360@rockwoodleadership.org",
