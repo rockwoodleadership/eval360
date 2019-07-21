@@ -130,7 +130,7 @@ class EvaluationEmailer
                                      "content" => "#{base_url}/evaluations/#{ev.access_key}/peer_decline"}]}
       end
       message = {
-       begin
+       begin preferred_name != nil
         "subject" => "#{participant.preferred_name} #{participant.last_name}'s Leadership Assessment"
        rescue 
         "subject" => "#{participant.first_name} #{participant.last_name}'s Leadership Assessment"
@@ -184,7 +184,7 @@ class EvaluationEmailer
                                   "content" => training.state }],
         "merge" => true,
         "to" => [{ "email" => participant.email, 
-                  begin
+                  begin preferred_name != nil
                    "name" => "#{participant.preferred_name} #{participant.last_name}"
                   rescue 
                     "name" => "#{participant.first_name} #{participant.last_name}"
