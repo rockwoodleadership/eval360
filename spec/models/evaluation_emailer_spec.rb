@@ -59,4 +59,11 @@ describe EvaluationEmailer do
       end
     end
   end
+  
+  describe '.send_template' do
+    it 'does not send a template for eval-done-PublicProgramsFellowship' do
+      eval_done = EvaluationEmailer.send_template(@template_name = 'eval-done-PublicProgramsFellowship', @message = 'test') 
+      expect(eval_done == nil)
+    end
+  end
 end
