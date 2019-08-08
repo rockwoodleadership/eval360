@@ -102,16 +102,20 @@ class EvaluationEmailer
     end
 
     def self.send_template(template_name, message)
-      results = mandrill.messages.send_template(template_name, [], message, true)
-      sent_count = 0
-      results.each do |result|
-        if result['status'] == 'sent'
-          sent_count = sent_count + 1
-        else
-          puts result
+      if template_name != 'eval-done-PublicProgramsFellowship'
+        results = mandrill.messages.send_template(template_name, [], message, true)
+        sent_count = 0
+        results.each do |result|
+          if result['status'] == 'sent'
+            sent_count = sent_count + 1
+          else
+            puts result
+          end
         end
+        return sent_count
+      else
+        return
       end
-      return sent_count
     end
 
     def self.mandrill
