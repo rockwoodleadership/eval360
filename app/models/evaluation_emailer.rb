@@ -102,7 +102,7 @@ class EvaluationEmailer
     end
 
     def self.send_template(template_name, message)
-      if template_name != 'eval-done-PublicProgramsFellowship'
+      if template_name != 'eval-done-PublicProgramsFellowship' || 'reminder-to-remind-PublicProgramsFellowship'
         results = mandrill.messages.send_template(template_name, [], message, true)
         sent_count = 0
         results.each do |result|
