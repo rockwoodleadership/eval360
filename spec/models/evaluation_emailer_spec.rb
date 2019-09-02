@@ -35,13 +35,13 @@ describe EvaluationEmailer do
     end
   end
 
-  describe '.remind_peers_reminder' do
-    it 'emails a peer reminder template' do
-      expect(EvaluationEmailer).to receive(:send_template).
-        with("reminder-to-remind-#{@participant.training.questionnaire.name}", anything())
-      EvaluationEmailer.remind_peers_reminder(@participant)
-    end
-  end
+  #describe '.remind_peers_reminder' do
+   # it 'emails a peer reminder template' do
+    #  expect(EvaluationEmailer).to receive(:send_template).
+     #   with("reminder-to-remind-#{@participant.training.questionnaire.name}", anything())
+      #EvaluationEmailer.remind_peers_reminder(@participant)
+    #end
+  #end
 
   describe '.send_peer_invites' do
     context 'when it successfully sends' do
