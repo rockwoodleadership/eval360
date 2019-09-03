@@ -19,13 +19,13 @@ class Training < ActiveRecord::Base
     end
   end
 
-  def self.send_remind_peers_reminders
-    email_block do |participant|
-      if participant.total_peer_evaluations > 0 && participant.completed_peer_evaluations < 10
-        participant.remind_to_remind_peers
-      end
-    end
-  end
+  #def self.send_remind_peers_reminders
+   # email_block do |participant|
+    #  if participant.total_peer_evaluations > 0 && participant.completed_peer_evaluations < 10
+     #   participant.remind_to_remind_peers
+     # end
+    #end
+  # end
 
   def formatted_date
     if start_date && end_date
