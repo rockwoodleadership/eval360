@@ -29,14 +29,14 @@ RSpec.describe Training, :type => :model do
       end
     end
 
-    describe ".send_remind_peers_reminders" do
-      it 'reminds participants to remind peers' do
-        expect(@participant2).not_to receive(:remind_to_remind_peers)
-        evaluator = create(:evaluator)
-        @participant2.evaluations.create(evaluator_id: evaluator.id) 
-        Training.send_remind_peers_reminders
-      end
-    end
+    #describe ".send_remind_peers_reminders" do
+     # it 'reminds participants to remind peers' do
+      #  expect(@participant2).not_to receive(:remind_to_remind_peers)
+       # evaluator = create(:evaluator)
+        #@participant2.evaluations.create(evaluator_id: evaluator.id) 
+       # Training.send_remind_peers_reminders
+      #end
+    #end
     context "when participant has reminders turned off" do
       describe ".send_self_eval_reminders" do
         it 'does not send a reminder' do
