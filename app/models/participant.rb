@@ -111,9 +111,9 @@ class Participant < ActiveRecord::Base
     update_salesforce
   end
 
-  #def remind_to_remind_peers
-   # EvaluationEmailer.remind_peers_reminder(participant)
-  #end
+  def remind_to_remind_peers
+   EvaluationEmailer.remind_peers_reminder(participant)
+  end
 
   private
   
