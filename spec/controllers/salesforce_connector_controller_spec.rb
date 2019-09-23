@@ -11,11 +11,11 @@ RSpec.describe SalesforceConnectorController, :type => :controller do
         email = "email#{Time.now}@example.com"
         @training = create(:training, sf_training_id: '123')
         allow(Training).to receive(:find_by) { @training }
-        @participant_params = JSON.generate({ preferred_name: 'Doris', last_name: 'Day', email: email,
+        @participant_params = JSON.generate({ first_name: 'Doris', last_name: 'Day', email: email,
                                              sf_training_id: '123', sf_registration_id: '345', sf_contact_id: '678',
                                              api_key: ENV['INBOUND_SALESFORCE_KEY'] })
       end 
-#changed first_name to preferred_name here
+
       after do
         post :new_participant, params: { :participant => @participant_params }
       end
@@ -33,13 +33,13 @@ RSpec.describe SalesforceConnectorController, :type => :controller do
     context 'with invalid parameters' do
 
       it "returns status code 422" do
-        participant_params = JSON.generate({ preferred_name: 'Doris', last_name: 'Day',
+        participant_params = JSON.generate({ first_name: 'Doris', last_name: 'Day',
                                              sf_training_id: '123', sf_registration_id: '345', sf_contact_id: '678'
                                              })
         post :new_participant, params: { :participant => participant_params }
         expect(response.status).to eq 422
       end
-#changed first_name to preferred_name here
+
     end
 
   end
