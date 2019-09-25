@@ -141,11 +141,10 @@ RSpec.describe Participant, :type => :model do
   end
 
   describe "#remind_to_remind_peers" do
-   it 'sends reminder to remind self' do
-     participant = build(:participant)
-     expect(EvaluationEmailer).to receive(:remind_peers_reminder)
-     participant.remind_to_remind_peers
-   end
- end
-
+    it 'sends reminder to self' do
+      participant = build(:participant)
+      expect(EvaluationEmailer).to receive(:remind_peers_reminder)
+      participant.remind_to_remind_peers
+    end
+  end
 end
