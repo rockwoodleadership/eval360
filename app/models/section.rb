@@ -3,6 +3,7 @@ class Section < ActiveRecord::Base
   has_many :questionnaire_templates
   has_many :questionnaires, through: :questionnaire_templates
   accepts_nested_attributes_for :questions
+  accepts_nested_attributes_for :questionnaire_templates, allow_destroy: true
 
 
   def self.generate_from_parsed_yaml(yaml)

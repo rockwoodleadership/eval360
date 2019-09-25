@@ -50,8 +50,8 @@ class EvaluationEmailer
   end
 
   def self.remind_peers_reminder(participant)
-    training = participant.training
-    template_name = "reminder-to-remind-#{training.questionnaire.name}"
+   training = participant.training
+    template_name = "self-reminder-#{training.questionnaire.name}"
     message = participant_message(participant)
     message["subject"] = "Rockwood: 360 Leadership Assessment Reminder"
     send_template(template_name, message)
@@ -102,16 +102,20 @@ class EvaluationEmailer
     end
 
     def self.send_template(template_name, message)
-      results = mandrill.messages.send_template(template_name, [], message, true)
-      sent_count = 0
-      results.each do |result|
-        if result['status'] == 'sent'
-          sent_count = sent_count + 1
-        else
-          puts result
+      if template_name != 'eval-done-PublicProgramsFellowship' || template_name != 'reminder-to-remind-PublicProgramsFellowship'
+        results = mandrill.messages.send_template(template_name, [], message, true)
+        sent_count = 0
+        results.each do |result|
+          if result['status'] == 'sent'
+            sent_count = sent_count + 1
+          else
+            puts result
+          end
         end
+        return sent_count
+      else
+        return
       end
-      return sent_count
     end
 
     def self.mandrill

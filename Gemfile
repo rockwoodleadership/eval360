@@ -10,7 +10,8 @@ gem 'uglifier'
 gem 'slim-rails'
 gem 'turbolinks'
 gem 'devise'
-gem 'activeadmin', github: 'activeadmin'
+gem 'activeadmin'
+#, github: 'activeadmin'
 gem 'active_record-acts_as'
 gem 'mandrill-api'
 gem 'formtastic', '~> 3.0'
@@ -25,6 +26,8 @@ gem 'newrelic_rpm'
 gem 'render_async'
 gem 'bundle-audit'
 gem "rails-html-sanitizer", ">= 1.0.4"
+gem 'prawn-emoji', require: false
+
 
 group :production do
   gem 'unicorn'
@@ -37,6 +40,7 @@ group :development do
   gem 'guard-rspec', require: false
   gem "spring"
   gem "spring-commands-rspec"
+  gem "byebug"
 end
 
 group :development, :test do
@@ -45,6 +49,7 @@ group :development, :test do
   gem 'pry'
   gem 'rspec-rails', '~> 3.7'
   gem "factory_bot_rails"
+  #gem 'restforce_mock'
 end
 
 group :test do

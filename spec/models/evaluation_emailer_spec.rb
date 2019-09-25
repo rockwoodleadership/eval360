@@ -36,9 +36,9 @@ describe EvaluationEmailer do
   end
 
   describe '.remind_peers_reminder' do
-    it 'emails a peer reminder template' do
-      expect(EvaluationEmailer).to receive(:send_template).
-        with("reminder-to-remind-#{@participant.training.questionnaire.name}", anything())
+   it 'emails a peer reminder template' do
+     expect(EvaluationEmailer).to receive(:send_template).
+       with("self-reminder-#{@participant.training.questionnaire.name}", anything())
       EvaluationEmailer.remind_peers_reminder(@participant)
     end
   end
@@ -57,6 +57,13 @@ describe EvaluationEmailer do
       it 'returns a count for number of messages sent' do
         expect(EvaluationEmailer.send_peer_reminders(@participant, "Please complete")).to eq 1
       end
+    end
+  end
+  
+  describe '.send_template' do
+    it 'does not send a template for eval-done-PublicProgramsFellowship' do
+      eval_done = EvaluationEmailer.send_template(@template_name = 'eval-done-PublicProgramsFellowship', @message = 'test') 
+      expect(eval_done == nil)
     end
   end
 end
