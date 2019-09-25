@@ -7,10 +7,9 @@ class SalesforceConnectorController < ApplicationController
 
     required_keys = ['first_name', 'last_name', 'email',
                      'sf_training_id', 'sf_registration_id', 'sf_contact_id']
-
     check_for_keys(required_keys, hash); return if performed?
     
-    sf_training_id = hash['sf_training_id']
+    sf_training_id = hash['sf_training_id'] 
     training = Training.find_by(sf_training_id: sf_training_id) 
 
     render json: 'invalid training record',
@@ -18,6 +17,7 @@ class SalesforceConnectorController < ApplicationController
 
     attributes = hash.extract!('first_name', 'last_name', 'email',
                                'sf_registration_id', 'sf_contact_id')
+ 
     existing = Participant.where(sf_contact_id: attributes['sf_contact_id'],
                                  sf_registration_id: attributes['sf_registration_id'])
     render json: 'participant already exists',
@@ -79,6 +79,7 @@ class SalesforceConnectorController < ApplicationController
     attributes = {}
     approved_fields = ['first_name', 'last_name', 'email',
                                'sf_registration_id', 'sf_contact_id']
+
     hash['changed_fields'].each do |cf|
       if cf == 'sf_training_id'
         old_training = Training.find_by(sf_training_id: hash['sf_old_training_id'])

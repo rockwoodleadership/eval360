@@ -15,7 +15,6 @@ RSpec.describe SalesforceConnectorController, :type => :controller do
                                              sf_training_id: '123', sf_registration_id: '345', sf_contact_id: '678',
                                              api_key: ENV['INBOUND_SALESFORCE_KEY'] })
       end 
-
       after do
         post :new_participant, params: { :participant => @participant_params }
       end

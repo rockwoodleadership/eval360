@@ -112,7 +112,7 @@ class Participant < ActiveRecord::Base
   end
 
   def remind_to_remind_peers
-    EvaluationEmailer.remind_peers_reminder(participant)
+   EvaluationEmailer.remind_peers_reminder(participant)
   end
 
   private

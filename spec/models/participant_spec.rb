@@ -147,5 +147,4 @@ RSpec.describe Participant, :type => :model do
       participant.remind_to_remind_peers
     end
   end
-
 end
