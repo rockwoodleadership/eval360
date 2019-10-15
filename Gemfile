@@ -11,6 +11,7 @@ gem 'slim-rails'
 gem 'turbolinks'
 gem 'devise'
 gem 'activeadmin'
+gem 'bundler', '~> 2.0.1'
 #, github: 'activeadmin'
 gem 'active_record-acts_as'
 gem 'mandrill-api'
@@ -58,5 +59,3 @@ group :test do
   gem 'database_cleaner'
   gem 'rails-controller-testing'
 end
-
-
