@@ -20,3 +20,4 @@ $( document ).ready( function() {
     $.post("/answers/"+ answer_id +"/update", data);
   });
 });
+

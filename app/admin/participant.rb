@@ -79,6 +79,11 @@ ActiveAdmin.register Participant do
       input :last_name
       input :email
       input :training
+
+            # ,:as => :select, 
+            # :collection => Training.all.map{ |x| [x.name, x.id]
+            #  #come back to this limiting option 
+            # }
     end
     actions
   end
