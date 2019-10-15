@@ -378,6 +378,7 @@ DEPENDENCIES
   bugsnag
   bullet
   bundle-audit
+  bundler (~> 2.0.1)
   cocoon
   coffee-rails
   database_cleaner
