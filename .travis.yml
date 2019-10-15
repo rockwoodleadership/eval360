@@ -6,6 +6,7 @@ addons:
 before_script:
   - cp config/database.yml.travis config/database.yml
   - psql -c 'create database eval360_test' -U postgres
+  - gem update --system
 deploy:
   provider: heroku
   api_key:
