@@ -75,6 +75,7 @@ ActiveAdmin.register Participant do
       input :training, 
                  :as => :select, 
                  :collection => Training.pluck(:name).last(10)
+
     end
     actions
   end
