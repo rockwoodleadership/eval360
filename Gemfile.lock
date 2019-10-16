@@ -74,6 +74,7 @@ GEM
     bundler-audit (0.6.1)
       bundler (>= 1.2.0, < 3)
       thor (~> 0.18)
+    byebug (11.0.1)
     cocoon (1.2.11)
     coderay (1.1.2)
     coffee-rails (4.2.2)
@@ -382,6 +383,7 @@ DEPENDENCIES
   bullet
   bundle-audit
   bundler (~> 2.0.1)
+  byebug
   cocoon
   coffee-rails
   database_cleaner
