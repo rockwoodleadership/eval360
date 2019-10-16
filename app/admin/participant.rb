@@ -73,7 +73,7 @@ ActiveAdmin.register Participant do
       input :email
       input :training, 
                  :as => :select, 
-                 :collection => Training.pluck(:name).last(10)
+                 :collection => Training.last(10)
     end
     actions
   end
