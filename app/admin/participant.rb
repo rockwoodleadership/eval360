@@ -12,7 +12,6 @@ ActiveAdmin.register Participant do
 
   controller do
     defaults finder: :find_by_access_key
-    #, :collection_name => [:participants]
 
     def update
       participant = Participant.find_by(access_key: params[:id])
@@ -72,10 +71,10 @@ ActiveAdmin.register Participant do
       input :first_name
       input :last_name
       input :email
-      input :training,  
-                 :collection => Training.pluck(:name).last(10)
-
-    end
+      input :training, 
+                 #:as => :select, 
+                 #:collection => Training.last(10)
+    #end
     actions
   end
 
