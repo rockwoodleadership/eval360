@@ -71,10 +71,9 @@ ActiveAdmin.register Participant do
       input :first_name
       input :last_name
       input :email
-      input :training, 
-               #  :as => :select, 
-               #  :collection => Training.last(10)
-    end
+      input :training 
+                 #:as => :select, 
+                 #:collection => Training.last(10)
     actions
   end
 
@@ -160,8 +159,8 @@ ActiveAdmin.register Participant do
         end
       end
       
+  end
 
-    end
     active_admin_comments
     div do
       link_to("Download Peer Assessment Status as CSV", download_evaluators_admin_training_participant_path(training, participant, format: 'csv'))
@@ -176,4 +175,5 @@ ActiveAdmin.register Participant do
       link_to("View Assessment Report", participant_report_path(participant), target: :blank)
     end
   end
+end
 end

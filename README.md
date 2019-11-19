@@ -59,4 +59,3 @@ t.participants.create(first_name: 'Joe', last_name: 'Smith', email: 'joe@example
 **Please find the documentation for ActiveAdmin, Formtastic, and Slim for reference. 
 
 
-

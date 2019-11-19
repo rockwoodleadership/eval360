@@ -33,6 +33,7 @@
     #evaluators
       = f.semantic_fields_for :evaluators do |ev|
         = render 'evaluator_fields', :f => ev if ev.object.new_record? 
+        
       .links
           = link_to_add_association 'add another recipient', f, :evaluators
     = f.actions do
