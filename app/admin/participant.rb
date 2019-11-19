@@ -74,7 +74,7 @@ ActiveAdmin.register Participant do
       input :training, 
                  :as => :select, 
                  :collection => Training.all
-    end
+    
     actions
   end
 
