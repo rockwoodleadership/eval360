@@ -71,9 +71,9 @@ ActiveAdmin.register Participant do
       input :first_name
       input :last_name
       input :email
-      input :training 
-                 #:as => :select, 
-                 #:collection => Training.last(10)
+      input :training, 
+                 :as => :select, 
+                 :collection => Training.all
     actions
   end
 
