@@ -71,10 +71,8 @@ ActiveAdmin.register Participant do
       input :first_name
       input :last_name
       input :email
-      input :training, 
-                 :as => :select, 
-                 :collection => Training.all
-    
+      input :training
+    end
     actions
   end
 
@@ -176,5 +174,4 @@ ActiveAdmin.register Participant do
       link_to("View Assessment Report", participant_report_path(participant), target: :blank)
     end
   end
-end
 end
