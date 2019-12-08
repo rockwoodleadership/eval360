@@ -43,6 +43,22 @@ describe EvaluationEmailer do
     end
   end
 
+  describe '.remind_peers_reminder' do
+    it 'does not send reminder-to-remind-PublicProgramsFellowship' do
+      expect(EvaluationEmailer).not_to receive(:send_template).
+        with("reminder-to-remind-PublicProgramsFellowship", anything())
+      EvaluationEmailer.remind_peers_reminder(@participant)
+    end
+  end
+
+  describe '.remind_peers_reminder' do
+    it 'does not send reminder-to-remind-YearlongPerformance OLD' do
+      expect(EvaluationEmailer).not_to receive(:send_template).
+        with("reminder-to-remind-YearlongPerformance OLD", anything())
+      EvaluationEmailer.remind_peers_reminder(@participant)
+    end
+  end
+
   describe '.send_peer_invites' do
     context 'when it successfully sends' do
       it 'returns a count for number of messages sent' do
