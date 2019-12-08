@@ -4,14 +4,8 @@ class SalesforceConnectorController < ApplicationController
   
   def new_participant
     hash = JSON.parse(params[:participant])
-
-    #skip_before_action :verify_authenticity_token
-  #Adding this because of "Unprocessable Entitymissing required key preferred_name"
-
     required_keys = ['first_name', 'last_name', 'email',
                      'sf_training_id', 'sf_registration_id', 'sf_contact_id']
-
-    #3) replacing back with first_name
 
     check_for_keys(required_keys, hash); return if performed?
     
@@ -23,13 +17,6 @@ class SalesforceConnectorController < ApplicationController
 
     attributes = hash.extract!('first_name', 'last_name', 'email',
                                'sf_registration_id', 'sf_contact_id')
-  
-   
-   #attributes['first_name'] = hash.extract!('Preferred_Name') 
-    #if the preferred name is given, (which it will be b/c if it's not given then Form Assembly
-    #pushed preferred name to first name), set the attribute of first name equal to the extracted 
-    #value of preferred name. 
-
 
     existing = Participant.where(sf_contact_id: attributes['sf_contact_id'],
                                  sf_registration_id: attributes['sf_registration_id'])
@@ -92,7 +79,6 @@ class SalesforceConnectorController < ApplicationController
     attributes = {}
     approved_fields = ['first_name', 'last_name', 'email',
                                'sf_registration_id', 'sf_contact_id']
-    
 
     hash['changed_fields'].each do |cf|
       if cf == 'sf_training_id'
