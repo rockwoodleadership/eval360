@@ -79,6 +79,7 @@ ActiveAdmin.register Participant do
       input :last_name
       input :email
       input :training
+      #, :as => :select, :collection => Training.all.map{|b| [b.name,b.id]}
     end
     actions
   end
