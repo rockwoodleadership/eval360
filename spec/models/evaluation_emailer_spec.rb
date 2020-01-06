@@ -58,7 +58,7 @@ describe EvaluationEmailer do
       EvaluationEmailer.remind_peers_reminder(@participant)
     end
   end
-
+  
   describe '.send_peer_invites' do
     context 'when it successfully sends' do
       it 'returns a count for number of messages sent' do

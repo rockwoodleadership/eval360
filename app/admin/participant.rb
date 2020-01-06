@@ -20,6 +20,7 @@ ActiveAdmin.register Participant do
       redirect_to admin_training_participant_path(participant.training, participant)
     end
 
+
   end
 
   member_action :remind, method: :get do
@@ -71,7 +72,9 @@ ActiveAdmin.register Participant do
       input :first_name
       input :last_name
       input :email
-      input :training
+      input :training 
+                 #:as => :select, 
+                 #:collection => Training.last(10)
     end
     actions
   end
