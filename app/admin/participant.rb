@@ -178,4 +178,3 @@ ActiveAdmin.register Participant do
     end
   end
 end
-
