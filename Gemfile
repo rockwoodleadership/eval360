@@ -11,6 +11,7 @@ gem 'uglifier'
 gem 'slim-rails'
 gem 'turbolinks'
 gem 'devise'
+gem "excon", ">= 0.71.0"
 gem 'actionpack', '5.1.5'
 gem 'activerecord', '5.1.5'
 gem 'activesupport', '5.1.5'
