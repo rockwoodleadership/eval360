@@ -73,8 +73,8 @@ ActiveAdmin.register Participant do
       input :last_name
       input :email
       input :training 
-                 #:as => :select, 
-                 #:collection => Training.last(10)
+          #:collection => Training.all.find_by(status: 'Planned')
+      
     end
     actions
   end
