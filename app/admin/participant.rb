@@ -1,7 +1,7 @@
 ActiveAdmin.register Participant do
   permit_params :training_id, :first_name, :last_name, :email, :do_not_remind
 
-  actions :index, :show, :new, :create, :update, :destroy 
+  actions :index, :show, :edit, :new, :create, :update, :destroy 
 
   belongs_to :training
   navigation_menu :default
@@ -19,6 +19,7 @@ ActiveAdmin.register Participant do
       flash[:notice] = "Participant has been updated"
       redirect_to admin_training_participant_path(participant.training, participant)
     end
+
 
   end
 
@@ -74,6 +75,7 @@ ActiveAdmin.register Participant do
       input :training 
                  #:as => :select, 
                  #:collection => Training.last(10)
+    end
     actions
   end
 
@@ -176,4 +178,4 @@ ActiveAdmin.register Participant do
     end
   end
 end
-end
+
