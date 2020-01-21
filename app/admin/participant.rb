@@ -1,9 +1,9 @@
 ActiveAdmin.register Participant do
-  permit_params :training_id, :first_name, :last_name, :email, :do_not_remind
+  belongs_to :training
+  permit_params :training_id, :first_name, :last_name, :email, :do_not_remind, :status
 
   actions :index, :show, :edit, :new, :create, :update, :destroy 
 
-  belongs_to :training
   navigation_menu :default
   menu false 
   config.filters = false
@@ -71,7 +71,7 @@ ActiveAdmin.register Participant do
       input :first_name
       input :last_name
       input :email
-      input :training
+      input :training, :collection => Training.where(:status => 'Planned') && Training.where(:status => 'In progress')
     end
     actions
   end
