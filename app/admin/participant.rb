@@ -71,7 +71,7 @@ ActiveAdmin.register Participant do
       input :first_name
       input :last_name
       input :email
-      input :training, :collection => Training.where(:status => 'Planned') && Training.where(:status => 'In progress')
+      input :training, method: :get, :collection => Training.where(:status => 'Planned') && Training.where(:status => 'In progress')
     end
     actions
   end
