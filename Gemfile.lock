@@ -1,20 +1,3 @@
-GIT
-  remote: git://github.com/activeadmin/activeadmin.git
-  revision: ee49d3d2d13c3c871a2ce3fe62e29bbc35b5f697
-  specs:
-    activeadmin (2.0.0.alpha)
-      arbre (>= 1.1.1)
-      formtastic (~> 3.1)
-      formtastic_i18n
-      inherited_resources (>= 1.7.0)
-      jquery-rails (>= 4.2.0)
-      kaminari (>= 1.0.1)
-      railties (>= 4.2, < 5.2)
-      ransack (>= 1.8.7)
-      sass (~> 3.4)
-      sprockets (>= 3.0, < 4.1)
-      sprockets-es6 (>= 0.9.2)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -44,6 +27,18 @@ GEM
     active_record-acts_as (3.0.0)
       activerecord (>= 4.2)
       activesupport (>= 4.2)
+    activeadmin (2.3.1)
+      arbre (~> 1.2, >= 1.2.1)
+      formtastic (~> 3.1)
+      formtastic_i18n (~> 0.4)
+      inherited_resources (~> 1.7)
+      jquery-rails (~> 4.2)
+      kaminari (~> 1.0, >= 1.0.1)
+      railties (>= 5.0, < 6.1)
+      ransack (~> 2.1, >= 2.1.1)
+      sassc-rails (~> 2.1)
+      sprockets (>= 3.0, < 4.1)
+      sprockets-es6 (~> 0.9, >= 0.9.2)
     activejob (5.1.5)
       activesupport (= 5.1.5)
       globalid (>= 0.3.6)
@@ -60,14 +55,14 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
-    arbre (1.1.1)
+    arbre (1.2.1)
       activesupport (>= 3.0.0)
     arel (8.0.0)
     babel-source (5.8.35)
     babel-transpiler (0.7.0)
       babel-source (>= 4.0, < 6)
       execjs (~> 2.0)
-    bcrypt (3.1.12)
+    bcrypt (3.1.13)
     bugsnag (6.6.4)
       concurrent-ruby (~> 1.0)
     builder (3.2.3)
@@ -79,6 +74,7 @@ GEM
     bundler-audit (0.6.1)
       bundler (>= 1.2.0, < 3)
       thor (~> 0.18)
+    byebug (11.0.1)
     cocoon (1.2.11)
     coderay (1.1.2)
     coffee-rails (4.2.2)
@@ -91,7 +87,7 @@ GEM
     concurrent-ruby (1.1.5)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
-    crass (1.0.4)
+    crass (1.0.5)
     daemons (1.2.6)
     database_cleaner (1.6.2)
     delayed_job (4.1.4)
@@ -99,10 +95,10 @@ GEM
     delayed_job_active_record (4.1.2)
       activerecord (>= 3.0, < 5.2)
       delayed_job (>= 3.0, < 5)
-    devise (4.6.2)
+    devise (4.7.1)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
-      railties (>= 4.1.0, < 6.0)
+      railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
     diff-lcs (1.3)
@@ -112,9 +108,9 @@ GEM
     dotenv-rails (2.2.1)
       dotenv (= 2.2.1)
       railties (>= 3.2, < 5.2)
-    erubi (1.8.0)
+    erubi (1.9.0)
     eventmachine (1.2.5)
-    excon (0.60.0)
+    excon (0.71.1)
     execjs (2.7.0)
     factory_bot (4.8.2)
       activesupport (>= 3.0.0)
@@ -148,18 +144,18 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
-    has_scope (0.7.1)
-      actionpack (>= 4.1, < 5.2)
-      activesupport (>= 4.1, < 5.2)
+    has_scope (0.7.2)
+      actionpack (>= 4.1)
+      activesupport (>= 4.1)
     hashdiff (0.3.7)
     hashie (3.6.0)
     i18n (0.9.5)
       concurrent-ruby (~> 1.0)
-    inherited_resources (1.8.0)
-      actionpack (>= 4.2, <= 5.2)
+    inherited_resources (1.11.0)
+      actionpack (>= 5.0, < 6.1)
       has_scope (~> 0.6)
-      railties (>= 4.2, <= 5.2)
-      responders
+      railties (>= 5.0, < 6.1)
+      responders (>= 2, < 4)
     jquery-rails (4.3.1)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
@@ -182,7 +178,7 @@ GEM
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
       ruby_dep (~> 1.2)
-    loofah (2.2.3)
+    loofah (2.4.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     lumberjack (1.0.12)
@@ -194,12 +190,12 @@ GEM
     method_source (0.9.2)
     mini_mime (1.0.0)
     mini_portile2 (2.4.0)
-    minitest (5.11.3)
+    minitest (5.12.0)
     multipart-post (2.0.0)
     nenv (0.3.0)
     newrelic_rpm (4.8.0.341)
     nio4r (2.2.0)
-    nokogiri (1.10.3)
+    nokogiri (1.10.7)
       mini_portile2 (~> 2.4.0)
     notiffany (0.1.1)
       nenv (~> 0.1)
@@ -207,8 +203,8 @@ GEM
     orm_adapter (0.5.0)
     pdf-core (0.7.0)
     pg (0.21.0)
-    polyamorous (1.3.3)
-      activerecord (>= 3.0)
+    polyamorous (2.3.0)
+      activerecord (>= 5.0)
     prawn (2.2.2)
       pdf-core (~> 0.7.0)
       ttfunk (~> 1.5)
@@ -216,7 +212,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
     public_suffix (3.0.2)
-    rack (2.0.7)
+    rack (2.0.8)
     rack-mini-profiler (0.10.7)
       rack (>= 1.2.0)
     rack-test (1.1.0)
@@ -240,7 +236,7 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.0.4)
+    rails-html-sanitizer (1.2.0)
       loofah (~> 2.2, >= 2.2.2)
     rails_serve_static_assets (0.0.5)
     railties (5.1.5)
@@ -250,20 +246,20 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     raindrops (0.19.0)
-    rake (12.3.2)
-    ransack (1.8.7)
-      actionpack (>= 3.0)
-      activerecord (>= 3.0)
-      activesupport (>= 3.0)
+    rake (12.3.3)
+    ransack (2.3.0)
+      actionpack (>= 5.0)
+      activerecord (>= 5.0)
+      activesupport (>= 5.0)
       i18n
-      polyamorous (~> 1.3.2)
+      polyamorous (= 2.3.0)
     rb-fsevent (0.10.2)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
     render_async (2.1.0)
-    responders (2.4.1)
-      actionpack (>= 4.2.0, < 6.0)
-      railties (>= 4.2.0, < 6.0)
+    responders (3.0.0)
+      actionpack (>= 5.0)
+      railties (>= 5.0)
     restforce (3.1.0)
       faraday (>= 0.9.0, <= 1.0)
       faraday_middleware (>= 0.8.8, <= 1.0)
@@ -291,7 +287,7 @@ GEM
       rspec-support (~> 3.7.0)
     rspec-support (3.7.1)
     ruby_dep (1.5.0)
-    rubyzip (1.2.2)
+    rubyzip (1.3.0)
     safe_yaml (1.0.4)
     sass (3.5.5)
       sass-listen (~> 4.0.0)
@@ -304,6 +300,14 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
+    sassc (2.2.1)
+      ffi (~> 1.9)
+    sassc-rails (2.1.2)
+      railties (>= 4.0.0)
+      sassc (>= 2.0)
+      sprockets (> 3.0)
+      sprockets-rails
+      tilt
     shellany (0.0.1)
     shoulda-callback-matchers (1.1.4)
       activesupport (>= 3)
@@ -370,11 +374,16 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  actionpack (= 5.1.5)
   active_record-acts_as
-  activeadmin!
+  activeadmin (= 2.3.1)
+  activerecord (= 5.1.5)
+  activesupport (= 5.1.5)
   bugsnag
   bullet
   bundle-audit
+  bundler (~> 2.0.1)
+  byebug
   cocoon
   coffee-rails
   database_cleaner
@@ -382,6 +391,7 @@ DEPENDENCIES
   devise
   dotenv-deployment
   dotenv-rails
+  excon (>= 0.71.0)
   factory_bot_rails
   formtastic (~> 3.0)
   formtastic-bootstrap
@@ -392,11 +402,13 @@ DEPENDENCIES
   pg (~> 0.21.0)
   prawn
   pry
+  rack (>= 2.0.8)
   rack-mini-profiler
   rails (= 5.1.5)
   rails-controller-testing
   rails-html-sanitizer (>= 1.0.4)
   rails_serve_static_assets
+  railties (= 5.1.5)
   rake
   render_async
   restforce
@@ -416,7 +428,7 @@ DEPENDENCIES
   webmock
 
 RUBY VERSION
-   ruby 2.5.0p0
+   ruby 2.5.5p157
 
 BUNDLED WITH
-   2.0.1
+   2.0.2

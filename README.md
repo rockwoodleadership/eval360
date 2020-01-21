@@ -1,13 +1,19 @@
 [![Build Status](https://travis-ci.org/rockwoodleadership/eval360.svg?branch=master)](https://travis-ci.org/rockwoodleadership/eval360)
 ## Rockwood 360 Eval Software
 
+## As of 10/16 we are deploying from the ‘upgrade-ruby’ branch
+
 ### Requirements
-- Ruby 2.5.0
+- Ruby 2.5.5 ---> upgraded from 2.5.0 on 10/16
 - Rails 5.1.5
 - Postgresql 9.4
+- Heroku stack: Heroku-18 ---> upgraded from Cedar-14 on 10/15
 
 #### Setup
-1 Fork the repo [https://help.github.com/articles/fork-a-repo/](https://help.github.com/articles/fork-a-repo/)  
+0 To set up this environment locally, please get the necessary login info to Github, Heroku, Salesforce, and Mailchimp (you will access Mandrill through here) from Joi or Amie. 
+```
+1 Fork the repo [https://help.github.com/articles/fork-a-repo/](https://help.github.com/articles/fork-a-repo/), and clone to your local computer. 
+``` 
 2 Run the below script
 ```
 ./script/newb
@@ -22,13 +28,15 @@ INBOUND_SALESFORCE_KEY="example"
 SALESFORCE_PASSWORD="passwordsecuritytoken"
 SALESFORCE_USERNAME="example@email.com"
 ``` 
+To find these, when logged into Heroku, please find the config vars in dashboard -> rockwood -> settings -> config vars, click “reveal config vars”. 
+```
 #### Start
 ```
 thin start --ssl
 ```
 #### Test
 ```
-rake
+rake, rspec
 ```
 
 #### Development Setup
@@ -45,5 +53,9 @@ t = Training.create(name: 'rockwood test', start_date: DateTime.parse('Jan 23 20
 t.participants.create(first_name: 'Joe', last_name: 'Smith', email: 'joe@example.com')
 ```
 4. Continue setup in admin panel
+```
+**We have the ability to create new questionnaires/sections/questions in the software too. 
+```
+**Please find the documentation for ActiveAdmin, Formtastic, and Slim for reference. 
 
 

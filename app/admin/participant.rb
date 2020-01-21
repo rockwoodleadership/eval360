@@ -20,6 +20,7 @@ ActiveAdmin.register Participant do
       redirect_to admin_training_participant_path(participant.training, participant)
     end
 
+
   end
 
   member_action :remind, method: :get do
@@ -158,8 +159,8 @@ ActiveAdmin.register Participant do
         end
       end
       
+  end
 
-    end
     active_admin_comments
     div do
       link_to("Download Peer Assessment Status as CSV", download_evaluators_admin_training_participant_path(training, participant, format: 'csv'))
