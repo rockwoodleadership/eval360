@@ -1,4 +1,4 @@
-class CreateEvaluations < ActiveRecord::Migration
+class CreateEvaluations < ActiveRecord::Migration[5.0]
   def change
     create_table :evaluations do |t|
       t.integer :participant_id

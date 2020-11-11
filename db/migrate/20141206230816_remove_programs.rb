@@ -1,4 +1,4 @@
-class RemovePrograms < ActiveRecord::Migration
+class RemovePrograms < ActiveRecord::Migration[5.0]
   def up
     remove_column :questionnaires, :program_id
     remove_column :trainings, :program_id
