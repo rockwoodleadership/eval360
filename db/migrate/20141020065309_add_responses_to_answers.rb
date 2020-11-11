@@ -1,4 +1,4 @@
-class AddResponsesToAnswers < ActiveRecord::Migration
+class AddResponsesToAnswers < ActiveRecord::Migration[5.0]
   def change
     add_column :answers, :numeric_response, :integer
     add_column :answers, :text_response, :text

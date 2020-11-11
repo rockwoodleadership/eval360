@@ -1,4 +1,4 @@
-class CreateEvaluators < ActiveRecord::Migration
+class CreateEvaluators < ActiveRecord::Migration[5.0]
   def change
     create_table :evaluators do |t|
       t.string :email
