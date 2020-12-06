@@ -48,16 +48,29 @@ ActiveAdmin.register Participant do
   end
 
   csv do
-    column :first_name
-    column :last_name
     column :email
     column "Self Assessment Complete" do |participant|
       if participant.self_evaluation
         participant.self_evaluation.completed? ? "Yes" : "No"
       end
     end
+    column "Question Ids" do |participant|
+      participant.evaluation.questions.each.pluck(:id)
+    end
+    column "Personal Numeric Responses" do |participant|
+      participant.evaluation.answers.each.pluck(:numeric_response).select {|response| response != nil }
+    end
     column "Peer Assessment Status" do |participant|
       participant.peer_evaluation_status
+    end
+    column "Peer Numeric Responses" do |participant|
+      participant.peer_evaluations.map { |evaluation| 
+        evaluation.answers.map { |answer| 
+          answer.numeric_response 
+        }.select { |response| 
+          response != nil 
+        }
+      }
     end
     column "Participant URL" do |participant|
       evaluation_edit_url(participant.self_evaluation) if participant.self_evaluation 
