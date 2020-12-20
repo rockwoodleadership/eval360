@@ -1,4 +1,4 @@
-class CreateQuestionnaireTemplateFromSections < ActiveRecord::Migration
+class CreateQuestionnaireTemplateFromSections < ActiveRecord::Migration[5.0]
   def up
    Section.all.each do |section|
      QuestionnaireTemplate.create(section_id: section.id,
