@@ -64,7 +64,7 @@ ActiveAdmin.register Participant do
       participant.peer_evaluation_status
     end
     column "Peer Numeric Responses" do |participant|
-      participant.peer_evaluations.answers.each.pluck(:numeric_response).select {|response| response != nil }
+      participant.peer_evaluations.each { |pe| pe.answers.each.pluck(:numeric_response).select {|response| response != nil }}
     end
     column "Participant URL" do |participant|
       evaluation_edit_url(participant.self_evaluation) if participant.self_evaluation 
