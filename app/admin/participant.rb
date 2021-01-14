@@ -49,6 +49,9 @@ ActiveAdmin.register Participant do
 
   csv do
     column :email
+    column "Name" do |participant|
+      participant.full_name
+    end
     column "Self Assessment Complete" do |participant|
       if participant.self_evaluation
         participant.self_evaluation.completed? ? "Yes" : "No"
