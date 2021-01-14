@@ -32,7 +32,7 @@ ActiveAdmin.register Training do
     div do
       link_to "create new training", new_admin_training_path, class: "small-new"
     end
-  end 
+  end
 
   form(:html => { :multipart => true}) do |f|
     f.inputs "WARNING" do

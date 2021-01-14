@@ -1,4 +1,4 @@
-class RemoveLocationFromTrainings < ActiveRecord::Migration
+class RemoveLocationFromTrainings < ActiveRecord::Migration[5.0]
   def change
     remove_column :trainings, :location, :string
   end

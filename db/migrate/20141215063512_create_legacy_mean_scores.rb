@@ -1,4 +1,4 @@
-class CreateLegacyMeanScores < ActiveRecord::Migration
+class CreateLegacyMeanScores < ActiveRecord::Migration[5.0]
   def change
     create_table :legacy_mean_scores do |t|
       t.string :key
