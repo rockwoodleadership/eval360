@@ -58,7 +58,6 @@ class EvaluationEmailer
     message = participant_message(participant)
     message["subject"] = "Rockwood: 360 Leadership Assessment Reminder"
     send_template(template_name, message)
-    end
   end
 
 
