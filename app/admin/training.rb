@@ -29,16 +29,9 @@ ActiveAdmin.register Training do
     column "Actions" do |training|
       link_to "View", admin_training_path(training)
     end 
-    column "Download CSV" do |training|
-      link_to "Download Participant Data", admin_training_participants_path(training, format: :csv)
-    end 
     div do
       link_to "create new training", new_admin_training_path, class: "small-new"
     end
-    # div do 
-    #   link_to "Download Participant Data", admin_training_participants_path(training, format: :csv)
-    # end
-
   end
 
   csv do
