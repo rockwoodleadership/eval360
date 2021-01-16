@@ -76,36 +76,33 @@ ActiveAdmin.register Training do
         evaluation_edit_url(participant.self_evaluation) if participant.self_evaluation 
       end
     end
-    # column "Average score" do |training, participants|
-    #   training.participants.map do |participant|
-    #     participant.
-    #   end
-    # end
     column "Question Ids" do |training, questionnaire, questions|
       training.questionnaire.questions.map do |question|
         question.id
       end
     end
-    column "Self score" do |training, participants|
-      training.participants.map do |participant, self_evaluation, answers|
+    column "Self scores" do |training, participants|
+      training.participants.map do |participant, self_evaluation, questions|
         if participant.self_evaluation
-          participant.evaluation.answers.map do |question|
-            question.numeric_response
+            @results = EvaluationResults.new(participant)
+          participant.evaluation.questions.map do |question|
+            @results.self_score_for_q(question.id)
           end
         end
       end
     end
-
-    # column "Histogram" do |training, participants|
-    #   training.participants.map do |participant, self_evaluation, answers|
-    #     histogram = Array.new(11) {|i| 0}
-    #     answers.map do |a|
-    #       histogram[a] += 1 unless a.nil? || a.zero?
-    #     end
-    #     return histogram
-    #   end
-    # end
-  end 
+  column "Average scores" do |training, participants|
+    training.participants.map do |participant, evaluation, questions|
+      if participant.evaluation
+        @results = EvaluationResults.new(participant)
+          participant.evaluation.questions.map do |question|
+            answers = @results.numeric_answers_for_q(question.id)
+            @results.mean_score_for_q(answers)
+          end
+      end
+    end
+  end
+end 
 
   form(:html => { :multipart => true}) do |f|
     f.inputs "WARNING" do
