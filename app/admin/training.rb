@@ -84,10 +84,10 @@ ActiveAdmin.register Training do
     column "Self scores" do |training, participants|
       training.participants.map do |participant, self_evaluation, questions|
         if participant.self_evaluation
-            @results = EvaluationResults.new(participant)
-          participant.evaluation.questions.map do |question|
-            @results.self_score_for_q(question.id)
-          end
+          @results = EvaluationResults.new(participant)
+            participant.self_evaluation.questions.map do |question|
+              @results.self_score_for_q(question.id)
+            end
         end
       end
     end
