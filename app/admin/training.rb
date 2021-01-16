@@ -29,9 +29,82 @@ ActiveAdmin.register Training do
     column "Actions" do |training|
       link_to "View", admin_training_path(training)
     end 
+    column "Download CSV" do |training|
+      link_to "Download Participant Data", admin_training_participants_path(training, format: :csv)
+    end 
     div do
       link_to "create new training", new_admin_training_path, class: "small-new"
     end
+    # div do 
+    #   link_to "Download Participant Data", admin_training_participants_path(training, format: :csv)
+    # end
+
+  end
+
+  csv do
+    column "Training Id" do |training|
+      training.id
+    end
+    column :questionnaire_id
+    column "Participant Ids" do |training, participants|
+      training.participants.map do |participant|
+        participant.id
+      end
+    end
+    column "Participant Access Keys" do |training, participants|
+      training.participants.map do |participant|
+        participant.access_key
+      end
+    end
+    column "SF Registration Ids" do |training, participants|
+      training.participants.map do |participant|
+        participant.sf_registration_id
+      end
+    end
+    column "SF Contact Ids" do |training, participants|
+      training.participants.map do |participant|
+        participant.sf_contact_id
+      end
+    end
+    column "Peer Assessment Sent Date" do |training, participants|
+      training.participants.map do |participant|
+        participant.peer_assessment_sent_date
+      end
+    end
+    column "Participant URL" do |training, participants|
+      training.participants.map do |participant|
+        evaluation_edit_url(participant.self_evaluation) if participant.self_evaluation 
+      end
+    end
+    # column "Average score" do |training, participants|
+    #   training.participants.map do |participant|
+    #     participant.
+    #   end
+    # end
+    column "Question Ids" do |training, questionnaire, questions|
+      training.questionnaire.questions.map do |question|
+        question.id
+      end
+    end
+    column "Self score" do |training, participants|
+      training.participants.map do |participant, self_evaluation, answers|
+        if participant.self_evaluation
+          participant.evaluation.answers.map do |question|
+            question.numeric_response
+          end
+        end
+      end
+    end
+
+    # column "Histogram" do |training, participants|
+    #   training.participants.map do |participant, self_evaluation, answers|
+    #     histogram = Array.new(11) {|i| 0}
+    #     answers.map do |a|
+    #       histogram[a] += 1 unless a.nil? || a.zero?
+    #     end
+    #     return histogram
+    #   end
+    # end
   end 
 
   form(:html => { :multipart => true}) do |f|
