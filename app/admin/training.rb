@@ -35,9 +35,7 @@ ActiveAdmin.register Training do
   end
 
   csv do
-    column "Training Id" do |training|
-      training.id
-    end
+    column :id
     column :questionnaire_id
     column "Participant Ids" do |training, participants|
       training.participants.map do |participant|
@@ -46,22 +44,24 @@ ActiveAdmin.register Training do
     end
     column "Participant Access Keys" do |training, participants|
       training.participants.map do |participant|
-        participant.access_key
+        "Access Key: #{participant.access_key}"
       end
     end
     column "SF Registration Ids" do |training, participants|
       training.participants.map do |participant|
-        participant.sf_registration_id
+        "Registration Id: #{participant.sf_registration_id}"
       end
     end
     column "SF Contact Ids" do |training, participants|
       training.participants.map do |participant|
-        participant.sf_contact_id
+        "SF Contact Id: #{participant.sf_contact_id}"
       end
     end
     column "Peer Assessment Sent Date" do |training, participants|
       training.participants.map do |participant|
-        participant.peer_assessment_sent_date
+        if participant.peer_assessment_sent_date != nil
+          participant.peer_assessment_sent_date
+        end
       end
     end
     column "Participant URL" do |training, participants|
@@ -69,33 +69,28 @@ ActiveAdmin.register Training do
         evaluation_edit_url(participant.self_evaluation) if participant.self_evaluation 
       end
     end
-    column "Question Ids" do |training, questionnaire, questions|
-      training.questionnaire.questions.map do |question|
-        question.id
-      end
-    end
     column "Self scores" do |training, participants|
       training.participants.map do |participant, self_evaluation, questions|
         if participant.self_evaluation
           @results = EvaluationResults.new(participant)
             participant.self_evaluation.questions.map do |question|
-              @results.self_score_for_q(question.id)
+              "Question Id: #{question.id}, Self-score: #{@results.self_score_for_q(question.id) ? @results.self_score_for_q(question.id) : 'none' }"
             end
         end
       end
     end
-  column "Average scores" do |training, participants|
-    training.participants.map do |participant, evaluation, questions|
-      if participant.evaluation
-        @results = EvaluationResults.new(participant)
-          participant.evaluation.questions.map do |question|
-            answers = @results.numeric_answers_for_q(question.id)
-            @results.mean_score_for_q(answers)
-          end
+    column "Average scores" do |training, participants|
+      training.participants.map do |participant, evaluation, questions|
+        if participant.evaluation
+          @results = EvaluationResults.new(participant)
+            participant.evaluation.questions.map do |question|
+              answers = @results.numeric_answers_for_q(question.id)
+              "Question Id: #{question.id}, Average score: #{@results.mean_score_for_q(answers) ? @results.mean_score_for_q(answers) : 'none'}"
+            end
+        end
       end
     end
   end
-end 
 
   form(:html => { :multipart => true}) do |f|
     f.inputs "WARNING" do
