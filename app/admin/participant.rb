@@ -49,7 +49,10 @@ ActiveAdmin.register Participant do
 
   csv do
     column :email
-    column "Name" do |participant|
+    column "Participant ID", :sortable => :id do |participant|
+      participant.id
+    end
+    column "Name", :sortable => :full_name do |participant|
       participant.full_name
     end
     column "Self Assessment Complete" do |participant|
@@ -57,26 +60,36 @@ ActiveAdmin.register Participant do
         participant.self_evaluation.completed? ? "Yes" : "No"
       end
     end
-    column "Question Ids" do |participant|
-      participant.evaluation.questions.each.pluck(:id)
-    end
-    column "Personal Numeric Responses" do |participant|
-      participant.evaluation.answers.each.pluck(:numeric_response).select {|response| response != nil }
+    @training = Training.find_by_id(params[:training_id])
+    @training.questionnaire.questions.map do |question|
+      column "Question #{question.id} Self Score" do |participant|
+        @results = EvaluationResults.new(participant)
+          if participant.self_evaluation
+            @results.self_score_for_q(question.id) ? @results.self_score_for_q(question.id) : 'none'
+          end
+      end
+      column "Question #{question.id} Peer Score" do |participant|
+        @results = EvaluationResults.new(participant)
+        if participant.evaluation
+          answers = @results.numeric_answers_for_q(question.id)
+          @results.mean_score_for_q(answers) ? @results.mean_score_for_q(answers) : 'none'
+        end
+      end
     end
     column "Peer Assessment Status" do |participant|
       participant.peer_evaluation_status
     end
-    column "Peer Numeric Responses" do |participant|
-      participant.peer_evaluations.map { |evaluation| 
-        evaluation.answers.map { |answer| 
-          answer.numeric_response 
-        }.select { |response| 
-          response != nil 
-        }
-      }
-    end
     column "Participant URL" do |participant|
       evaluation_edit_url(participant.self_evaluation) if participant.self_evaluation 
+    end
+    column "Participant Access Keys" do |participant|
+        participant.access_key
+    end
+    column "SF Registration Ids" do |participant|
+      participant.sf_registration_id
+    end
+    column "SF Contact Ids" do |participant|
+      participant.sf_contact_id
     end
   end
 
