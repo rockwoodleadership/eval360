@@ -42,54 +42,6 @@ ActiveAdmin.register Training do
         participant.id
       end
     end
-    column "Participant Access Keys" do |training, participants|
-      training.participants.map do |participant|
-        "Access Key: #{participant.access_key}"
-      end
-    end
-    column "SF Registration Ids" do |training, participants|
-      training.participants.map do |participant|
-        "Registration Id: #{participant.sf_registration_id}"
-      end
-    end
-    column "SF Contact Ids" do |training, participants|
-      training.participants.map do |participant|
-        "SF Contact Id: #{participant.sf_contact_id}"
-      end
-    end
-    column "Peer Assessment Sent Date" do |training, participants|
-      training.participants.map do |participant|
-        if participant.peer_assessment_sent_date != nil
-          participant.peer_assessment_sent_date
-        end
-      end
-    end
-    column "Participant URL" do |training, participants|
-      training.participants.map do |participant|
-        evaluation_edit_url(participant.self_evaluation) if participant.self_evaluation 
-      end
-    end
-    column "Self scores" do |training, participants|
-      training.participants.map do |participant, self_evaluation, questions|
-        if participant.self_evaluation
-          @results = EvaluationResults.new(participant)
-            participant.self_evaluation.questions.map do |question|
-              "Question Id: #{question.id}, Self-score: #{@results.self_score_for_q(question.id) ? @results.self_score_for_q(question.id) : 'none' }"
-            end
-        end
-      end
-    end
-    column "Average scores" do |training, participants|
-      training.participants.map do |participant, evaluation, questions|
-        if participant.evaluation
-          @results = EvaluationResults.new(participant)
-            participant.evaluation.questions.map do |question|
-              answers = @results.numeric_answers_for_q(question.id)
-              "Question Id: #{question.id}, Average score: #{@results.mean_score_for_q(answers) ? @results.mean_score_for_q(answers) : 'none'}"
-            end
-        end
-      end
-    end
   end
 
   form(:html => { :multipart => true}) do |f|
@@ -162,10 +114,10 @@ ActiveAdmin.register Training do
           link_to("View", admin_training_participant_path(training, participant)) 
         end
       end
-      
     end
+
     div do
-      link_to "Download CSV", admin_training_participants_path(training, format: :csv)
+      link_to "Download Participant Self Scores and Avg Scores", admin_training_participants_path(training, format: :csv)
     end
     div do
       link_to "Edit Training", edit_admin_training_path(training)
