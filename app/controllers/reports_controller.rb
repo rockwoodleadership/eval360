@@ -12,8 +12,10 @@ class ReportsController < ApplicationController
 
   def histogram
     question = Question.find(params[:question_id])
-    @histogram = Histogram.new(participant, question)
-    render :partial => "histogram"
+    if question
+      @histogram = Histogram.new(participant, question)
+      render :partial => "histogram"
+    end
   end
 
   private
