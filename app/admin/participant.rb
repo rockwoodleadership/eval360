@@ -47,8 +47,7 @@ ActiveAdmin.register Participant do
 
   end
 
-  csv do
-    # start with questionnaire templates, use these to find all the trainings associated with it, and with each training, do everything already done. 
+  csv do 
     column :training_id
     column :email
     column "Participant ID", :sortable => :id do |participant|
