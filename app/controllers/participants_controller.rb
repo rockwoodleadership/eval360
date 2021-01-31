@@ -64,7 +64,7 @@ class ParticipantsController < ApplicationController
   private
 
   def find_participant
-    @participant = Participant.find_by_access_key(params[:id])
+    @participant = params[:id] ? Participant.find_by_access_key(params[:id]) : nil
   end
 
   
