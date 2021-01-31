@@ -48,6 +48,7 @@ ActiveAdmin.register Participant do
   end
 
   csv do
+    # start with questionnaire templates, use these to find all the trainings associated with it, and with each training, do everything already done. 
     column :training_id
     column :email
     column "Participant ID", :sortable => :id do |participant|
@@ -196,6 +197,9 @@ ActiveAdmin.register Participant do
     active_admin_comments
     div do
       link_to("Download Peer Assessment Status as CSV", download_evaluators_admin_training_participant_path(training, participant, format: 'csv'))
+    end
+    div do
+      link_to('Assessments', admin_training_participant_evaluations_path(training, participant))
     end
     div do
       link_to("Edit Participant", edit_admin_training_participant_path(training, participant))
