@@ -51,7 +51,7 @@ ActiveAdmin.register Questionnaire, as: "Assessment" do
 
 
   div do
-    link_to('Trainings Associated with Assessment', admin_questionnaire_trainings_path(questionnaire)
+    link_to('Trainings Associated with Assessment', admin_questionnaire_trainings_path(questionnaire))
   end
 end
 
