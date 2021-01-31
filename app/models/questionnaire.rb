@@ -1,6 +1,7 @@
 require 'yaml'
 class Questionnaire < ActiveRecord::Base
   has_many :questionnaire_templates
+  has_many :trainings
   has_many :sections, -> { includes(:questions).order("created_at ASC") },
     through: :questionnaire_templates
   validates_uniqueness_of :name

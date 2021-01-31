@@ -48,7 +48,11 @@ ActiveAdmin.register Questionnaire, as: "Assessment" do
         end
       end
     end
-  end
 
+
+  div do
+    link_to('Trainings Associated with Assessment', admin_questionnaire_trainings_path(params[:id]))
+  end
+end
 
 end
