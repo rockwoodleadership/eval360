@@ -48,7 +48,7 @@ ActiveAdmin.register Questionnaire, as: "Assessment" do
         end
       end
     end
-  end
 
+end
 
 end

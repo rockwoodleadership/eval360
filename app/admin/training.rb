@@ -34,16 +34,6 @@ ActiveAdmin.register Training do
     end
   end
 
-  csv do
-    column :id
-    column :questionnaire_id
-    column "Participant Ids" do |training, participants|
-      training.participants.map do |participant|
-        participant.id
-      end
-    end
-  end
-
   form(:html => { :multipart => true}) do |f|
     f.inputs "WARNING" do
       f.render partial: "admin/warning"
@@ -119,6 +109,7 @@ ActiveAdmin.register Training do
     div do
       link_to "Download Participant Self Scores and Avg Scores", admin_training_participants_path(training, format: :csv)
     end
+
     div do
       link_to "Edit Training", edit_admin_training_path(training)
     end
