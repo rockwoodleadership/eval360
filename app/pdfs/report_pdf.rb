@@ -1,4 +1,5 @@
 class ReportPdf < Prawn::Document
+  require 'prawn'
   TOP_OF_PAGE = 775
   BOTTOM_OF_PAGE = 100
   BLOCK_HEIGHT = 130
@@ -10,6 +11,10 @@ class ReportPdf < Prawn::Document
 
   def initialize(participant)
     super()
+    self.font_families.update("DejaVuSans" => {
+      :normal => "vendor/assets/fonts/dejavu-sans/DejaVuSans.ttf", 
+      :bold => "vendor/assets/fonts/dejavu-sans/DejaVuSansCondensed-Bold.ttf"})
+    font "DejaVuSans"
     @participant = participant
     @questions = participant.self_evaluation.questions
     @results = EvaluationResults.new(participant)
