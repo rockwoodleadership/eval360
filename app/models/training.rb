@@ -54,7 +54,7 @@ class Training < ActiveRecord::Base
   private
 
   def self.email_block
-    upcoming_trainings = Training.includes(:participants).where("deadline IN (?)", Date.current..21.days.from_now)
+    upcoming_trainings = Training.includes(:participants).where("deadline IN (?)", DateTime.now..21.days.from_now)
     upcoming_trainings.each do |training|
       training.participants.each do |participant|
         yield(participant) unless participant.do_not_remind?
