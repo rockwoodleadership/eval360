@@ -15,4 +15,5 @@ deploy:
   on:
     repo: rockwoodleadership/eval360
   run:
+    - "gem install bundler -v "$(grep -A 1 "BUNDLED WITH" Gemfile.lock | tail -n 1)""
     - "rake db:migrate"
