@@ -65,11 +65,9 @@ ActiveAdmin.register Section do
           question.answer_type
         end
         column "Actions" do |question|
-         #actions
-          #section.questions.actions
-         #link_to("View", admin_question_path(question)) 
-         #+ "   " + link_to("Edit", edit_admin_questionnaire_section_question_path(section.questionnaire, section, question)) + "   " 
-         #link_to("Delete", destroy_admin_questionnaire_section_question_path(section.questionnaires, section, question))
+          link_to("View", admin_questionnaire_section_question_path(section, question)) + "   " + link_to("Edit", edit_admin_questionnaire_section_question_path(section, question))
+          #  + "   " + link_to("Delete", admin_questionnaire_section_question_path(section, question), data: { confirm: "Are you sure you want to delete this section?" }, method: :delete)
+          #working on adding this
         end
         #para link_to("New Question", new_admin_question_path)
       end

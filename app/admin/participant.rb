@@ -54,13 +54,37 @@ ActiveAdmin.register Participant do
 
   end
 
-  csv do
-    column :first_name
-    column :last_name
+  csv do 
+    column :training_id
     column :email
+    column "Participant ID", :sortable => :id do |participant|
+      participant.id
+    end
+    column "Name", :sortable => :full_name do |participant|
+      participant.full_name
+    end
     column "Self Assessment Complete" do |participant|
       if participant.self_evaluation
         participant.self_evaluation.completed? ? "Yes" : "No"
+      end
+    end
+    column "Assessment Sent Date" do |participant|
+      participant.assessment_sent_date ? participant.assessment_sent_date : 'none'
+    end
+    @training = Training.find_by_id(params[:training_id])
+    @training.questionnaire.questions.map do |question|
+      column "Question #{question.id} Self Score" do |participant|
+        @results = EvaluationResults.new(participant)
+          if participant.self_evaluation
+            @results.self_score_for_q(question.id) ? @results.self_score_for_q(question.id) : 'none'
+          end
+      end
+      column "Question #{question.id} Peer Score" do |participant|
+        @results = EvaluationResults.new(participant)
+        if participant.evaluation
+          answers = @results.numeric_answers_for_q(question.id)
+          @results.mean_score_for_q(answers) ? @results.mean_score_for_q(answers) : 'none'
+        end
       end
     end
     column "Peer Assessment Status" do |participant|
@@ -68,6 +92,15 @@ ActiveAdmin.register Participant do
     end
     column "Participant URL" do |participant|
       evaluation_edit_url(participant.self_evaluation) if participant.self_evaluation 
+    end
+    column "Participant Access Keys" do |participant|
+        participant.access_key
+    end
+    column "SF Registration Ids" do |participant|
+      participant.sf_registration_id
+    end
+    column "SF Contact Ids" do |participant|
+      participant.sf_contact_id
     end
   end
 
@@ -174,6 +207,9 @@ ActiveAdmin.register Participant do
     active_admin_comments
     div do
       link_to("Download Peer Assessment Status as CSV", download_evaluators_admin_training_participant_path(training, participant, format: 'csv'))
+    end
+    div do
+      link_to('Assessments', admin_training_participant_evaluations_path(training, participant))
     end
     div do
       link_to("Edit Participant", edit_admin_training_participant_path(training, participant))

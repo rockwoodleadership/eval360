@@ -1,4 +1,4 @@
-class ChangeValueToFloatInLegacyMeanScores < ActiveRecord::Migration
+class ChangeValueToFloatInLegacyMeanScores < ActiveRecord::Migration[5.0]
   def up
    change_column :legacy_mean_scores, :value, 'float USING CAST(value AS float)' 
   end

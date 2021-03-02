@@ -3,16 +3,22 @@
 
 ### Requirements
 - Ruby 2.5.0
-- Rails 5.1.5
+- Rails 5.2.0
 - Postgresql 9.4
+- Heroku stack: Heroku-18
 
 #### Setup
-1 Fork the repo [https://help.github.com/articles/fork-a-repo/](https://help.github.com/articles/fork-a-repo/)  
+0 To set up this environment locally, please get the necessary login info to Github, Heroku, Salesforce, and Mailchimp (you will access Mandrill through here) from Joi or Amie.
+
+1 Fork the repo 
+```
+[https://help.github.com/articles/fork-a-repo/](https://help.github.com/articles/fork-a-repo/)  
+```
 2 Run the below script
 ```
 ./script/newb
 ```
-3 Create a .env file with the following using the associated keys:
+3 Create a .env file with the following using the associated keys found in Heroku:
 ```
 MANDRILL_APIKEY="MANDRILL_APIKEY"
 DATABASEDOTCOM_CLIENT_ID="1234"

@@ -50,11 +50,15 @@ class EvaluationEmailer
   end
 
   def self.remind_peers_reminder(participant)
-   training = participant.training
-    template_name = "self-reminder-#{training.questionnaire.name}"
+    training = participant.training
+    template_name = "reminder-to-remind-#{training.questionnaire.name}"
+    if template_name == "reminder-to-remind-YearlongPerformance OLD"
+       return
+    else
     message = participant_message(participant)
     message["subject"] = "Rockwood: 360 Leadership Assessment Reminder"
     send_template(template_name, message)
+    end
   end
 
 

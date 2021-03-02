@@ -55,7 +55,7 @@ ActiveAdmin.register Questionnaire, as: "Assessment" do
         para link_to("New Question", new_admin_questionnaire_section_question_path(questionnaire,section))
       end
     end
-    panel "Links" do
+end
 
       para link_to("Back to all Sections", admin_sections_path)
       para link_to("Back to all Assessments", admin_assessments_path)

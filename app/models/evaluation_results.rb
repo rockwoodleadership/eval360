@@ -13,7 +13,7 @@ class EvaluationResults
   end
 
   def self_score_for_q(question_id)
-    self_evaluation.answers.find_by(question_id: question_id).numeric_response
+    self_evaluation.answers.find_by(question_id: question_id).numeric_response ? self_evaluation.answers.find_by(question_id: question_id).numeric_response : nil
   end
 
   def mean_score_for_q(answers)

@@ -46,8 +46,7 @@ class Evaluation < ActiveRecord::Base
   end
 
   def not_accessible?
-    if self.evaluator.declined? or Date.today > participant.training.end_date
-      ##reverting Date.current to Date.today
+    if (self.evaluator.declined? || participant.training.end_date == nil || DateTime.now > participant.training.end_date)
       return true
     end
     return false
