@@ -22,3 +22,5 @@ server.crt
 server.csr
 server.key
 server.orig.key
+
+.tool-versions

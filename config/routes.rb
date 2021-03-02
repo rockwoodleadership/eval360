@@ -37,6 +37,14 @@ Rails.application.routes.draw do
         resources :evaluations
       end
     end
+
+    resources :questionnaires do
+      resources :trainings do
+        resources :participants do
+          resources :evaluations
+        end
+      end
+    end
   end
   
 

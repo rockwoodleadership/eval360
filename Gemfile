@@ -1,8 +1,7 @@
 source 'https://rubygems.org'
 
-ruby '2.5.5'
-gem 'rails', '5.1.5'
-gem 'rack', ">=2.0.8"
+ruby '2.5.0'
+gem 'rails', '5.2.0'
 gem 'pg', '~>0.21.0'
 gem 'jquery-rails'
 gem 'coffee-rails'
@@ -11,23 +10,15 @@ gem 'uglifier'
 gem 'slim-rails'
 gem 'turbolinks'
 gem 'devise'
-gem "excon", ">= 0.71.0"
-gem 'actionpack', '5.1.5'
-gem 'activerecord', '5.1.5'
-gem 'activesupport', '5.1.5'
-gem 'railties', '5.1.5'
-gem 'activeadmin', '2.3.1'
-gem 'bundler', '~> 2.0.1'
-gem 'byebug'
-#, , github: 'activeadmin'
+gem 'activeadmin', '~>2.9.0'
 gem 'active_record-acts_as'
 gem 'mandrill-api'
-gem 'formtastic', '~> 3.0'
+gem 'formtastic', '~> 3.1.5'
 gem 'formtastic-bootstrap'
 gem "cocoon"
 gem 'bugsnag'
 gem 'prawn'
-gem 'delayed_job_active_record'
+gem 'delayed_job_active_record', '4.1.4'
 gem 'rubyzip'
 gem 'restforce'
 gem 'newrelic_rpm'
@@ -50,7 +41,7 @@ end
 
 group :development, :test do
   gem "bullet"
-  gem 'dotenv-rails'
+  gem 'dotenv-rails', '~>2.2.2'
   gem 'pry'
   gem 'rspec-rails', '~> 3.7'
   gem "factory_bot_rails"

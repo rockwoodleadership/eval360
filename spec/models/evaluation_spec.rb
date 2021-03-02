@@ -101,7 +101,7 @@ RSpec.describe Evaluation, :type => :model do
     end
 
     it 'returns true if training date has passed' do
-      training = build(:training, end_date: Date.current - 1.day )
+      training = build(:training, end_date: DateTime.now - 1.day )
       participant = build(:participant, training: training)
       evaluation = build(:evaluation, participant: participant)
       expect(evaluation.not_accessible?).to eq true 

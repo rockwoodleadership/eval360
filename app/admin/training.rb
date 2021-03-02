@@ -32,7 +32,7 @@ ActiveAdmin.register Training do
     div do
       link_to "create new training", new_admin_training_path, class: "small-new"
     end
-  end 
+  end
 
   form(:html => { :multipart => true}) do |f|
     f.inputs "WARNING" do
@@ -104,11 +104,12 @@ ActiveAdmin.register Training do
           link_to("View", admin_training_participant_path(training, participant)) 
         end
       end
-      
     end
+
     div do
-      link_to "Download CSV", admin_training_participants_path(training, format: :csv)
+      link_to "Download Participant Self Scores and Avg Scores", admin_training_participants_path(training, format: :csv)
     end
+
     div do
       link_to "Edit Training", edit_admin_training_path(training)
     end

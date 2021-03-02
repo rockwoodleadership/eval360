@@ -52,7 +52,7 @@ class EvaluationEmailer
   def self.remind_peers_reminder(participant)
     training = participant.training
     template_name = "reminder-to-remind-#{training.questionnaire.name}"
-    if template_name == "reminder-to-remind-Public-ProgramsFellowship" || template_name == "reminder-to-remind-YearlongPerformance OLD"
+    if template_name == "reminder-to-remind-YearlongPerformance OLD"
        return
     else
     message = participant_message(participant)
