@@ -1,9 +1,7 @@
 ActiveAdmin.register Question do
   permit_params :section_id, :answer_type, :description, :self_description
 
-  actions :index, :show, :edit, :update
-  #:new, :create, :destroy not
-  #working on adding these
+  actions :index, :show, :edit, :update, :new, :create, :destroy
 
   controller do
     nested_belongs_to :questionnaire, :section
@@ -30,6 +28,9 @@ ActiveAdmin.register Question do
       row :description
       row :self_description
       row :legacy_tag
+    end
+    div do
+      link_to("Back to Assessment", admin_assessment_path(questionnaire))
     end
   end
 
