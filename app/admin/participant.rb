@@ -20,6 +20,13 @@ ActiveAdmin.register Participant do
       redirect_to admin_training_participant_path(participant.training, participant)
     end
 
+    def destroy
+      participant = Participant.find_by(access_key: params[:id])
+      participant.destroy 
+      flash[:notice] = "Participant has been removed"
+      redirect_to admin_training_participants_path(participant.training)
+    end
+
   end
 
   member_action :remind, method: :get do
