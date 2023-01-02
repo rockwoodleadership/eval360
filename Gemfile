@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.5.0'
+ruby '2.7.2'
 gem 'rails', '5.2.0'
 gem 'pg', '~>0.21.0'
 gem 'jquery-rails'
@@ -44,7 +44,7 @@ group :development, :test do
   gem 'dotenv-rails', '~>2.2.2'
   gem 'pry'
   gem 'rspec-rails', '~> 3.7'
-  gem "factory_bot_rails"
+  gem "factory_bot_rails", require: false
 end
 
 group :test do
