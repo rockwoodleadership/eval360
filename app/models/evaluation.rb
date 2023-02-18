@@ -9,7 +9,7 @@ class Evaluation < ActiveRecord::Base
   validates_presence_of :participant
   validates_presence_of :evaluator
 
-  before_validation :set_access_key, on: :create 
+  before_validation :set_access_key, on: :create
   after_create :build_questions
   after_create :set_defaults
 
@@ -53,16 +53,18 @@ class Evaluation < ActiveRecord::Base
   end
 
   private
-  
+
     def build_questions
-      questions = participant.training.questionnaire.questions
-      questions.each do |question|
-        answers.create(numeric_response: nil, text_response: "", question: question)
+      if participant.training
+        questions = participant.training.questionnaire.questions
+        questions.each do |question|
+          answers.create(numeric_response: nil, text_response: "", question: question)
+        end
       end
     end
 
     def set_defaults
-      return if completed? 
+      return if completed?
       self.completed = false
       self.save
     end

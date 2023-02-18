@@ -2,13 +2,14 @@ class EvaluationsController < ApplicationController
 
   def edit
     @evaluation = Evaluation.find_by_access_key(params[:evaluation_id])
-    not_found if @evaluation.nil? || @evaluation.not_accessible? 
+    not_found if @evaluation.nil? || @evaluation.not_accessible?
 
     completed_self_eval = @evaluation.completed? && @evaluation.self_eval?
     completed_peer_eval = @evaluation.completed? && !@evaluation.self_eval?
-    
+
 
     if completed_self_eval
+      @evaluation.save
       redirect_to invitations_path(@evaluation.participant)
     end
 
@@ -20,7 +21,7 @@ class EvaluationsController < ApplicationController
       render :edit
     end
   end
-    
+
 
   def update
     evaluation = Evaluation.find_by_access_key(params[:id])
@@ -31,7 +32,7 @@ class EvaluationsController < ApplicationController
     submitting_peer_eval = (params[:commit] == "Submit" &&
                             !evaluation.self_eval?)
     saving = (params[:commit] == "Save For Later")
-    
+
     unless saving
 
       if evaluation.answers.joins(:question).where(questions: { answer_type: "numeric" },
@@ -42,13 +43,13 @@ class EvaluationsController < ApplicationController
       end
     end
 
-    if submitting_self_eval 
+    if submitting_self_eval
       participant.completed_self_eval
       flash[:notice] = "Thank you for completing your self-survey."
       redirect_to invitations_path participant
     end
-    
-    if submitting_peer_eval 
+
+    if submitting_peer_eval
       participant.peer_evaluation_completed(evaluation)
       redirect_to thank_you_path
     end
@@ -70,7 +71,7 @@ class EvaluationsController < ApplicationController
 
     redirect_to :root
   end
-  
+
   private
     def evaluation_params
       params.require(:evaluation).permit(answers_attributes: [:numeric_response, :text_response, :id])
