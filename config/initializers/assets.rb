@@ -12,4 +12,4 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
-Rails.application.config.assets.precompile += [ 'evaluations.js', 'invitations.js', 'admin/active_admin.css', 'admin/active_admin.js', 'admin/admin_functions.js', 'admin/download_reports.js', 'report.css']
+Rails.application.config.assets.precompile += ['manifest.js']
