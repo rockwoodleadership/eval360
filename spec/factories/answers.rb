@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :answer do
-    question
-    evaluation
+    association :question
+    association :evaluation
   end
 
   factory :text_answer, class: Answer do

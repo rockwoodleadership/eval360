@@ -3,7 +3,7 @@ class Training < ActiveRecord::Base
   accepts_nested_attributes_for :participants
   belongs_to :questionnaire
 
-  validates_presence_of :questionnaire_id
+  validates_presence_of :questionnaire
 
   def self.send_self_eval_reminders
     email_block do |participant|

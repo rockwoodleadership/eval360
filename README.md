@@ -57,3 +57,15 @@ t.participants.create(first_name: 'Joe', last_name: 'Smith', email: 'joe@example
 Please find the documentation for ActiveAdmin, Formtastic, and Slim for reference. 
 
 
+#### Up and Running with Docker Compose
+1. Install Docker
+1. `docker compose build`
+1. `docker compose up`
+1. `docker compose exec backend bash`
+1. `bin/rails db:create && bin/rails db:migrate`
+
+OPTIONAL IF ENCOUNTERING MIGRATION OR SCHEMA ISSUES
+1. `docker compose exec backend bash`
+1. `bin/rails db` to get to a postgres prompt
+1. In postgres: `INSERT INTO ar_internal_metadata ("key", "value", "created_at", "updated_at")
+VALUES ('environment', 'development', now(), now()) RETURNING "key";`

@@ -7,7 +7,7 @@ Delayed::Worker.delay_jobs = false
 require 'webmock/rspec'
 WebMock.disable_net_connect!(:allow => "codeclimate.com")
 
-require 'factory_bot'
+require 'factory_bot_rails'
 require 'database_cleaner'
 require 'active_record'
 require 'bullet'

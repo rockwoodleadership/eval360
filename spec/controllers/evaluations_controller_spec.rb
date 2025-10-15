@@ -27,6 +27,8 @@ RSpec.describe EvaluationsController, :type => :controller do
 
       context 'when evaluation is completed' do
         before (:each) do
+          participant = create(:participant)
+          @evaluation.update(participant: participant)
           allow(@evaluation).to receive(:completed?) { true }
         end
         context 'when evaluation is a self eval' do

@@ -24,3 +24,5 @@ server.key
 server.orig.key
 
 .tool-versions
+
+/db_data

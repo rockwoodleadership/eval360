@@ -1,9 +1,9 @@
 FactoryBot.define do
   factory :participant do
-    first_name "Sean"
-    last_name "Combs"
-    training
-    email "participant#{Time.now}@example.com"
+    first_name { "Sean" }
+    last_name { "Combs" }
+    association :training
+    email { "participant#{Time.now}@example.com" }
 
     factory :participant_with_self_eval do
       after(:create) do |participant|

@@ -2,7 +2,7 @@
 require 'rails_helper' 
 
 # If using RSpec 2.x, remove `RSpec.`
-RSpec.describe "Factory Girl" do
+RSpec.describe "Factory Bot" do
   FactoryBot.factories.map(&:name).each do |factory_name|
     describe "#{factory_name} factory" do
 
